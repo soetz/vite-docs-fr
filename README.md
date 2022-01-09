@@ -14,29 +14,27 @@
 
 # Vite ⚡
 
-> Next Generation Frontend Tooling
+> Tooling front-end nouvelle génération
 
-- 💡 Instant Server Start
-- ⚡️ Lightning Fast HMR
-- 🛠️ Rich Features
-- 📦 Optimized Build
-- 🔩 Universal Plugin Interface
-- 🔑 Fully Typed APIs
+- 💡 Démarrage instantané du serveur
+- ⚡️ Rafraîchissement des modules ultra rapide
+- 🛠️ Fonctionnalités abondantes
+- 📦 Build optimisé
+- 🔩 Interface universelle de plugins
+- 🔑 APIs typées
 
-Vite (French word for "quick", pronounced [`/vit/`](https://cdn.jsdelivr.net/gh/vitejs/vite@main/docs/public/vite.mp3), like "veet") is a new breed of frontend build tool that significantly improves the frontend development experience. It consists of two major parts:
+Vite (prononcé comme en français) est un outil de build frontend d’un nouveau genre qui améliore grandement l’expérience de développement. Il se compose de deux parties :
 
-- A dev server that serves your source files over [native ES modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules), with [rich built-in features](https://vitejs.dev/guide/features.html) and astonishingly fast [Hot Module Replacement (HMR)](https://vitejs.dev/guide/features.html#hot-module-replacement).
+- Un serveur de développement qui sert les fichiers sous la forme de [modules ECMAScript](https://developer.mozilla.org/fr/docs/Web/JavaScript/Guide/Modules), qui propose de [nombreuses fonctionnalités](https://vitejs.dev/guide/features.html) et qui permet un [rafraîchissement des modules (HMR)](https://vitejs.dev/guide/features.html#hot-module-replacement) très rapide.
 
-- A [build command](https://vitejs.dev/guide/build.html) that bundles your code with [Rollup](https://rollupjs.org), pre-configured to output highly optimized static assets for production.
+- Une [commande de build](https://vitejs.dev/guide/build.html) qui bundle votre code à l’aide de [Rollup](https://rollupjs.org), pré-configuré pour optimiser grandement la taille des ressources statiques en production.
 
-In addition, Vite is highly extensible via its [Plugin API](https://vitejs.dev/guide/api-plugin.html) and [JavaScript API](https://vitejs.dev/guide/api-javascript.html) with full typing support.
-
-[Read the Docs to Learn More](https://vitejs.dev).
+En plus, Vite peut être étendu grâce à son [API de Plugin](https://vitejs.dev/guide/api-plugin.html) ainsi que l’[API JavaScript](https://vitejs.dev/guide/api-javascript.html) typée.
 
 ## Contribution
 
-See [Contributing Guide](https://github.com/vitejs/vite/blob/main/CONTRIBUTING.md).
+Voir le [guide du contributeur](https://github.com/vitejs/vite/blob/main/CONTRIBUTING.md).
 
-## License
+## Licence
 
-MIT
+Vite est distribué sous licence MIT.
