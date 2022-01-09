@@ -1,0 +1,22 @@
+{
+	"name": "vite-docs-fr",
+	"version": "0.0.0",
+	"description": "Vite.js documentation French translation",
+	"repository": "https://github.com/soetz/vite-docs-fr",
+	"license": "MIT",
+	"private": true,
+	"devDependencies": {
+		"chalk": "^4.1.2",
+		"vitepress": "^0.21.4",
+		"yorkie": "^2.0.0"
+	},
+	"scripts": {
+		"build": "vitepress build",
+		"dev": "vitepress dev",
+		"preview": "npm run build && npm run serve",
+		"serve": "vitepress serve ."
+	},
+	"gitHooks": {
+		"commit-msg": "node scripts/verifyCommit.js"
+	}
+}
