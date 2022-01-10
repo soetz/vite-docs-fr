@@ -14,11 +14,11 @@
 
 # Vite ⚡
 
-> Tooling front-end nouvelle génération
+> Le tooling front-end nouvelle génération
 
 - 💡 Démarrage instantané du serveur
 - ⚡️ Rafraîchissement des modules ultra rapide
-- 🛠️ Fonctionnalités abondantes
+- 🛠️ Riche en fonctionnalités
 - 📦 Build optimisé
 - 🔩 Interface universelle de plugins
 - 🔑 APIs typées
@@ -29,7 +29,7 @@ Vite (prononcé comme en français) est un outil de build frontend d’un nouvea
 
 - Une [commande de build](https://vitejs.dev/guide/build.html) qui bundle votre code à l’aide de [Rollup](https://rollupjs.org), pré-configuré pour optimiser grandement la taille des ressources statiques en production.
 
-En plus, Vite peut être étendu grâce à son [API de Plugin](https://vitejs.dev/guide/api-plugin.html) ainsi que l’[API JavaScript](https://vitejs.dev/guide/api-javascript.html) typée.
+En plus, Vite peut être étendu grâce à son [API pour plugin](https://vitejs.dev/guide/api-plugin.html) ainsi que l’[API JavaScript](https://vitejs.dev/guide/api-javascript.html) typée.
 
 ## Contribution
 
