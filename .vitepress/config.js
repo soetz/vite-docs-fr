@@ -8,15 +8,14 @@ const pkg = require('../package.json')
  module.exports = {
   title: 'Vite',
   lang: 'fr',
-  description: 'Next Generation Frontend Tooling',
+  description: 'Le tooling front-end nouvelle génération.',
   head: [['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }]],
   themeConfig: {
     repo: pkg.repository,
     logo: '/logo.svg',
-    docsDir: 'docs',
     docsBranch: 'main',
     editLinks: true,
-    editLinkText: 'Suggest changes to this page',
+    editLinkText: 'Suggérer une modification sur cette page',
 
     // TODO: French search
     algolia: {
@@ -29,17 +28,17 @@ const pkg = require('../package.json')
 
     nav: [
       { text: 'Guide', link: '/guide/' },
-      { text: 'Config', link: '/config/' },
+      { text: 'Configuration', link: '/config/' },
       { text: 'Plugins', link: '/plugins/' },
       {
-        text: 'Links',
+        text: 'Liens',
         items: [
           {
             text: 'Twitter',
             link: 'https://twitter.com/vite_js'
           },
           {
-            text: 'Discord Chat',
+            text: 'Serveur Discord',
             link: 'https://chat.vitejs.dev'
           },
           {
@@ -47,11 +46,11 @@ const pkg = require('../package.json')
             link: 'https://github.com/vitejs/awesome-vite'
           },
           {
-            text: 'DEV Community',
+            text: 'Communauté DEV.to',
             link: 'https://dev.to/t/vite'
           },
           {
-            text: 'Rollup Plugins Compat',
+            text: 'Compatibilité des plugins Rollup',
             link: 'https://vite-rollup-plugins.patak.dev/'
           },
           {
@@ -61,7 +60,7 @@ const pkg = require('../package.json')
         ]
       },
       {
-        text: 'Languages',
+        text: 'Langues',
         items: [
           {
             text: 'English',
@@ -88,55 +87,55 @@ const pkg = require('../package.json')
           text: 'Guide',
           children: [
             {
-              text: 'Why Vite',
+              text: 'Pourquoi utiliser Vite',
               link: '/guide/why'
             },
             {
-              text: 'Getting Started',
+              text: 'Démarrer',
               link: '/guide/'
             },
             {
-              text: 'Features',
+              text: 'Fonctionnalités',
               link: '/guide/features'
             },
             {
-              text: 'Using Plugins',
+              text: 'Utiliser des plugins',
               link: '/guide/using-plugins'
             },
             {
-              text: 'Dependency Pre-Bundling',
+              text: 'Pré-bundler des dépendances',
               link: '/guide/dep-pre-bundling'
             },
             {
-              text: 'Static Asset Handling',
+              text: 'Gestion des ressources statiques',
               link: '/guide/assets'
             },
             {
-              text: 'Building for Production',
+              text: 'Build de production',
               link: '/guide/build'
             },
             {
-              text: 'Deploying a Static Site',
+              text: 'Déployer un site statique',
               link: '/guide/static-deploy'
             },
             {
-              text: 'Env Variables and Modes',
+              text: 'Variables d’environnement et modes',
               link: '/guide/env-and-mode'
             },
             {
-              text: 'Server-Side Rendering (SSR)',
+              text: 'Rendu côté serveur (SSR)',
               link: '/guide/ssr'
             },
             {
-              text: 'Backend Integration',
+              text: 'Intégration du backend',
               link: '/guide/backend-integration'
             },
             {
-              text: 'Comparisons',
+              text: 'Comparaisons',
               link: '/guide/comparisons'
             },
             {
-              text: 'Migration from v1',
+              text: 'Migration depuis la v1',
               link: '/guide/migration'
             }
           ]
@@ -145,19 +144,19 @@ const pkg = require('../package.json')
           text: 'APIs',
           children: [
             {
-              text: 'Plugin API',
+              text: 'API de plugin',
               link: '/guide/api-plugin'
             },
             {
-              text: 'HMR API',
+              text: 'API du rafraîchissement des modules (HMR)',
               link: '/guide/api-hmr'
             },
             {
-              text: 'JavaScript API',
+              text: 'API JavaScript',
               link: '/guide/api-javascript'
             },
             {
-              text: 'Config Reference',
+              text: 'Référentiel de la configuration',
               link: '/config/'
             }
           ]
