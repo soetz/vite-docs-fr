@@ -8,7 +8,7 @@ const pkg = require('../package.json')
  module.exports = {
   title: 'Vite',
   lang: 'fr',
-  description: 'Tooling front-end nouvelle génération',
+  description: 'Le tooling front-end nouvelle génération.',
   head: [['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }]],
   themeConfig: {
     repo: pkg.repository,
