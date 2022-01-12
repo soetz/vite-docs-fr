@@ -1,26 +1,26 @@
 ---
 home: true
 heroImage: /logo.svg
-actionText: Get Started
+actionText: Démarrer
 actionLink: /guide/
 
-altActionText: Learn More
+altActionText: En savoir plus
 altActionLink: /guide/why
 
 features:
-  - title: 💡 Instant Server Start
-    details: On demand file serving over native ESM, no bundling required!
-  - title: ⚡️ Lightning Fast HMR
-    details: Hot Module Replacement (HMR) that stays fast regardless of app size.
-  - title: 🛠️ Rich Features
-    details: Out-of-the-box support for TypeScript, JSX, CSS and more.
-  - title: 📦 Optimized Build
-    details: Pre-configured Rollup build with multi-page and library mode support.
-  - title: 🔩 Universal Plugins
-    details: Rollup-superset plugin interface shared between dev and build.
-  - title: 🔑 Fully Typed APIs
-    details: Flexible programmatic APIs with full TypeScript typing.
-footer: MIT Licensed | Copyright © 2019-present Evan You & Vite Contributors
+  - title: 💡 Démarrage instantané du serveur
+    details: Les fichiers sont servis instantanément sous la forme de modules ESM ! Il n’y a pas besoin de builder.
+  - title: ⚡️ Rafraîchissement des modules ultra rapide
+    details: Pendant le développement, les modules sont remplacés rapidement peu importe la taille de l’app.
+  - title: 🛠️ Riche en fonctionnalités
+    details: Support inclus pour Typescript, JSX, CSS, et bien d’autres.
+  - title: 📦 Build optimisé
+    details: Le build se fait grâce à Rollup, pré-configuré et avec le support du multi-page et du mode librairie.
+  - title: 🔩 Interface universelle de plugins
+    details: Interface de plugins basée sur Rollup et partagée entre développement et build.
+  - title: 🔑 APIs typées
+    details: APIs programmatiques flexibles avec définition TypeScript de tous les types.
+footer: Licence MIT | Copyright © 2019-aujourd’hui Evan You & les contributeurs à Vite
 ---
 
 <div class="frontpage sponsors">
@@ -35,7 +35,7 @@ footer: MIT Licensed | Copyright © 2019-present Evan You & Vite Contributors
       <img :src="src" :alt="name" :id="`sponsor-${id}`">
     </a>
   </div>
-  <a href="https://github.com/sponsors/yyx990803" target="_blank" rel="noopener">Become a sponsor on GitHub</a>
+  <a href="https://github.com/sponsors/yyx990803" target="_blank" rel="noopener">Devenez sponsor sur GitHub</a>
 </div>
 
 <script setup>
