@@ -1,31 +1,31 @@
 # Plugins
 
 :::tip NOTE
-Vite aims to provide out-of-the-box support for common web development patterns. Before searching for a Vite or Compatible Rollup plugin, check out the [Features Guide](../guide/features.md). A lot of the cases where a plugin would be needed in a Rollup project are already covered in Vite.
+Vite tente de supporter les patterns de développement web les plus courants sans qu’il n’y ait besoin de plugins. Avant de partir à la recherche d’un plugin Vite ou Rollup qui soit compatible, faites un tour sur le [guide des fonctionnalités](../guide/features.md). Souvent, les cas où un plugin serait nécessaire pour un projet Rollup sont déjà couverts par Vite.
 :::
 
-## Official Plugins
+## Plugins officiels
 
 ### [@vitejs/plugin-vue](https://github.com/vitejs/vite/tree/main/packages/plugin-vue)
 
-- Provides Vue 3 Single File Components support.
+- Permet le support des composants à fichier unique (_single file components_) pour Vue 3.
 
 ### [@vitejs/plugin-vue-jsx](https://github.com/vitejs/vite/tree/main/packages/plugin-vue-jsx)
 
-- Provides Vue 3 JSX support (via [dedicated Babel transform](https://github.com/vuejs/jsx-next)).
+- Permet le support du JSX pour Vue 3 (à l’aide des [transformations Babel dédiées](https://github.com/vuejs/jsx-next)).
 
 ### [@vitejs/plugin-react](https://github.com/vitejs/vite/tree/main/packages/plugin-react)
 
-- Provides all-in-one React Support.
+- Permet le support de React.
 
 ### [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy)
 
-- Provides legacy browsers support for the production build.
+- Permet le support des navigateurs anciens pour le build de production.
 
-## Community Plugins
+## Plugins de la communauté
 
-Check out [awesome-vite](https://github.com/vitejs/awesome-vite#plugins) - you can also submit a PR to list your plugins there.
+Allez voir du côté d’[awesome-vite](https://github.com/vitejs/awesome-vite#plugins) – vous pouvez également faire une PR pour ajouter vos plugins à la liste.
 
-## Rollup Plugins
+## Plugins Rollup
 
-[Vite plugins](../guide/api-plugin) are an extension of Rollup's plugin interface. Check out the [Rollup Plugin Compatibility section](../guide/api-plugin#rollup-plugin-compatibility) for more information.
+Les [plugins Vite](../guide/api-plugin) sont une extension de l’interface pour plugins de Rollup. Allez voir la [section Compatibilité des plugins Rollup](../guide/api-plugin#compatibilite-des-plugins-rollup) pour plus d’informations.
