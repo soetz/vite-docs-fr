@@ -2,7 +2,7 @@
 
 When it is time to deploy your app for production, simply run the `vite build` command. By default, it uses `<root>/index.html` as the build entry point, and produces an application bundle that is suitable to be served over a static hosting service. Check out the [Deploying a Static Site](./static-deploy) for guides about popular services.
 
-## Browser Compatibility
+## Compatibilité navigateur
 
 The production bundle assumes support for modern JavaScript. By default, Vite targets browsers which support the [native ESM script tag](https://caniuse.com/es6-module) and [native ESM dynamic import](https://caniuse.com/es6-module-dynamic-import). As a reference, Vite uses this [browserslist](https://github.com/browserslist/browserslist) query:
 
@@ -16,7 +16,7 @@ Note that by default, Vite only handles syntax transforms and **does not cover p
 
 Legacy browsers can be supported via [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy), which will automatically generate legacy chunks and corresponding ES language feature polyfills. The legacy chunks are conditionally loaded only in browsers that do not have native ESM support.
 
-## Public Base Path
+## Chemin public de base
 
 - Related: [Asset Handling](./assets)
 
@@ -95,7 +95,7 @@ module.exports = defineConfig({
 
 If you specify a different root, remember that `__dirname` will still be the folder of your vite.config.js file when resolving the input paths. Therefore, you will need to add your `root` entry to the arguments for `resolve`.
 
-## Library Mode
+## Mode librairie
 
 When you are developing a browser-oriented library, you are likely spending most of the time on a test/demo page that imports your actual library. With Vite, you can use your `index.html` for that purpose to get the smooth development experience.
 

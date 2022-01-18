@@ -66,7 +66,7 @@ import InlineWorker from './shader.js?worker&inline'
 
 Check out the [Web Worker section](./features.md#web-workers) for more details.
 
-## The `public` Directory
+## Le répertoire `public`
 
 If you have assets that are:
 

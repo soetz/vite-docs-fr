@@ -59,7 +59,7 @@ if (import.meta.env.SSR) {
 
 This is statically replaced during build so it will allow tree-shaking of unused branches.
 
-## Setting Up the Dev Server
+## Paramétrer le serveur de développement
 
 When building an SSR app, you likely want to have full control over your main server and decouple Vite from the production environment. It is therefore recommended to use Vite in middleware mode. Here is an example with [express](https://expressjs.com/):
 
@@ -208,7 +208,7 @@ In the production branch of `server.js` we need to read and pass the manifest to
 
 If the routes and the data needed for certain routes are known ahead of time, we can pre-render these routes into static HTML using the same logic as production SSR. This can also be considered a form of Static-Site Generation (SSG). See [demo pre-render script](https://github.com/vitejs/vite/blob/main/packages/playground/ssr-vue/prerender.js) for working example.
 
-## SSR Externals
+## Externalisation
 
 Many dependencies ship both ESM and CommonJS files. When running SSR, a dependency that provides CommonJS builds can be "externalized" from Vite's SSR transform / module system to speed up both dev and build. For example, instead of pulling in the pre-bundled ESM version of React and then transforming it back to be Node.js-compatible, it is more efficient to simply `require('react')` instead. It also greatly improves the speed of the SSR bundle build.
 

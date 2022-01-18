@@ -144,7 +144,7 @@ const pkg = require('../package.json')
           text: 'APIs',
           children: [
             {
-              text: 'API de plugin',
+              text: 'API pour plugin',
               link: '/guide/api-plugin'
             },
             {
