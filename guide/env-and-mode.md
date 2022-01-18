@@ -22,7 +22,7 @@ It will also replace these strings appearing in JavaScript strings and Vue templ
 
 - For Vue templates or other HTML that gets compiled into JavaScript strings, you can use the [`<wbr>` tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/wbr), e.g. `import.meta.<wbr>env.MODE`.
 
-## `.env` Files
+## Fichiers `.env`
 
 Vite uses [dotenv](https://github.com/motdotla/dotenv) to load additional environment variables from the following files in your [environment directory](/config/#envdir):
 

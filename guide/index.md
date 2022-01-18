@@ -97,7 +97,7 @@ If the project uses `main` as the default branch, suffix the project repo with `
 npx degit user/project#main my-project
 ```
 
-## `index.html` and Project Root
+## `index.html` et racine du projet
 
 One thing you may have noticed is that in a Vite project, `index.html` is front-and-central instead of being tucked away inside `public`. This is intentional: during development Vite is a server, and `index.html` is the entry point to your application.
 
