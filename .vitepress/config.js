@@ -87,7 +87,7 @@ const pkg = require('../package.json')
           text: 'Guide',
           children: [
             {
-              text: 'Pourquoi utiliser Vite',
+              text: 'Pourquoi utiliser Vite ?',
               link: '/guide/why'
             },
             {
