@@ -58,7 +58,7 @@ module.exports = defineConfig({
 })
 ```
 
-## Multi-Page App
+## Application multi-pages
 
 Suppose you have the following source code structure:
 
