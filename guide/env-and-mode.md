@@ -1,6 +1,6 @@
 # Env Variables and Modes
 
-## Env Variables
+## Variables d’environnement
 
 Vite exposes env variables on the special **`import.meta.env`** object. Some built-in variables are available in all cases:
 
