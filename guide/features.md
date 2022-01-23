@@ -18,7 +18,7 @@ Le code ci-dessus provoquerait une erreur dans le navigateur. Vite va détecter 
 
 **Les dépendances sont fortement mises en cache**
 
-Vite met les dépendances en cache à l’aide de headers HTTP, alors si vous souhaitez éditer ou débugger une dépendance localement, suivez les instructions se trouvant [ici](./dep-pre-bundling#cache-navigateur).
+Vite met les dépendances en cache à l’aide d’en-têtes HTTP, alors si vous souhaitez éditer ou débugger une dépendance localement, suivez les instructions se trouvant [ici](./dep-pre-bundling#cache-navigateur).
 
 ## Rafraîchissement des modules à la volée (_HMR_)
 
