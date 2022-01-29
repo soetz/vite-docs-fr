@@ -1,91 +1,91 @@
-# Static Asset Handling
+# Gestion des ressources statiques
 
-- Related: [Public Base Path](./build#public-base-path)
-- Related: [`assetsInclude` config option](/config/#assetsinclude)
+- Voir aussi : [Chemin public de base](./build#chemin-public-de-base)
+- Voir aussi : [option de configuration `assetsInclude`](/config/#assetsinclude)
 
-## Importing Asset as URL
+## Importer une ressource en tant qu’URL
 
-Importing a static asset will return the resolved public URL when it is served:
+Importer une ressource statique retournera l’URL publique résolue où elle est servie :
 
 ```js
 import imgUrl from './img.png'
 document.getElementById('hero-img').src = imgUrl
 ```
 
-For example, `imgUrl` will be `/img.png` during development, and become `/assets/img.2d8efhg.png` in the production build.
+Par exemple, `imgUrl` sera `/img.png` pendant le développement, et deviendra `/assets/img.2d8efhg.png` pour le build de production.
 
-The behavior is similar to webpack's `file-loader`. The difference is that the import can be either using absolute public paths (based on project root during dev) or relative paths.
+Le comportement est similaire au `file-loader` de webpack. La différence est que l’import peut utiliser au choix un chemin absolu (par rapport à la racine du projet pendant le développement) ou un chemin relatif.
 
-- `url()` references in CSS are handled the same way.
+- Les références `url()` dans le CSS sont traitées de la même façon.
 
-- If using the Vue plugin, asset references in Vue SFC templates are automatically converted into imports.
+- Si vous utilisez le plugin Vue, les références à des ressources dans le template d’un composant à fichier unique (_SFC_) sont convertis en imports.
 
-- Common image, media, and font filetypes are detected as assets automatically. You can extend the internal list using the [`assetsInclude` option](/config/#assetsinclude).
+- Les types de fichiers les plus courants pour les images, les medias, ou les polices de caractères sont détectés automatiquement comme étant des ressources. Vous pouvez étendre la liste interne avec l’[option `assetsInclude`](/config/#assetsinclude).
 
-- Referenced assets are included as part of the build assets graph, will get hashed file names, and can be processed by plugins for optimization.
+- Les ressources référencées sont incluses au graphe des ressources du build, se voient assigner un nom de fichier haché, et peuvent être transformées par des plugins d’optimisation.
 
-- Assets smaller in bytes than the [`assetsInlineLimit` option](/config/#build-assetsinlinelimit) will be inlined as base64 data URLs.
+- Les ressources plus petites (en octets) que l’[option `assetsInlineLimit`](/config/#build-assetsinlinelimit) seront mises inline comme URLs de données base64.
 
-### Explicit URL Imports
+### Imports URL explicites
 
-Assets that are not included in the internal list or in `assetsInclude`, can be explicitly imported as an URL using the `?url` suffix. This is useful, for example, to import [Houdini Paint Worklets](https://houdini.how/usage).
+Les ressources qui ne sont pas incluses dans la liste interne ou dans `assetsInclude` peuvent être importées en tant qu’URL explicitement en utilisant le suffixe `?url`. C’est utile pour importer des [paint worklets Houdini](https://houdini.how/usage), par exemple.
 
 ```js
 import workletURL from 'extra-scalloped-border/worklet.js?url'
 CSS.paintWorklet.addModule(workletURL)
 ```
 
-### Importing Asset as String
+### Importer une ressource en tant que chaîne de caractères
 
-Assets can be imported as strings using the `?raw` suffix.
+Les ressources peuvent être importées en tant que chaînes de caractères à l’aide du suffixe `?raw`.
 
 ```js
 import shaderString from './shader.glsl?raw'
 ```
 
-### Importing Script as a Worker
+### Importer un script en tant que worker
 
-Scripts can be imported as web workers with the `?worker` or `?sharedworker` suffix.
+Les scripts peuvent être importés en tant que web workers à l’aide des suffixes `?worker` et `?sharedworker`.
 
 ```js
-// Separate chunk in the production build
+// il sera inclut à un morceau (chunk) différent pour le build de production
 import Worker from './shader.js?worker'
 const worker = new Worker()
 ```
 
 ```js
-// sharedworker
+// worker partagé
 import SharedWorker from './shader.js?sharedworker'
 const sharedWorker = new SharedWorker()
 ```
 
 ```js
-// Inlined as base64 strings
+// mis inline en chaînes de caractères base64
 import InlineWorker from './shader.js?worker&inline'
 ```
 
-Check out the [Web Worker section](./features.md#web-workers) for more details.
+Lisez la [section Web workers](./features.md#web-workers) pour plus de détails.
 
 ## Le répertoire `public`
 
-If you have assets that are:
+Si vous avez des ressources :
 
-- Never referenced in source code (e.g. `robots.txt`)
-- Must retain the exact same file name (without hashing)
-- ...or you simply don't want to have to import an asset first just to get its URL
+- qui ne sont jamais référencées dans le code source (par exemple `robots.txt`),
+- qui doivent garder exactement le même nom de fichier (sans hachage),
+- … ou tout simplement que vous ne voulez pas avoir à importer pour accéder à leur URL,
 
-Then you can place the asset in a special `public` directory under your project root. Assets in this directory will be served at root path `/` during dev, and copied to the root of the dist directory as-is.
+alors vous pouvez les placer dans le répertoire spécial `public` à la racine de votre projet. Les ressources dans ce répertoire seront servies à la racine `/` pendant le développement, et copiées à la racine du répertoire dist telles quelles lors du build.
 
-The directory defaults to `<root>/public`, but can be configured via the [`publicDir` option](/config/#publicdir).
+Le répertoire par défaut est `<root>/public`, mais cela peut-être modifié à l’aide de l’[option `publicDir`](/config/#publicdir).
 
-Note that:
+Notez que :
 
-- You should always reference `public` assets using root absolute path - for example, `public/icon.png` should be referenced in source code as `/icon.png`.
-- Assets in `public` cannot be imported from JavaScript.
+- Vous devriez toujours référencer les ressources de `public` avec des chemins absolus. Par exemple, `public/icon.png` devrait être référencé dans le code source en tant que `/icon.png`.
+- Les ressources de `public` ne peuvent pas être importées dans le JavaScript.
 
 ## new URL(url, import.meta.url)
 
-[import.meta.url](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import.meta) is a native ESM feature that exposes the current module's URL. Combining it with the native [URL constructor](https://developer.mozilla.org/en-US/docs/Web/API/URL), we can obtain the full, resolved URL of a static asset using relative path from a JavaScript module:
+[import.meta.url](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Statements/import.meta) est une fonctionnalité native des modules ES qui expose l’URL du module courant. En la combinant avec le [constructeur de l’interface URL](https://developer.mozilla.org/fr/docs/Web/API/URL) native, on peut obtenir l’URL complète et résolue d’une ressource statique en utilisant un chemin relatif depuis un module JavaScript :
 
 ```js
 const imgUrl = new URL('./img.png', import.meta.url).href
@@ -93,9 +93,9 @@ const imgUrl = new URL('./img.png', import.meta.url).href
 document.getElementById('hero-img').src = imgUrl
 ```
 
-This works natively in modern browsers - in fact, Vite doesn't need to process this code at all during development!
+Cela fonctionne nativement avec les navigateurs modernes — en fait, Vite n’a pas du tout besoin de traiter ce code pour le développement !
 
-This pattern also supports dynamic URLs via template literals:
+Ce pattern fonctionne aussi avec une URL dynamique usant d’un littéral de gabarit (_template literal_) :
 
 ```js
 function getImageUrl(name) {
@@ -103,8 +103,8 @@ function getImageUrl(name) {
 }
 ```
 
-During the production build, Vite will perform necessary transforms so that the URLs still point to the correct location even after bundling and asset hashing.
+Pendant le build de production, Vite fera les transformations nécessaires pour que les URLs pointent toujours au bon endroit même après le bundling et le hachage des ressources.
 
-::: warning Note: Does not work with SSR
-This pattern does not work if you are using Vite for Server-Side Rendering, because `import.meta.url` have different semantics in browsers vs. Node.js. The server bundle also cannot determine the client host URL ahead of time.
+::: warning Note : Ne fonctionne pas avec le rendu côté serveur (SSR)
+Ce pattern ne fonctionnera pas si vous utilisez Vite pour du rendu côté serveur, parce qu’`import.meta.url` a une sémantique différente dans le navigateur et dans Node.js. Le bundle serveur ne peut de toute façon pas déterminer l’URL cliente en amont.
 :::

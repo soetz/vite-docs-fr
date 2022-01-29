@@ -52,4 +52,4 @@ Bien qu’`esbuild` soit très rapide et soit déjà capable de bundler des libr
 
 ## En quoi Vite diffère-t-il de … ?
 
-Vous pouvez vous rendre à la [section comparaisons](./comparisons) pour plus de détails sur la façon dont Vite diffère des autres outils similaires.
+Vous pouvez vous rendre à la [section Comparaisons](./comparisons) pour plus de détails sur la façon dont Vite diffère des autres outils similaires.
