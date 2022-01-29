@@ -76,7 +76,7 @@ Si vous avez des ressources :
 
 alors vous pouvez les placer dans le répertoire spécial `public` à la racine de votre projet. Les ressources dans ce répertoire seront servies à la racine `/` pendant le développement, et copiées à la racine du répertoire dist telles quelles lors du build.
 
-Le répertoire par défaut est `<root>/public`, mais cela peut-être modifié à l’aide de l’[option `publicDir`](/config/#publicdir).
+Le répertoire par défaut est `<racine>/public`, mais cela peut-être modifié à l’aide de l’[option `publicDir`](/config/#publicdir).
 
 Notez que :
 
