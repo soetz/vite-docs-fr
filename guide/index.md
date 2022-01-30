@@ -91,7 +91,7 @@ npm install
 npm run dev
 ```
 
-Si le projet utilise la branche `main` comme branche par défaut, ajoutez `#main` au nom du repo
+Si le projet utilise la branche `main` comme branche par défaut, ajoutez `#main` au nom du dépôt
 
 ```bash
 npx degit user/project#main my-project
@@ -131,7 +131,7 @@ Des options de ligne de commande supplémentaires comme `--port` ou `--https` so
 
 ## Utiliser des commits inédits
 
-Si vous voulez tester les dernières fonctionnalités sans attendre de nouvelle version, vous devrez cloner le [repo vite](https://github.com/vitejs/vite) sur votre machine, le builder et le lier (_link_) vous-même ([pnpm](https://pnpm.io/) doit être installé) :
+Si vous voulez tester les dernières fonctionnalités sans attendre de nouvelle version, vous devrez cloner le [dépôt vite](https://github.com/vitejs/vite) sur votre machine, le builder et le lier (_link_) vous-même ([pnpm](https://pnpm.io/) doit être installé) :
 
 ```bash
 git clone https://github.com/vitejs/vite.git

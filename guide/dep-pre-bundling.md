@@ -38,7 +38,7 @@ Après que le serveur ait démarré, si un nouvel import de dépendance est renc
 
 ## Monorepos et dépendances liées
 
-Dans une configuration monorepo, une dépendance peut être un package lié du même repo. Vite détecte automatiquement les dépendances qui ne sont pas résolues depuis `node_modules` et les traite comme du code source. Il n’essaiera pas de bundler la dépendance liée, et analysera sa liste de dépendances à la place.
+Dans une configuration monorepo, une dépendance peut être un package lié du même dépôt. Vite détecte automatiquement les dépendances qui ne sont pas résolues depuis `node_modules` et les traite comme du code source. Il n’essaiera pas de bundler la dépendance liée, et analysera sa liste de dépendances à la place.
 
 ::: warning Note
 Les dépendances liées peuvent ne pas fonctionner correctement dans le build final à cause de différences dans la façon de résoudre les dépendances.

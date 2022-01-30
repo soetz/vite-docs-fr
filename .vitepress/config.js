@@ -127,7 +127,7 @@ const pkg = require('../package.json')
               link: '/guide/ssr'
             },
             {
-              text: 'Intégration du backend',
+              text: 'Intégration du back-end',
               link: '/guide/backend-integration'
             },
             {

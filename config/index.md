@@ -761,7 +761,7 @@ export default defineConfig(async ({ command, mode }) => {
 
 - **Type :** `boolean`
 - **Valeur par défaut :** `false`
-- **Voir aussi :** [Intégration du backend](/guide/backend-integration)
+- **Voir aussi :** [Intégration du back-end](/guide/backend-integration)
 
   Quand cette option est à `true`, le build générera également un fichier `manifest.json` contenant un mapping entre les noms de fichiers de ressources non-hashés et leurs versions hashées, qui peut ensuite être utilisé par un framework serveur afin de rendre les bons liens de ressources.
 
