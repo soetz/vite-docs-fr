@@ -268,9 +268,9 @@ Vous pouvez aussi déployer sur un [domaine personnalisé](http://surge.sh/help/
 
 ## Vercel
 
-Pour déployer votre application Vite à l’aide de [Vercel for Git](https://vercel.com/docs/git), assurez-vous qu’il a été poussé sur un dépôt Git.
+Pour déployer votre application Vite à l’aide de [Vercel for Git](https://vercel.com/docs/git), assurez-vous qu’il a été poussé sur un dépôt git.
 
-Allez sur https://vercel.com/import/git et importez le projet dans Vercel en utilisant le Git de votre choix (GitHub, GitLab ou BitBucket). Suivez les instructions et sélectionnez la racine du projet avec le `package.json` et remplacez le build par `npm run build` et le répertoire de sortie par `./dist`
+Allez sur https://vercel.com/import/git et importez le projet dans Vercel en utilisant le git de votre choix (GitHub, GitLab ou BitBucket). Suivez les instructions et sélectionnez la racine du projet avec le `package.json` et remplacez le build par `npm run build` et le répertoire de sortie par `./dist`
 
 ![Override Vercel Configuration](../images/vercel-configuration.png)
 
