@@ -18,7 +18,7 @@ Les guides suivants partent du principe que les affirmations suivantes sont vrai
 Il est important de noter que `vite preview` est fait pour prévisualiser le build localement et pas pour être un serveur de production.
 
 ::: tip NOTE
-Ces guides fournissent des instructions pour effectuer un déploiement statique de votre site Vite. Vite propose également un support expérimental du rendu côté serveur (_server side rendering_). Le rendu côté serveur correspond aux frameworks front-end qui peuvent exécuter une application dans Node.js, en la pré-rendant en HTML, et qui l’« hydratent » côté client. Allez voir le [guide du rendu côté serveur](./ssr) pour en savoir plus sur cette fonctionnalité. Autrement, si vous souhaitez intégrer votre application à un framework côté serveur classique, allez plutôt voir le [guide d’intégration du back-end](./backend-integration).
+Ces guides fournissent des instructions pour effectuer un déploiement statique de votre site Vite. Vite propose également un support expérimental du rendu côté serveur (_server side rendering_). Le rendu côté serveur fait référence aux frameworks front-end qui supportent le fait d’exécuter une application dans Node.js, qui font un pré-rendu en HTML, et qui l’« hydratent » côté client en bout de course. Allez voir le [guide du rendu côté serveur](./ssr) pour en savoir plus sur cette fonctionnalité. Autrement, si vous souhaitez intégrer votre application à un framework côté serveur classique, allez plutôt voir le [guide d’intégration du back-end](./backend-integration).
 :::
 
 ## Builder l’application
