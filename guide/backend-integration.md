@@ -1,45 +1,45 @@
-# Backend Integration
+# Intégration du back-end
 
 :::tip Note
-If you want to serve the HTML using a traditional backend (e.g. Rails, Laravel) but use Vite for serving assets, check for existing integrations listed in [Awesome Vite](https://github.com/vitejs/awesome-vite#integrations-with-backends).
+Si vous souhaitez servir le HTML à l’aide d’un back-end traditionnel (par exemple Rails ou Laravel) mais utiliser Vite pour servir les ressources, allez voir les intégrations listées par [Awesome Vite](https://github.com/vitejs/awesome-vite#integrations-with-backends).
 
-If you need a custom integration, you can follow the steps in this guide to configure it manually
+Si vous avez besoin d’une intégration particulière, vous pouvez suivre ce guide pour la configurer manuellement.
 :::
 
-1. In your Vite config, configure the entry and enable build manifest:
+1. Dans votre configuration Vite, configurez l’entrée et activez le manifeste de build :
 
    ```js
    // vite.config.js
    export default defineConfig({
      build: {
-       // generate manifest.json in outDir
+       // génère le manifest.json dans outDir
        manifest: true,
        rollupOptions: {
-         // overwrite default .html entry
+         // remplace l’entrée .html par défaut
          input: '/path/to/main.js'
        }
      }
    })
    ```
 
-   If you haven't disabled the [module preload polyfill](/config/#build-polyfillmodulepreload), you also need to import the polyfill in your entry
+   Si vous n’avez pas désactivé le [polyfill de module preload](/config/#build-polyfillmodulepreload), vous devrez aussi l’importer dans votre entrée
 
    ```js
-   // add the beginning of your app entry
+   // ajoutez au début de votre entrée d’application
    import 'vite/modulepreload-polyfill'
    ```
 
-2. For development, inject the following in your server's HTML template (substitute `http://localhost:3000` with the local URL Vite is running at):
+2. Pour le développement, injectez ce qui suit dans le template HTML de votre serveur (remplacez `http://localhost:3000` par l’URL locale sur laquelle Vite est exposé) :
 
    ```html
-   <!-- if development -->
+   <!-- si en mode développement -->
    <script type="module" src="http://localhost:3000/@vite/client"></script>
    <script type="module" src="http://localhost:3000/main.js"></script>
    ```
 
-   Also make sure the server is configured to serve static assets in the Vite working directory, otherwise assets such as images won't be loaded properly.
+   Assurez-vous également que le serveur soit configuré pour servir les ressources statiques du répertoire de Vite, sinon les ressources comme les images ne seront pas chargées correctement.
 
-   Note if you are using React with `@vitejs/plugin-react`, you'll also need to add this before the above scripts, since the plugin is not able to modify the HTML you are serving:
+   Notez que si vous utilisez React avec `@vitejs/plugin-react`, vous devrez aussi ajouter ceci avant le script ci-dessus, puisque le plugin ne peut pas modifier le HTML que vous servez :
 
    ```html
    <script type="module">
@@ -51,7 +51,7 @@ If you need a custom integration, you can follow the steps in this guide to conf
    </script>
    ```
 
-3. For production: after running `vite build`, a `manifest.json` file will be generated alongside other asset files. An example manifest file looks like this:
+3. Pour la production : après que vous ayez lancé `vite build`, un fichier `manifest.json` sera généré en plus des autres fichiers de ressources. Un fichier de manifeste ressemble à ceci :
 
    ```json
    {
@@ -75,15 +75,15 @@ If you need a custom integration, you can follow the steps in this guide to conf
    }
    ```
 
-   - The manifest has a `Record<name, chunk>` structure
-   - For entry or dynamic entry chunks, the key is the relative src path from project root.
-   - For non entry chunks, the key is the base name of the generated file prefixed with `_`.
-   - Chunks will contain information on its static and dynamic imports (both are keys that maps to the corresponding chunk in the manifest), and also its corresponding CSS and asset files (if any).
+   - Le manifeste a une structure au format `Record<nom, morceau>`.
+   - Pour les morceaux (_chunks_) d’entrée, la clé est le chemin relatif du src depuis la racine projet.
+   - Pour les morceaux qui ne sont pas d’entrée, la clé est le nom de base du fichier généré préfixé par `_`.
+   - Les morceaux contiendront des informations sur leurs imports statiques et dynamiques (les deux sont des clés qui renvoient vers le morceau correspondant dans le manifeste), et aussi sur le CSS qui leur est associé (s’il y en a).
 
-   You can use this file to render links or preload directives with hashed filenames (note: the syntax here is for explanation only, substitute with your server templating language):
+   Vous pouvez utiliser ce fichier pour rendre des liens ou des directives de pré-chargement (_preload directives_) de fichiers hachés (note : la syntaxe ci-dessous est pour l’exemple, remplacez-la par votre langage de templating côté serveur) :
 
    ```html
-   <!-- if production -->
+   <!-- si en mode production -->
    <link rel="stylesheet" href="/assets/{{ manifest['main.js'].css }}" />
    <script type="module" src="/assets/{{ manifest['main.js'].file }}"></script>
    ```
