@@ -1,49 +1,49 @@
-# Comparisons with Other No-Bundler Solutions
+# Comparaisons avec d’autres solutions no-bundler
 
 ## Snowpack
 
-[Snowpack](https://www.snowpack.dev/) is also a no-bundle native ESM dev server that is very similar in scope to Vite. Aside from different implementation details, the two projects share a lot in terms of technical advantages over traditional tooling. Vite's dependency pre-bundling is also inspired by Snowpack v1 (now [`esinstall`](https://github.com/snowpackjs/snowpack/tree/main/esinstall)). Some of the main differences between the two projects are:
+[Snowpack](https://www.snowpack.dev/) est aussi un serveur de développement no-bundle reposant sur les bundles ES natifs qui est très similaire à Vite en termes de périmètre. En dehors des détails d’implémentation qui diffèrent, les deux projets ont beaucoup en commun en termes d’avantages techniques par rapport au tooling traditionnel. Le pré-bundling des dépendances de Vite est aussi inspiré de Snowpack v1 (qui est devenu [`esinstall`](https://github.com/snowpackjs/snowpack/tree/main/esinstall)). Les plus grosses différences entre les deux projets sont :
 
-**Production Build**
+**Build de production**
 
-Snowpack's default build output is unbundled: it transforms each file into separate built modules, which can then be fed into different "optimizers" that perform the actual bundling. The benefit of this is that you can choose between different end-bundlers to fit specific needs (e.g. webpack, Rollup, or even esbuild), the downside is that it's a bit of a fragmented experience - for example, the esbuild optimizer is still unstable, the Rollup optimizer is not officially maintained, and different optimizers have different output and configurations.
+La sortie de build par défaut de Snowpack n’est pas un bundle : il transforme chaque fichier en plusieurs modules buildés, qui peuvent ensuite être passés à différents « optimisateurs » (_"optimizers"_) qui s’occupent du bundling. L’intérêt est que vous pouvez choisir entre différents bundlers finaux pour répondre à des besoins spécifiques (par exemple, webpack, Rollup, et même esbuild), et le côté pervers est que l’expérience est relativement fragmentée — par exemple, l’optimisateur esbuild est toujours instable, l’optimisateur Rollup n’est pas maintenu officiellement, et différents optimisateurs ne rendent pas la même chose en sortie et ne sont pas configurés de la même façon.
 
-Vite opts to have a deeper integration with one single bundler (Rollup) in order to provide a more streamlined experience. It also allows Vite to support a [Universal Plugin API](./api-plugin) that works for both dev and build.
+Vite choisit d’avoir une intégration plus poussée d’un seul bundler (Rollup) afin de fournir une expérience plus structurée. Cela permet aussi à Vite de proposer une [API universelle pour plugin](./api-plugin) qui fonctionne à la fois pour le développement et pour le build.
 
-Due to a more integrated build process, Vite supports a wide range of features that are currently not available in Snowpack build optimizers:
+Grâce au process de build plus intégré, Vite supporte quelques fonctionnalités qui ne sont pour l’instant pas disponibles avec les optimisateurs de build de Snowpack :
 
-- [Multi-Page Support](./build#multi-page-app)
-- [Library Mode](./build#library-mode)
-- [Automatic CSS code-splitting](./features#css-code-splitting)
-- [Optimized async chunk loading](./features#async-chunk-loading-optimization)
-- Official [legacy mode plugin](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) that generates dual modern/legacy bundles and auto delivers the right bundle based on browser support.
+- [Support du multi-pages](./build#application-multi-pages)
+- [Mode librairie](./build#mode-librairie)
+- [Fractionnement (_code splitting_) automatique du CSS](./features#fractionnement-code-splitting-du-css)
+- [Optimisation du chargement des morceaux (_chunks_) asynchrones](./features#optimisation-du-chargement-des-morceaux-asynchrones)
+- [Plugin legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) officiel qui génère deux bundles (un pour les navigateurs récents et un pour les navigateurs anciens) et livre automatiquement le bon bundle suivant le support navigateur.
 
-**Faster Dependency Pre-Bundling**
+**Pré-bundling des dépendances plus rapide**
 
-Vite uses [esbuild](https://esbuild.github.io/) instead of Rollup for dependency pre-bundling. This results in significant performance improvements in terms of cold server start and re-bundling on dependency invalidations.
+Vite utilise [esbuild](https://esbuild.github.io/) plutôt que Rollup pour le pré-bundling des dépendances. Cela permet d’importantes améliorations en termes de performance au niveau du démarrage du serveur à froid et du re-bundling des dépendances invalidées.
 
-**Monorepo Support**
+**Support du monorepo**
 
-Vite is designed to handle monorepo setups and we have users successfully using it with Yarn, Yarn 2, and PNPM based monorepos.
+Vite est fait pour permettre de manipuler des configurations monorepo et nous avons des utilisateurs qui ont réussi à l’utiliser pour des monorepos basés sur Yarn, Yarn 2 et PNPM.
 
-**CSS Pre-Processor Support**
+**Support des préprocesseurs CSS**
 
-Vite provides more refined support for Sass and Less, including improved `@import` resolution (aliases and npm dependencies) and [automatic `url()` rebasing for inlined files](./features#import-inlining-and-rebasing).
+Vite fournit un support plus fin de Sass et de Less, avec une meilleure résolution des `@import` (alias et dépendances npm) et la [réécriture automatique des `url()` des fichiers mis inline](./features#mise-inline-et-reecriture-de-la-base-pour-import).
 
-**First Class Vue Support**
+**Support de première classe pour Vue**
 
-Vite was initially created to serve as the future foundation of [Vue.js](https://vuejs.org/) tooling. Although as of 2.0 Vite is now fully framework-agnostic, the official Vue plugin still provides first-class support for Vue's Single File Component format, covering all advanced features such as template asset reference resolving, `<script setup>`, `<style module>`, custom blocks and more. In addition, Vite provides fine-grained HMR for Vue SFCs. For example, updating the `<template>` or `<style>` of an SFC will perform hot updates without resetting its state.
+Vite a été créé à l’origine pour être la fondation du futur du tooling [Vue.js](https://vuejs.org/). Même si depuis la 2.0 Vite n’est lié à aucun framework en particulier, le plugin officiel Vue fournit toujours un support de première classe aux composants à fichier unique (_Single File Component_) de Vue, et supporte toutes les fonctionnalités avancées comme la résolution des références de ressources, `<script setup>`, `<style module>`, les blocs custom et plus encore. De plus, Vite gère finement le remplacements des modules à la volée pour les composants à fichier unique. Par exemple, modifier le `<template>` ou le `<style>` d’un composant à fichier unique enclenchera le remplacement à la volée sans remettre son état à zéro.
 
 ## WMR
 
-[WMR](https://github.com/preactjs/wmr) by the Preact team provides a similar feature set, and Vite 2.0's support for Rollup's plugin interface is inspired by it.
+[WMR](https://github.com/preactjs/wmr) de l’équipe Preact propose des fonctionnalités similaires, et le support de l’interface pour plugin de Rollup par Vite en est inspiré.
 
-WMR is mainly designed for [Preact](https://preactjs.com/) projects, and offers more integrated features such as pre-rendering. In terms of scope, it's closer to a Preact meta framework, with the same emphasis on compact size as Preact itself. If you are using Preact, WMR is likely going to offer a more fine-tuned experience.
+WMR est surtout fait pour les projets [Preact](https://preactjs.com/), et propose des fonctionnalités plus intégrées, comme le pré-rendu. En termes de périmètre, il est plus proche d’un meta-framework Preact, avec le même accent sur l’idée de rester compact que Preact lui-même. Si vous utilisez Preact, WMR a de bonnes chances de vous offrir une expérience plus adaptée.
 
 ## @web/dev-server
 
-[@web/dev-server](https://modern-web.dev/docs/dev-server/overview/) (previously `es-dev-server`) is a great project and Vite 1.0's Koa-based server setup was inspired by it.
+[@web/dev-server](https://modern-web.dev/docs/dev-server/overview/) (autrefois `es-dev-server`) est un bon projet et le serveur basé sur Koa de Vite 1.0 en est inspiré.
 
-`@web/dev-server` is a bit lower-level in terms of scope. It does not provide official framework integrations, and requires manually setting up a Rollup configuration for the production build.
+`@web/dev-server` est un peu plus bas-niveau en termes de périmètre. Il ne fournit pas d’intégrations officielles pour les frameworks, et requiert de configurer manuellement Rollup pour le build de production.
 
-Overall, Vite is a more opinionated / higher-level tool that aims to provide a more out-of-the-box workflow. That said, the `@web` umbrella project contains many other excellent tools that may benefit Vite users as well.
+De manière générale, Vite est un outil plus _opinionated_ / haut-niveau et vise à fournir des comportements par défaut qui conviennent la plupart du temps. Ceci étant dit, le projet `@web` contient beaucoup d’autres outils qui sont excellents et qui peuvent aussi être utiles pour les utilisateurs de Vite.
