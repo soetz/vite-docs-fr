@@ -32,7 +32,7 @@ Vite fournit un support plus fin de Sass et de Less, avec une meilleure résolut
 
 **Support de première classe pour Vue**
 
-Vite a été créé à l’origine pour être la fondation du futur du tooling [Vue.js](https://vuejs.org/). Même si depuis la 2.0 Vite n’est lié à aucun framework en particulier, le plugin officiel Vue fournit toujours un support de première classe aux composants à fichier unique (_Single File Component_) de Vue, et supporte toutes les fonctionnalités avancées comme la résolution des références de ressources, `<script setup>`, `<style module>`, les blocs custom et plus encore. De plus, Vite gère finement le remplacements des modules à la volée pour les composants à fichier unique. Par exemple, modifier le `<template>` ou le `<style>` d’un composant à fichier unique enclenchera le remplacement à la volée sans remettre son état à zéro.
+Vite a été créé à l’origine pour être la fondation du futur du tooling [Vue.js](https://vuejs.org/). Même si depuis la 2.0 Vite n’est lié à aucun framework en particulier, le plugin officiel Vue fournit toujours un support de première classe aux composants à fichier unique (_Single File Component_) de Vue, et supporte toutes les fonctionnalités avancées comme la résolution des références de ressources, `<script setup>`, `<style module>`, les blocs custom et plus encore. De plus, Vite gère finement le remplacements des modules à la volée (_HMR_) pour les composants à fichier unique. Par exemple, modifier le `<template>` ou le `<style>` d’un composant à fichier unique enclenchera le remplacement à la volée sans remettre son état à zéro.
 
 ## WMR
 
