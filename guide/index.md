@@ -44,7 +44,7 @@ Vite requiert [Node.js](https://nodejs.org/en/) avec une version ⩾ 12.2.0. Cec
 Avec NPM :
 
 ```bash
-$ npm init vite@latest
+$ npm create vite@latest
 ```
 
 Avec Yarn :
@@ -65,10 +65,10 @@ Vous pouvez également spécifier directement le nom du projet et le template qu
 
 ```bash
 # npm 6.x
-npm init vite@latest my-vue-app --template vue
+npm create vite@latest my-vue-app --template vue
 
 # pour npm à partir de la v7, un double-tiret supplémentaire est nécessaire :
-npm init vite@latest my-vue-app -- --template vue
+npm create vite@latest my-vue-app -- --template vue
 
 # yarn
 yarn create vite my-vue-app --template vue

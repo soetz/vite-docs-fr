@@ -268,15 +268,28 @@ Vous pouvez aussi déployer sur un [domaine personnalisé](http://surge.sh/help/
 
 ## Vercel
 
-Pour déployer votre application Vite à l’aide de [Vercel for Git](https://vercel.com/docs/git), assurez-vous qu’il a été poussé sur un dépôt git.
+### Vercel CLI
 
-Allez sur https://vercel.com/import/git et importez le projet dans Vercel en utilisant le git de votre choix (GitHub, GitLab ou BitBucket). Suivez les instructions et sélectionnez la racine du projet avec le `package.json` et remplacez le build par `npm run build` et le répertoire de sortie par `./dist`
+1. Installez [Vercel CLI](https://vercel.com/cli) et lancez `vercel` pour déployer.
+2. Vercel détectera que vous utilisez Vite et utilisera les bons paramètres pour votre déploiement.
+3. Votre application est déployée ! (par exemple [vite-vue-template.vercel.app](https://vite-vue-template.vercel.app/))
 
-![Override Vercel Configuration](../images/vercel-configuration.png)
+```bash
+$ npm i -g vercel
+$ vercel init vite
+Vercel CLI
+> Success! Initialized "vite" example in ~/your-folder.
+- To deploy, `cd vite` and run `vercel`.
+```
 
-Après que votre projet ait été importé, chaque fois que vous pousserez sur une branche, un déploiement de prévisualisation sera généré, et chaque modification sur la branche de production (le plus souvent « main ») occasionnera un déploiement de production.
+### Vercel for Git
 
-Une fois déployée, une URL vous permettant de voir votre application comme la suivante vous sera fournie : https://vite.vercel.app
+1. Poussez votre code sur le dépôt git (GitHub, GitLab, BitBucket).
+2. [Importez votre projet Vite](https://vercel.com/new) dans Vercel.
+3. Vercel détectera que vous utilisez Vite et utilisera les bons paramètres pour votre déploiement.
+4. Votre application est déployée ! (par exemple [vite-vue-template.vercel.app](https://vite-vue-template.vercel.app/))
+
+Après que votre projet ait été importé et déployé, chaque fois que vous pousserez, un [déploiement de prévisualisation](https://vercel.com/docs/concepts/deployments/environments#preview) sera généré, et tous les changements faits sur la branche de production (le plus souvent « main ») donneront lieu à [déploiement de production](https://vercel.com/docs/concepts/deployments/environments#production).
 
 ## Azure Static Web Apps
 

@@ -191,13 +191,13 @@ Ceci étant dit, Vite fournit le support pour les fichiers `.scss`, `.sass`, `.l
 
 ```bash
 # .scss et .sass
-npm install -D sass
+npm add -D sass
 
 # .less
-npm install -D less
+npm add -D less
 
 # .styl et .stylus
-npm install -D stylus
+npm add -D stylus
 ```
 
 Si vous utilisez les composants à fichier unique de Vue, cela permet automatiquement l’utilisation de `<style lang="sass">` et compagnie.
