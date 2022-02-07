@@ -1,23 +1,24 @@
-# JavaScript API
+# API JavaScript
 
-Vite's JavaScript APIs are fully typed, and it's recommended to use TypeScript or enable JS type checking in VSCode to leverage the intellisense and validation.
+Les APIs JavaScript de Vite sont complétement typées, et il est recommandé d’utiliser TypeScript ou d’activer la vérification des types JS dans VSCode pour profiter d’IntelliSense et de la validation.
 
 ## `createServer`
 
-**Type Signature:**
+**Signature de type :**
 
 ```ts
 async function createServer(inlineConfig?: InlineConfig): Promise<ViteDevServer>
 ```
 
-**Example Usage:**
+**Exemple d’utilisation :**
 
 ```js
 const { createServer } = require('vite')
 
 ;(async () => {
   const server = await createServer({
-    // any valid user config options, plus `mode` and `configFile`
+    // n’importe quelles options de configuration valides, ainsi que `mode` et
+    // `configFile`
     configFile: false,
     root: __dirname,
     server: {
@@ -32,86 +33,91 @@ const { createServer } = require('vite')
 
 ## `InlineConfig`
 
-The `InlineConfig` interface extends `UserConfig` with additional properties:
+L’interface `InlineConfig` étend `UserConfig` avec des propriétés supplémentaires :
 
-- `configFile`: specify config file to use. If not set, Vite will try to automatically resolve one from project root. Set to `false` to disable auto resolving.
-- `envFile`: Set to `false` to disable `.env` files.
+- `configFile` : spécifie le fichier de configuration à utiliser. S’il n’est pas fourni, Vite essaiera de le résoudre depuis la racine projet. Définissez-la à `false` pour désactiver la résolution automatique.
+- `envFile` : définissez-la à `false` pour désactiver la prise en charge des fichiers `.env`.
 
 ## `ViteDevServer`
 
 ```ts
 interface ViteDevServer {
   /**
-   * The resolved Vite config object.
+   * L’objet de configuration Vite résolu.
    */
   config: ResolvedConfig
   /**
-   * A connect app instance
-   * - Can be used to attach custom middlewares to the dev server.
-   * - Can also be used as the handler function of a custom http server
-   *   or as a middleware in any connect-style Node.js frameworks.
+   * Une instance d’application connect,
+   * - peut être utilisée pour attacher des middlewares custom au serveur de
+   *   développement.
+   * - peut aussi être utilisée comme fonction handler d’un serveur HTTP custom
+   *   ou comme middleware d’un framework Node.js de style connect.
    *
    * https://github.com/senchalabs/connect#use-middleware
    */
   middlewares: Connect.Server
   /**
-   * Native Node http server instance.
-   * Will be null in middleware mode.
+   * Instance native du serveur HTTP Node.
+   * Sera null en mode middleware.
    */
   httpServer: http.Server | null
   /**
-   * Chokidar watcher instance.
+   * Instance du watcher Chokidar.
    * https://github.com/paulmillr/chokidar#api
    */
   watcher: FSWatcher
   /**
-   * Web socket server with `send(payload)` method.
+   * Serveur web socket avec une méthode `send(payload)`.
    */
   ws: WebSocketServer
   /**
-   * Rollup plugin container that can run plugin hooks on a given file.
+   * Conteneur de plugin Rollup qui peut lancer des hooks de plugins pour un
+   * fichier donné.
    */
   pluginContainer: PluginContainer
   /**
-   * Module graph that tracks the import relationships, url to file mapping
-   * and hmr state.
+   * Le graphe des modules stockant les relations d’import, les correspondances
+   * entre URLs et fichiers, et l’état du remplacement des modules à la volée.
    */
   moduleGraph: ModuleGraph
   /**
-   * Programmatically resolve, load and transform a URL and get the result
-   * without going through the http request pipeline.
+   * Résoudre, charger et transformer programmatiquement une URL et recevoir le
+   * résultat sans passer par la pipeline de requête HTTP.
    */
   transformRequest(
     url: string,
     options?: TransformOptions
   ): Promise<TransformResult | null>
   /**
-   * Apply Vite built-in HTML transforms and any plugin HTML transforms.
+   * Appliquer les transformations du HTML internes à Vite ainsi que les
+   * transformations HTML des plugins.
    */
   transformIndexHtml(url: string, html: string): Promise<string>
   /**
-   * Load a given URL as an instantiated module for SSR.
+   * Charger une URL donnée en tant que module instancié pour le rendu côté
+   * serveur.
    */
   ssrLoadModule(
     url: string,
     options?: { isolated?: boolean }
   ): Promise<Record<string, any>>
   /**
-   * Fix ssr error stacktrace.
+   * Corriger la stacktrace des erreurs en rendu côté serveur.
    */
   ssrFixStacktrace(e: Error): void
   /**
-   * Start the server.
+   * Démarrer le serveur.
    */
   listen(port?: number, isRestart?: boolean): Promise<ViteDevServer>
   /**
-   * Restart the server.
+   * Relancer le serveur.
    *
-   * @param forceOptimize - force the optimizer to re-bundle, same as --force cli flag
+   * @param forceOptimize - force l’optimisateur à refaire le bundling, à la
+   * façon du signal --force de l’interface en ligne de commande
    */
   restart(forceOptimize?: boolean): Promise<void>
   /**
-   * Stop the server.
+   * Arrête le serveur.
    */
   close(): Promise<void>
 }
@@ -119,7 +125,7 @@ interface ViteDevServer {
 
 ## `build`
 
-**Type Signature:**
+**Signature de type :**
 
 ```ts
 async function build(
@@ -127,7 +133,7 @@ async function build(
 ): Promise<RollupOutput | RollupOutput[]>
 ```
 
-**Example Usage:**
+**Exemple d’utilisation :**
 
 ```js
 const path = require('path')
@@ -148,22 +154,23 @@ const { build } = require('vite')
 
 ## `preview`
 
-**Experimental**
+**Expérimental**
 
-**Type Signature:**
+**Signature de type :**
 
 ```ts
 async function preview(inlineConfig?: InlineConfig): Promise<PreviewServer>
 ```
 
-**Example Usage:**
+**Exemple d’utilisation :**
 
 ```js
 const { preview } = require('vite')
 
 ;(async () => {
   const previewServer = await preview({
-    // any valid user config options, plus `mode` and `configFile`
+    // n’importe quelles options de configuration valides, ainsi que `mode` et
+    // `configFile`
     preview: {
       port: 8080,
       open: true
@@ -176,7 +183,7 @@ const { preview } = require('vite')
 
 ## `resolveConfig`
 
-**Type Signature:**
+**Signature de type :**
 
 ```ts
 async function resolveConfig(
@@ -186,11 +193,11 @@ async function resolveConfig(
 ): Promise<ResolvedConfig>
 ```
 
-The `command` value is `serve` in dev (in the cli `vite`, `vite dev`, and `vite serve` are aliases).
+La valeur de `command` est `serve` en développement (dans l’interface en ligne de commande, `vite`, `vite dev`, et `vite serve` sont des alias).
 
 ## `transformWithEsbuild`
 
-**Type Signature:**
+**Signature de type :**
 
 ```ts
 async function transformWithEsbuild(
