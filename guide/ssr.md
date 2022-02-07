@@ -102,7 +102,7 @@ Ici, `vite` est une instance de [ViteDevServer](./api-javascript#vitedevserver).
 L’étape suivante consiste à implémenter le code servant le HTML rendu par le serveur sur `*` :
 
 ```js
-app.use('*', async (req, res) => {
+app.use('*', async (req, res, next) => {
   const url = req.originalUrl
 
   try {
@@ -140,8 +140,7 @@ app.use('*', async (req, res) => {
     // Si une erreur est signalée, on laisse Vite réécrire la stacktrace afin
     // que l’erreur pointe bien sur le code source problématique.
     vite.ssrFixStacktrace(e)
-    console.error(e)
-    res.status(500).end(e.message)
+    next(e)
   }
 })
 ```

@@ -83,7 +83,7 @@ interface ImportMeta {
 
 ## Modes
 
-Par défaut, le serveur de développement (commande `dev`) exécute Vite en mode `development` et les commandes `build` et `serve` en mode `production`.
+Par défaut, le serveur de développement (commande `dev`) exécute Vite en mode `development` et la commande `build` en mode `production`.
 
 Cela signifie que lorsque vous lancez `vite build`, les variables d’environnement de `.env.production` seront chargées si ce fichier existe :
 

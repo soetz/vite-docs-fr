@@ -27,6 +27,14 @@ Vous pouvez également spécifier explicitement l’emplacement de votre fichier
 vite --config my-config.js
 ```
 
+Notez que Vite remplacera `__filename`, `__dirname`, et `import.meta.url`. Les utiliser comme noms pour des variables provoquera une erreur :
+
+```js
+const __filename = "value"
+// sera transformé en
+const "path/vite.config.js" = "value"
+```
+
 ### Configuration d’IntelliSense
 
 Puisque des typages TypeScript sont fournis avec Vite, vous pouvez profiter de l’IntelliSense de votre IDE à l’aide des indices de types (_type hints_) JSDoc :
@@ -158,7 +166,7 @@ export default defineConfig(async ({ command, mode }) => {
 - **Type :** `string | false`
 - **Valeur par défaut :** `"public"`
 
-  Répertoire d’où servir les ressources statiques. Les fichiers de ce répertoires sont servis à `/` pendant le développement et copiés à la racine de `outDir` pendant le build, et ils sont toujours servis ou copiés tel quels sans aucune transformation. La valeur peut être soit un chemin absolu sur tout le système de fichiers, soit un chemin relatif à la racine du projet.
+  Répertoire d’où servir les ressources statiques. Les fichiers de ce répertoires sont servis à `/` pendant le développement et copiés à la racine de `outDir` pendant le build, et ils sont toujours servis ou copiés tels quels sans aucune transformation. La valeur peut être soit un chemin absolu sur tout le système de fichiers, soit un chemin relatif à la racine du projet. La valeur par défaut est `.vite` quand aucun package.json n’est détecté.
 
   Définir `publicDir` à `false` désactive cette fonctionnalité.
 
@@ -173,9 +181,9 @@ export default defineConfig(async ({ command, mode }) => {
 
 ### resolve.alias
 
-- **Type :** `Record<string, string> | Array<{ find: string | RegExp, replacement: string }>`
+- **Type :** `Record<string, string> | Array<{ find: string | RegExp, replacement: string, customResolver?: ResolverFunction | ResolverObject }>`
 
-  Sera passé à `@rollup/plugin-alias` via son [option `entries`](https://github.com/rollup/plugins/tree/master/packages/alias#entries). Cela peut être soit un objet, soit un array de paires `{ trouve, remplace }`.
+  Sera passé à `@rollup/plugin-alias` via son [option `entries`](https://github.com/rollup/plugins/tree/master/packages/alias#entries). Cela peut être soit un objet, soit un array de paires `{ trouve, remplace, résolveurCustom }`.
 
   Utilisez toujours des chemins absolus lorsque vous définissez des alias de chemin vers le système de fichiers. Les alias relatifs seront utilisés tel quels et ne seront pas résolus en tant que chemins du système de fichiers.
 
@@ -473,6 +481,11 @@ export default defineConfig(async ({ command, mode }) => {
           configure: (proxy, options) => {
             // proxy sera une instance de `http-proxy`
           }
+        },
+        // proxifier websockets ou socket.io
+        '/socket.io': {
+          target: 'ws://localhost:3000',
+          ws: true
         }
       }
     }
@@ -583,7 +596,9 @@ export default defineConfig(async ({ command, mode }) => {
   Par défaut, Vite cherchera successivement dans les dossiers parents de la [racine du projet](/guide/#index-html-et-racine-du-projet) un éventuel espace de travail (_workspace_) et l’utilisera pour savoir ce qu’il peut servir ou non. Un espace de travail valide remplit l’une des conditions suivantes, et si aucun espace de travail n’est trouvé Vite se rabattra sur la racine du projet.
 
   - un fichier `package.json` contenu dans le dossier comporte un champ `workspaces` 
-  - le dossier contient un fichier `pnpm-workspace.yaml`
+  - le dossier contient l’un des fichiers suivants :
+    - `lerna.json` 
+    - `pnpm-workspace.yaml`
 
   Cette option accepte un chemin spécifiant la racine d’un espace de travail personnalisé. Cela peut être un chemin absolu ou un chemin relatif à la [racine du projet](/guide/#index-html-et-racine-du-projet). Par exemple :
 
@@ -846,7 +861,7 @@ export default defineConfig(async ({ command, mode }) => {
 ### preview.port
 
 - **Type :** `number`
-- **Valeur par défaut :** `5000`
+- **Valeur par défaut :** `4173`
 
   Spécifie le port serveur. Notez que si le port est déjà utilisé, Vite utilisera automatiquement le prochain port disponible, alors il est possible que ce ne soit pas le port sur lequel le serveur écoute in fine.
 

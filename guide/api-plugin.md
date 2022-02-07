@@ -36,9 +36,7 @@ Si votre plugin ne fonctionne qu’avec un framework en particulier, son nom doi
 - `vite-plugin-react-` pour les plugins React
 - `vite-plugin-svelte-` pour les plugins Svelte
 
-La convention de Vite pour les modules virtuels est de préfixer le chemin visible par l’utilisateur par `virtual:`. Si possible le nom du plugin devrait être utilisé comme un namespace pour éviter d’entrer en conflit avec les autres plugins de l’écosystème. Par exemple, `vite-plugin-posts` pourrait demander aux utilisateurs d’importer un module virtuel `virtual:posts` ou `virtual:posts/helpers` pour obtenir des informations au moment du build. En interne, les plugins qui utilisent des modules virtuels doivent préfixer l’identifiant par `\0` lorsqu’ils résolvent l’identifiant (c’est une convention de l’écosystème Rollup). Cela évite que d’autres plugins essayent de traiter le même identifiant (comme la résolution des nœuds), et les fonctionnalités intégrées à Vite comme les sourcemaps peuvent se servir de cette information pour différencier les modules virtuels des fichiers classiques. `\0` n’est pas un caractère autorisé dans les URLs d’import alors nous devons le remplacer pendant l’analyse de l’import. Dans le navigateur, un identifiant virtuel `\0{id}` sera encodé sous la forme `/@id/__x00__{id}` pour le développement. Cet identifiant sera à nouveau décodé avant d’entrer dans la pipeline de plugins, alors cette mécanique n’est pas visible par les hooks de plugins.
-
-Notez que les modules directement tirés d’un vrai fichier, comme c’est le cas d’un module de script dans un composant à fichier unique (_SFC_) (un composant à fichier unique .vue ou .svelte par exemple) n’ont pas besoin de suivre cette convention. Les composants à fichier unique génèrent en général une série de sous-modules lorsqu’ils sont traités mais le code de ceux-ci peut-être relié au système de fichiers. Utiliser `\0` pour ces sous-modules empêcherait les sourcemaps de fonctionner correctement.
+Voir aussi la [convention pour les modules virtuels](#convention-pour-les-modules-virtuels).
 
 ## Configuration des plugins
 
@@ -84,7 +82,34 @@ export default defineConfig({
 C’est une convention répandue de créer des plugins Vite/Rollup à l’aide d’une fonction fabrique (_factory_) qui retourne l’objet plugin. La fonction peut accepter des options qui permettent aux utilisateurs de configurer le comportement du plugin.
 :::
 
+### Transformer les types de fichiers custom
+
+```js
+const fileRegex = /\.(my-file-ext)$/
+
+export default function myPlugin() {
+  return {
+    name: 'transform-file',
+
+    transform(src, id) {
+      if (fileRegex.test(id)) {
+        return {
+          code: compileFileToJS(src),
+          map: null // fournissez une sourcemap si possible
+        }
+      }
+    }
+  }
+}
+```
+
 ### Importer un fichier virtuel
+
+Voir l’exemple de la [section suivante](#convention-pour-les-modules-virtuels).
+
+## Convention pour les modules virtuels
+
+Les modules virtuels sont un procédé utile qui permet de passer des informations aux fichiers source au moment du build avec une syntaxe d’import de module ES normale.
 
 ```js
 export default function myPlugin() {
@@ -116,26 +141,9 @@ import { msg } from '@my-virtual-module'
 console.log(msg)
 ```
 
-### Transformer les types de fichiers custom
+La convention de Vite pour les modules virtuels est de préfixer le chemin visible par l’utilisateur par `virtual:`. Si possible le nom du plugin devrait être utilisé comme un namespace pour éviter d’entrer en conflit avec les autres plugins de l’écosystème. Par exemple, `vite-plugin-posts` pourrait demander aux utilisateurs d’importer un module virtuel `virtual:posts` ou `virtual:posts/helpers` pour obtenir des informations au moment du build. En interne, les plugins qui utilisent des modules virtuels doivent préfixer l’identifiant par `\0` lorsqu’ils résolvent l’identifiant (c’est une convention de l’écosystème Rollup). Cela évite que d’autres plugins essayent de traiter le même identifiant (comme la résolution des nœuds), et les fonctionnalités intégrées à Vite comme les sourcemaps peuvent se servir de cette information pour différencier les modules virtuels des fichiers classiques. `\0` n’est pas un caractère autorisé dans les URLs d’import alors nous devons le remplacer pendant l’analyse de l’import. Dans le navigateur, un identifiant virtuel `\0{id}` sera encodé sous la forme `/@id/__x00__{id}` pour le développement. Cet identifiant sera à nouveau décodé avant d’entrer dans la pipeline de plugins, alors cette mécanique n’est pas visible par les hooks de plugins.
 
-```js
-const fileRegex = /\.(my-file-ext)$/
-
-export default function myPlugin() {
-  return {
-    name: 'transform-file',
-
-    transform(src, id) {
-      if (fileRegex.test(id)) {
-        return {
-          code: compileFileToJS(src),
-          map: null // fournissez une sourcemap si possible
-        }
-      }
-    }
-  }
-}
-```
+Notez que les modules directement tirés d’un vrai fichier, comme c’est le cas d’un module de script dans un composant à fichier unique (_SFC_) (un composant à fichier unique .vue ou .svelte par exemple) n’ont pas besoin de suivre cette convention. Les composants à fichier unique génèrent en général une série de sous-modules lorsqu’ils sont traités mais le code de ceux-ci peut-être relié au système de fichiers. Utiliser `\0` pour ces sous-modules empêcherait les sourcemaps de fonctionner correctement.
 
 ## Hooks universels
 
