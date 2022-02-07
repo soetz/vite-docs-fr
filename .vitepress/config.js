@@ -148,7 +148,7 @@ const pkg = require('../package.json')
               link: '/guide/api-plugin'
             },
             {
-              text: 'API du rafraîchissement des modules (HMR)',
+              text: 'API du rafraîchissement des modules à la volée (HMR)',
               link: '/guide/api-hmr'
             },
             {
