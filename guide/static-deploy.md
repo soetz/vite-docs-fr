@@ -40,7 +40,7 @@ $ npm run build
 $ npm run preview
 ```
 
-La commande `vite preview` va démarrer un serveur web statique local qui sert les fichiers du dossier `dist` sur `http://localhost:5000`. C’est un moyen facile de vérifier que le build de production fonctionne en local.
+La commande `vite preview` va démarrer un serveur web statique local qui sert les fichiers du dossier `dist` sur `http://localhost:4173`. C’est un moyen facile de vérifier que le build de production fonctionne en local.
 
 Vous pouvez configurer le port du serveur en passant l’option `--port` comme argument.
 
