@@ -165,12 +165,27 @@ Vous pouvez aussi lancer le script ci-dessus dans votre configuration CI pour d�
 
 ## Netlify
 
-1. Sur [Netlify](https://netlify.com), installez un nouveau projet depuis GitHub avec les paramètres suivants :
+1. Installez l’[interface en ligne de commande de Netlify](https://cli.netlify.com/).
+2. Créez un nouveau site avec `ntl init`.
+3. Déployez avec `ntl deploy`.
 
-   - **Commande de build (_Build Command_) :** `vite build` ou `npm run build`
-   - **Dossier de publication (_Publish directory_) :** `dist`
+```bash
+# Installer l’interface en ligne de commande de Netlify
+$ npm install -g netlify-cli
 
-2. Cliquez sur le bouton déployer.
+# Créer un nouveau site sur Netlify
+$ ntl init
+
+# Déployer sur une URL de pré-visualisation unique
+$ ntl deploy
+```
+
+L’interface en ligne de commande Netlify vous donnera une URL de pré-visualisation pour que vous puissiez vérifier le résultat. Lorsque vous êtes prêt(e) à mettre en production, utilisez le signal `prod` :
+
+```bash
+# Déployer le site en production
+$ ntl deploy --prod
+```
 
 ## Google Firebase
 
