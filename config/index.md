@@ -135,7 +135,7 @@ export default defineConfig(async ({ command, mode }) => {
 
   Définit des constantes globales. Les valeurs saisies seront définies comme des variables globales en développement et remplacées statiquement pendant le build.
 
-  - Depuis la version `2.0.0-beta.70`, les chaînes de caractères sont utilisées comme des expressions brutes, donc si vous définissez une chaîne de caractères constante, elle doit être explicitement mise entre quotes (avec `JSON.stringify` par exemple).
+  - Depuis la version `2.0.0-beta.70`, les chaînes de caractères sont utilisées comme des expressions brutes, donc si vous définissez une chaîne de caractères constante, elle doit être explicitement mise entre crochets (avec `JSON.stringify` par exemple).
 
   - Les remplacements sont faits seulement lorsque la correspondance est entourée par des délimiteurs de mots (`\b`).
 
@@ -595,9 +595,9 @@ export default defineConfig(async ({ command, mode }) => {
 
   Par défaut, Vite cherchera successivement dans les dossiers parents de la [racine du projet](/guide/#index-html-et-racine-du-projet) un éventuel espace de travail (_workspace_) et l’utilisera pour savoir ce qu’il peut servir ou non. Un espace de travail valide remplit l’une des conditions suivantes, et si aucun espace de travail n’est trouvé Vite se rabattra sur la racine du projet.
 
-  - un fichier `package.json` contenu dans le dossier comporte un champ `workspaces` 
+  - un fichier `package.json` contenu dans le dossier comporte un champ `workspaces`
   - le dossier contient l’un des fichiers suivants :
-    - `lerna.json` 
+    - `lerna.json`
     - `pnpm-workspace.yaml`
 
   Cette option accepte un chemin spécifiant la racine d’un espace de travail personnalisé. Cela peut être un chemin absolu ou un chemin relatif à la [racine du projet](/guide/#index-html-et-racine-du-projet). Par exemple :
