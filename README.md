@@ -20,7 +20,7 @@
 - ⚡️ Rafraîchissement ultra-rapide
 - 🛠️ Riche en fonctionnalités
 - 📦 Compilations optimisée
-- 🔩 Interface plugin universelle
+- 🔩 Interface de plugins universelle
 - 🔑 APIs typées
 
 Vite (prononcé comme en français) est un outil de compilation frontend d’un nouveau genre qui améliore grandement l’expérience de développement. Il se compose de deux parties :
