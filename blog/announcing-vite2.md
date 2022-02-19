@@ -46,7 +46,7 @@ Vite réserve un traitement de faveur à CSS et supporte les fonctionnalités su
 
 ### Support du rendu côté serveur (_SSR_)
 
-Vite 2.0 est livré avec le [support expérimental du rendu côté serveur](https://vitejs.dev/guide/ssr.html). Vite fournit des APIs afin de charger et de mettre à jour efficacement le code source ESM en Node.js pendant le développement (presque comme du rafraîchissement de modules à la volée côté serveur), et externalise automatiquement les dépendances compatibles avec CommonJS pour accélérer la vitesse de la compilation. Le serveur de production peut être complètement découplé de Vite, et le même setup peut être facilement adapté pour permettre le pré-rendu / la génération statique (_SSG_).
+Vite 2.0 est livré avec le [support expérimental du rendu côté serveur](https://vitejs.dev/guide/ssr.html). Vite fournit des APIs afin de charger et de mettre à jour efficacement le code source ESM en Node.js pendant le développement (presque comme du rafraîchissement de modules à la volée côté serveur), et externalise automatiquement les dépendances compatibles avec CommonJS pour rendre la compilation plus rapide. Le serveur de production peut être complètement découplé de Vite, et le même setup peut être facilement adapté pour permettre le pré-rendu / la génération statique (_SSG_).
 
 Le rendu côté serveur de Vite est proposé comme une fonctionnalité bas-niveau, et nous nous attendons à ce que des frameworks plus haut-niveau s’appuient dessus.
 
