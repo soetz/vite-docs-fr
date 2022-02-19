@@ -683,7 +683,7 @@ export default defineConfig(async ({ command, mode }) => {
 
   Définit si le [polyfill de module preload](https://guybedford.com/es-module-preloading-integrity#modulepreload-polyfill) doit être injecté automatiquement.
 
-  Si cette option est définie à `true`, le polyfill est automatiquement injecté au module proxy de chaque entrée `index.html`. Si la compilation est configuré pour utiliser une entrée spécifique non-HTML à l’aide de `build.rollupOptions.input`, alors il faut importer manuellement le polyfill dans ladite entrée :
+  Si cette option est définie à `true`, le polyfill est automatiquement injecté au module proxy de chaque entrée `index.html`. Si la compilation est configurée pour utiliser une entrée spécifique non-HTML à l’aide de `build.rollupOptions.input`, alors il faut importer manuellement le polyfill dans ladite entrée :
 
   ```js
   import 'vite/modulepreload-polyfill'
