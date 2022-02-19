@@ -122,7 +122,8 @@ Dans un projet dans lequel Vite est installé, vous pouvez utiliser le binaire `
     "dev": "vite", // démarre le serveur de développement
                    // alias : `vite dev`, `vite serve`
     "build": "vite build",    // effectue la compilation de production
-    "preview": "vite preview" // prévisualise la compilation de production en local
+    "preview": "vite preview" // prévisualise la compilation de production
+                              // en local
   }
 }
 ```
