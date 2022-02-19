@@ -12,7 +12,7 @@
 
 - Les [options en lien avec le CSS](/config/#css-modules) sont désormais regroupées sous `css`.
 
-- Toutes les [options spécifiques au build](/config/#options-du-build) sont désormais regroupées sous `build`.
+- Toutes les [options spécifiques à la compilation](/config/#options-de-compilation) sont désormais regroupées sous `build`.
 
   - `rollupInputOptions` et `rollupOutputOptions` sont remplacées par [`build.rollupOptions`](/config/#build-rollupoptions).
   - `esbuildTarget` est désormais [`build.target`](/config/#build-target).
@@ -98,7 +98,7 @@ Le support de React Fast Refresh est désormais assuré par [`@vitejs/plugin-rea
 
 ## Changements du format du manifeste
 
-Le manifeste du build utilise désormais le format suivant :
+Le manifeste de compilation utilise désormais le format suivant :
 
 ```json
 {

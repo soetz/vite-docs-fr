@@ -12,7 +12,7 @@ Vite a pour but de régler ces problèmes en s’appuyant sur les dernières ava
 
 ### Démarrage lent du serveur
 
-Lorsque vous démarrez le serveur de développement à froid, si votre configuration de build est basée sur un bundler, il doit rapidement crawler puis builder toute votre application avant qu’elle ne puisse être servie.
+Lorsque vous démarrez le serveur de développement à froid, si votre configuration de compilation est basée sur un bundler, il doit rapidement crawler puis compiler toute votre application avant qu’elle ne puisse être servie.
 
 Vite raccourcit la durée du démarrage du serveur en divisant d’abord les modules d’une application en deux catégories : les **dépendances** et le **code source**.
 
@@ -30,7 +30,7 @@ Vite raccourcit la durée du démarrage du serveur en divisant d’abord les mod
 
 ### Rafraîchissement lent
 
-Quand un fichier est édité dans le contexte d’une configuration de build basée sur un bundler, il est inefficace de refaire le build de zéro, pour des raisons évidentes : la durée de rafraîchissement va augmenter linéairement en fonction de la taille de l’application.
+Quand un fichier est édité dans le contexte d’une configuration de compilation basée sur un bundler, il est inefficace de refaire la compilation de zéro, pour des raisons évidentes : la durée de rafraîchissement va augmenter linéairement en fonction de la taille de l’application.
 
 Certains serveurs de développement de bundlers gardent leurs opérations en mémoire, et peuvent ainsi invalider seulement une certaine partie du graphe des modules lorsqu’un fichier est modifié, mais il y a toujours besoin de reconstruire l’intégralité du bundle et de recharger la page web. Reconstruire le bundle est coûteux, et recharger la page ne permet pas de conserver l’état de l’application. C’est la raison pour laquelle certains bundlers supportent le remplacement de modules à la volée (_hot module replacement_ ou _HMR_) : cela permet de rafraîchir un module « à chaud », sans affecter le reste de la page. Cela améliore grandement l’expérience de développement – cependant, en pratique nous avons remarqué que même la vitesse des mises à jour à la volée se détériore nettement en fonction de la taille de l’application.
 
@@ -44,11 +44,11 @@ Une fois que vous aurez vu à quel point Vite est rapide, nous doutons fortement
 
 Même si les modules ES natifs sont désormais largement supportés, les utiliser en production sans bundling reste inefficace (même avec HTTP/2) à cause des allers-retours causés par les imports imbriqués. Pour obtenir une meilleure performance de chargement en production, il reste plus efficace de bundler votre code en éliminant le code inutile (_tree-shaking_), en usant du chargement opportun (_lazy loading_) et du fractionnement en morceaux (_common chunk splitting_) (qui permet de favoriser la mise en cache).
 
-Il n’est pas simple de concilier le fait de rendre un build optimisé et d’assurer que le comportement en développement et en production soit cohérent. C’est la raison pour laquelle Vite fournit une [commande de build](./build) qui inclut d’origine de nombreuses [optimisations de performance](./features#optimisations-du-build).
+Il n’est pas simple de concilier le fait de rendre une compilation optimisée et d’assurer que le comportement en développement et en production soit cohérent. C’est la raison pour laquelle Vite fournit une [commande de compilation](./build) qui inclut d’origine de nombreuses [optimisations de performance](./features#optimisations-de-la-compilation).
 
 ## Pourquoi ne pas utiliser esbuild pour le bundle ?
 
-Bien qu’`esbuild` soit très rapide et soit déjà capable de bundler des librairies, certaines fonctionnalités nécessaires pour le bundle d’_applications_ sont toujours en cours de développement — en particulier le fractionnement du code et la gestion du CSS. Pour le moment, Rollup est plus mature et flexible à ces égards. Ceci dit, nous n’excluons pas d’utiliser `esbuild` pour le build de production une fois que ces sujets seront traités.
+Bien qu’`esbuild` soit très rapide et soit déjà capable de bundler des librairies, certaines fonctionnalités nécessaires pour le bundle d’_applications_ sont toujours en cours de développement — en particulier le fractionnement du code et la gestion du CSS. Pour le moment, Rollup est plus mature et flexible à ces égards. Ceci dit, nous n’excluons pas d’utiliser `esbuild` pour la compilation de production une fois que ces sujets seront traités.
 
 ## En quoi Vite diffère-t-il de … ?
 

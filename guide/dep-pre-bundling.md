@@ -26,7 +26,7 @@ Pre-bundling them to speed up dev server page load...
 
 2. **La performance :** Vite convertit les dépendances ESM ayant beaucoup de modules internes en un module unique pour améliorer la performance de chargement.
 
-   Certains packages fournissent leurs builds en modules ES sous la forme de plein de fichiers différents qui s’importent les uns les autres. Par exemple, [`lodash-es` a plus de 600 modules internes](https://unpkg.com/browse/lodash-es/) ! Lorsque l’on écrit `import { debounce } from 'lodash-es'`, le navigateur doit effectuer plus de 600 requêtes HTTP en même temps ! Même si le serveur peut les supporter, le grand nombre de requêtes crée un embouteillage du côté du navigateur, ce qui rend le chargement de la page nettement plus lent.
+   Certains packages fournissent leurs modules compilés sous format ES en plein de fichiers différents qui s’importent les uns les autres. Par exemple, [`lodash-es` a plus de 600 modules internes](https://unpkg.com/browse/lodash-es/) ! Lorsque l’on écrit `import { debounce } from 'lodash-es'`, le navigateur doit effectuer plus de 600 requêtes HTTP en même temps ! Même si le serveur peut les supporter, le grand nombre de requêtes crée un embouteillage du côté du navigateur, ce qui rend le chargement de la page nettement plus lent.
 
    En pré-bundlant `lodash-es` en un unique module, il n’y a plus besoin que d’une requête HTTP !
 
@@ -41,8 +41,8 @@ Après que le serveur ait démarré, si un nouvel import de dépendance est renc
 Dans une configuration monorepo, une dépendance peut être un package lié du même dépôt. Vite détecte automatiquement les dépendances qui ne sont pas résolues depuis `node_modules` et les traite comme du code source. Il n’essaiera pas de bundler la dépendance liée, et analysera sa liste de dépendances à la place.
 
 ::: warning Note
-Les dépendances liées peuvent ne pas fonctionner correctement dans le build final à cause de différences dans la façon de résoudre les dépendances.
-Utilisez plutôt `npm package` pour toutes les dépendances locales pour éviter d’avoir des problèmes dans le build final.
+Les dépendances liées peuvent ne pas fonctionner correctement dans la compilation final à cause de différences dans la façon de résoudre les dépendances.
+Utilisez plutôt `npm package` pour toutes les dépendances locales pour éviter d’avoir des problèmes dans la compilation finale.
 :::
 
 ## Modifier le comportement

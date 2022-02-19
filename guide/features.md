@@ -30,7 +30,7 @@ Notez que vous n’aurez normalement pas besoin de les configurer manuellement �
 
 Vite supporte l’import de fichiers `.ts` par défaut.
 
-Vite ne fait que transpiler les fichiers `.ts` et n’effectue **AUCUNE** vérification des types (_type checking_). Il part du principe que c’est votre IDE et votre process de build qui prennent en charge la vérification des types (vous pouvez lancer `tsc --noEmit` dans le script de build ou installer `vue-tsc` et lancer `vue-tsc --noEmit` pour effectuer la vérification des types de vos fichiers `*.vue`).
+Vite ne fait que transpiler les fichiers `.ts` et n’effectue **AUCUNE** vérification des types (_type checking_). Il part du principe que c’est votre IDE et votre process de compilation qui prennent en charge la vérification des types (vous pouvez lancer `tsc --noEmit` dans le script de compilation ou installer `vue-tsc` et lancer `vue-tsc --noEmit` pour effectuer la vérification des types de vos fichiers `*.vue`).
 
 Vite utilise [esbuild](https://github.com/evanw/esbuild) pour transpiler le TypeScript en JavaScript, ce qui est environ 20 à 30 fois plus rapide qu’avec `tsc`, et les remplacements de modules peuvent être faits en moins de 50 ms.
 
@@ -66,7 +66,7 @@ La plupart des librairies présument que `"useDefineForClassFields": true`, comm
 
 Mais certaines d’entre elles n’ont pas encore fait la transition, comme [`lit-element`](https://github.com/lit/lit-element/issues/1030). Définissez explicitement `useDefineForClassFields` à `false` dans ces cas-là.
 
-#### Autres options du compilateur qui affectent le résultat du build
+#### Autres options du compilateur qui affectent le résultat de la compilation
 
 - [`extends`](https://www.typescriptlang.org/tsconfig#extends)
 - [`importsNotUsedAsValues`](https://www.typescriptlang.org/tsconfig#importsNotUsedAsValues)
@@ -236,7 +236,7 @@ import Worker from './worker.js?worker'
 
 ```js
 // charge un web worker qui est mis inline en chaîne de caractères base64 au
-// moment du build
+// moment de la compilation
 import InlineWorker from './worker.js?worker&inline'
 ```
 
@@ -282,7 +282,7 @@ for (const path in modules) {
 }
 ```
 
-Les fichiers correspondants sont chargés de manière opportune (_lazy loaded_) à l’aide de l’import dynamique et seront séparés en différents morceaux (_chunks_) durant le build. Si vous préférez importer tous les modules directement (par exemple si vous avez besoin que des effets secondaires (_side-effects_) de ces modules soient d’abord appliqués), vous pouvez utiliser plutôt `import.meta.globEager` :
+Les fichiers correspondants sont chargés de manière opportune (_lazy loaded_) à l’aide de l’import dynamique et seront séparés en différents morceaux (_chunks_) durant la compilation. Si vous préférez importer tous les modules directement (par exemple si vous avez besoin que des effets secondaires (_side-effects_) de ces modules soient d’abord appliqués), vous pouvez utiliser plutôt `import.meta.globEager` :
 
 ```js
 const modules = import.meta.globEager('./dir/*.js')
@@ -334,7 +334,7 @@ init({
 })
 ```
 
-Dans le build de production, les fichiers `.wasm` qui sont plus petits que `assetInlineLimit` seront mis inline en tant que chaînes de caractères base64. Sinon, ils seront copiés dans le dossier dist comme des ressources et seront récupérés à la demande.
+Dans la compilation de production, les fichiers `.wasm` qui sont plus petits que `assetInlineLimit` seront mis inline en tant que chaînes de caractères base64. Sinon, ils seront copiés dans le dossier dist comme des ressources et seront récupérés à la demande.
 
 ## Web workers
 
@@ -346,17 +346,17 @@ import MyWorker from './worker?worker'
 const worker = new MyWorker()
 ```
 
-Le script de worker peut aussi être une déclaration `import` plutôt qu’`importScripts()` — notez que durant le développement cela repose sur le support natif et ne fonctionne actuellement qu’avec Chrome, mais pour le build de production il sera compilé.
+Le script de worker peut aussi être une déclaration `import` plutôt qu’`importScripts()` — notez que durant le développement cela repose sur le support natif et ne fonctionne actuellement qu’avec Chrome, mais pour la compilation de production il sera compilé.
 
-Par défaut, le script du worker sera émis dans un morceau (_chunk_) différent dans le build de production. Si vous souhaitez mettre le worker inline dans des chaînes de caractères base64, ajoutez l’instruction `inline` :
+Par défaut, le script du worker sera émis dans un morceau (_chunk_) différent dans la compilation de production. Si vous souhaitez mettre le worker inline dans des chaînes de caractères base64, ajoutez l’instruction `inline` :
 
 ```js
 import MyWorker from './worker?worker&inline'
 ```
 
-## Optimisations du build
+## Optimisations de la compilation
 
-> Les fonctionnalités ci-dessous sont appliquées automatiquement lors du process de build et il n’y a pas besoin de les configurer explicitement, à moins que vous ne vouliez les désactiver.
+> Les fonctionnalités ci-dessous sont appliquées automatiquement lors du process de compilation et il n’y a pas besoin de les configurer explicitement, à moins que vous ne vouliez les désactiver.
 
 ### Fractionnement (_code splitting_) du CSS
 

@@ -154,12 +154,12 @@ Le script `dev` de `package.json` devrait également être modifié pour plutôt
   }
 ```
 
-## Build de production
+## Compilation de production
 
 Pour mettre en production un projet usant du rendu côté serveur, on doit :
 
-1. Produire un build client normal, et
-2. Produire un build de rendu côté serveur, qui peut être chargé directement par `require()` afin que l’on n’ait pas besoin de repasser dans le `ssrLoadModule` de Vite.
+1. Produire une compilation client normal, et
+2. Produire une compilation de rendu côté serveur, qui peut être chargé directement par `require()` afin que l’on n’ait pas besoin de repasser dans le `ssrLoadModule` de Vite.
 
 Les scripts de `package.json` ressembleront à ça :
 
@@ -173,13 +173,13 @@ Les scripts de `package.json` ressembleront à ça :
 }
 ```
 
-Notez que le signal `--ssr` indique qu’il s’agit d’un build de rendu côté serveur. Il devrait également indiquer l’entrée de rendu côté serveur.
+Notez que le signal `--ssr` indique qu’il s’agit d’une compilation de rendu côté serveur. Il devrait également indiquer l’entrée de rendu côté serveur.
 
 Ensuite, dans `server.js`, on doit ajouter de la logique spécifique à la production en se référant à `process.env.NODE_ENV` :
 
-- Au lieu de lire le `index.html` racine, utilisez plutôt `dist/client/index.html` comme template, puisqu’il contient les bons liens vers les ressources pour le build client.
+- Au lieu de lire le `index.html` racine, utilisez plutôt `dist/client/index.html` comme template, puisqu’il contient les bons liens vers les ressources pour la compilation client.
 
-- Au lieu d’`await vite.ssrLoadModule('/src/entry-server.js')`, utilisez plutôt `require('./dist/server/entry-server.js')` (ce fichier est le résultat du build de rendu côté serveur).
+- Au lieu d’`await vite.ssrLoadModule('/src/entry-server.js')`, utilisez plutôt `require('./dist/server/entry-server.js')` (ce fichier est le résultat de la compilation de rendu côté serveur).
 
 - Déplacez la création et tous les usages du serveur du développement `vite` derrière des branches conditionnelles spécifiques au développement, et ajoutez des middlewares servant les fichiers statiques de `dist/client`.
 
@@ -187,14 +187,14 @@ Référez-vous aux démonstrations pour [Vue](https://github.com/vitejs/vite/tre
 
 ## Générer les directives de pré-chargement (_preload directives_)
 
-`vite build` supporte le signal `--ssrManifest` qui générera un fichier `ssr-manifest.json` dans le répertoire de sortie du build :
+`vite build` supporte le signal `--ssrManifest` qui générera un fichier `ssr-manifest.json` dans le répertoire de sortie de la compilation:
 
 ```diff
 - "build:client": "vite build --outDir dist/client",
 + "build:client": "vite build --outDir dist/client --ssrManifest",
 ```
 
-Le script ci-dessus générera désormais un fichier `dist/client/ssr-manifest.json` pour le build client — oui, le manifeste de rendu côté serveur est généré depuis le build client car nous voulons associer les identifiants de modules aux fichiers clients. Le manifeste contient des associations entre les identifiants de modules et les morceaux (_chunks_) ou les fichiers de ressources correspondants.
+Le script ci-dessus générera désormais un fichier `dist/client/ssr-manifest.json` pour la compilation client — oui, le manifeste de rendu côté serveur est généré depuis la compilation client car nous voulons associer les identifiants de modules aux fichiers clients. Le manifeste contient des associations entre les identifiants de modules et les morceaux (_chunks_) ou les fichiers de ressources correspondants.
 
 Pour exploiter le manifeste, les frameworks doivent fournir un moyen de collecter les identifiants des modules des composants qui ont été utilisés durant le rendu côté serveur.
 
@@ -216,17 +216,17 @@ Si les routes et les données requises pour certaines routes sont connues à l�
 
 ## Externalisation
 
-De nombreuses dépendances fournissent à la fois des fichiers de modules ES et CommonJS. Une dépendance fournissant un build CommonJS peut être « externalisée » de la transformation et du système de modules de rendu côté serveur de Vite lorsque le rendu côté serveur est utilisé, afin de rendre à la fois le serveur de développement et le build plus rapides. Par exemple, plutôte que de tirer la version modules ES de React et d’ensuite la re-transformer pour qu’elle soit compatible avec Node.js, il est plus efficace de simplement `require('react')`. Cela raccourcit aussi grandement la durée du build de rendu côté serveur.
+De nombreuses dépendances fournissent à la fois des fichiers de modules ES et CommonJS. Une dépendance fournissant une compilation CommonJS peut être « externalisée » de la transformation et du système de modules de rendu côté serveur de Vite lorsque le rendu côté serveur est utilisé, afin de rendre à la fois le serveur de développement et la compilation plus rapides. Par exemple, plutôte que de tirer la version modules ES de React et d’ensuite la re-transformer pour qu’elle soit compatible avec Node.js, il est plus efficace de simplement `require('react')`. Cela raccourcit aussi grandement la durée de compilation de rendu côté serveur.
 
 Vite réalise l’externalisation du rendu côté serveur automatiquement selon les heuristiques suivantes :
 
-- Si le point d’entrée de module ES résolu et son point d’entrée par défaut pour Node sont différents, le point d’entrée pour Node est probablement un build CommonJS qui peut être externalisé. Par exemple, `vue` sera externalisé automatiquement car il fournit à la fois un build module ES et un build CommonJS.
+- Si le point d’entrée de module ES résolu et son point d’entrée par défaut pour Node sont différents, le point d’entrée pour Node est probablement une compilation CommonJS qui peut être externalisé. Par exemple, `vue` sera externalisé automatiquement car il fournit à la fois une compilation en module ES et une compilation en CommonJS.
 
 - Sinon, Vite regardera si le point d’entrée du package contient de la syntaxe de modules ES valide — si ce n’est pas le cas, le package est probablement au format CommonJS et sera externalisé. Par exemple, `react-dom` sera externalisé automatiquement car il ne spécifie qu’une entrée et qu’elle est au format CommonJS.
 
 Si les heuristiques mènent à des erreurs, vous pouvez ajuster manuellement l’externalisation du rendu côté serveur à l’aide des options de configuration `ssr.external` et `ssr.noExternal`.
 
-Dans le futur, ces heuristiques seront sans doute meilleures si le projet a le `type: "module"` d’activé, afin que Vite puisse aussi externaliser les dépendances qui fournissent des builds ESM compatibles avec Node en les important avec `import()` pendant le rendu côté serveur.
+Dans le futur, ces heuristiques seront sans doute meilleures si le projet a le `type: "module"` d’activé, afin que Vite puisse aussi externaliser les dépendances qui fournissent des compilation ESM compatibles avec Node en les important avec `import()` pendant le rendu côté serveur.
 
 :::warning Gérer les alias
 Si vous avez configuré des alias qui redirigent un package vers un autre, vous pourriez plutôt vouloir faire des alias des véritables packages `node_modules` afin que cela fonctionne pour les dépendances externalisées pour le rendu côté serveur. [Yarn](https://classic.yarnpkg.com/en/docs/cli/add/#toc-yarn-add-alias) et [pnpm](https://pnpm.js.org/en/aliases) supportent tous deux les alias via le préfixe `npm:`.
@@ -263,11 +263,11 @@ Avant Vite 2.7, cette information était passée aux hooks de plugin à l’aide
 
 ## Cible de rendu côté serveur
 
-La cible par défaut du build de rendu côté serveur est un environnement Node, mais vous pouvez également exécuter le serveur dans un web worker. La différence réside dans la résolution de l’entrée du package qui est différente suivant la plateforme. Vous pouvez configurer la cible pour qu’elle soit un web worker en définissant `ssr.target` sur `'webworker'`.
+La cible par défaut de compilation de rendu côté serveur est un environnement Node, mais vous pouvez également exécuter le serveur dans un web worker. La différence réside dans la résolution de l’entrée du package qui est différente suivant la plateforme. Vous pouvez configurer la cible pour qu’elle soit un web worker en définissant `ssr.target` sur `'webworker'`.
 
 ## Bundle de rendu côté serveur
 
-Dans certains cas, comme lorsque le runtime est `webworker`, il se peut que vous souhaitiez que votre build de rendu côté serveur soit bundlé en un seul fichier JavaScript. Vous pouvez obtenir ce comportement en définissant `ssr.noExternal` à `true`. Cela aura deux effets :
+Dans certains cas, comme lorsque le runtime est `webworker`, il se peut que vous souhaitiez que votre compilation de rendu côté serveur soit bundlé en un seul fichier JavaScript. Vous pouvez obtenir ce comportement en définissant `ssr.noExternal` à `true`. Cela aura deux effets :
 
 - Toutes les dépendances seront traitées comme `noExternal`
 - Une erreur sera déclenchée si une fonctionnalité intégrée à Node.js est importée

@@ -12,7 +12,7 @@ import imgUrl from './img.png'
 document.getElementById('hero-img').src = imgUrl
 ```
 
-Par exemple, `imgUrl` sera `/img.png` pendant le développement, et deviendra `/assets/img.2d8efhg.png` pour le build de production.
+Par exemple, `imgUrl` sera `/img.png` pendant le développement, et deviendra `/assets/img.2d8efhg.png` pour la compilation de production.
 
 Le comportement est similaire au `file-loader` de webpack. La différence est que l’import peut utiliser au choix un chemin absolu (par rapport à la racine du projet pendant le développement) ou un chemin relatif.
 
@@ -22,7 +22,7 @@ Le comportement est similaire au `file-loader` de webpack. La différence est qu
 
 - Les types de fichiers les plus courants pour les images, les medias, ou les polices de caractères sont détectés automatiquement comme étant des ressources. Vous pouvez étendre la liste interne avec l’[option `assetsInclude`](/config/#assetsinclude).
 
-- Les ressources référencées sont incluses au graphe des ressources du build, se voient assigner un nom de fichier haché, et peuvent être transformées par des plugins d’optimisation.
+- Les ressources référencées sont incluses au graphe des ressources de compilation, se voient assigner un nom de fichier haché, et peuvent être transformées par des plugins d’optimisation.
 
 - Les ressources plus petites (en octets) que l’[option `assetsInlineLimit`](/config/#build-assetsinlinelimit) seront mises inline comme URLs de données base64.
 
@@ -48,7 +48,7 @@ import shaderString from './shader.glsl?raw'
 Les scripts peuvent être importés en tant que web workers à l’aide des suffixes `?worker` et `?sharedworker`.
 
 ```js
-// il sera inclut à un morceau (chunk) différent pour le build de production
+// il sera inclut à un morceau (chunk) différent pour la compilation de production
 import Worker from './shader.js?worker'
 const worker = new Worker()
 ```
@@ -74,7 +74,7 @@ Si vous avez des ressources :
 - qui doivent garder exactement le même nom de fichier (sans hachage),
 - … ou tout simplement que vous ne voulez pas avoir à importer pour accéder à leur URL,
 
-alors vous pouvez les placer dans le répertoire spécial `public` à la racine de votre projet. Les ressources dans ce répertoire seront servies à la racine `/` pendant le développement, et copiées à la racine du répertoire dist telles quelles lors du build.
+alors vous pouvez les placer dans le répertoire spécial `public` à la racine de votre projet. Les ressources dans ce répertoire seront servies à la racine `/` pendant le développement, et copiées à la racine du répertoire `dist` telles quelles lors de la compilation.
 
 Le répertoire par défaut est `<racine>/public`, mais cela peut-être modifié à l’aide de l’[option `publicDir`](/config/#publicdir).
 
@@ -103,7 +103,7 @@ function getImageUrl(name) {
 }
 ```
 
-Pendant le build de production, Vite fera les transformations nécessaires pour que les URLs pointent toujours au bon endroit même après le bundling et le hachage des ressources.
+Pendant la compilation de production, Vite fera les transformations nécessaires pour que les URLs pointent toujours au bon endroit même après le bundling et le hachage des ressources.
 
 ::: warning Note : Ne fonctionne pas avec le rendu côté serveur (SSR)
 Ce pattern ne fonctionnera pas si vous utilisez Vite pour du rendu côté serveur, parce qu’`import.meta.url` a une sémantique différente dans le navigateur et dans Node.js. Le bundle serveur ne peut de toute façon pas déterminer l’URL cliente en amont.

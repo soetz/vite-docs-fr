@@ -4,13 +4,13 @@
 
 [Snowpack](https://www.snowpack.dev/) est aussi un serveur de développement no-bundle reposant sur les bundles ES natifs qui est très similaire à Vite en termes de périmètre. En dehors des détails d’implémentation qui diffèrent, les deux projets ont beaucoup en commun en termes d’avantages techniques par rapport au tooling traditionnel. Le pré-bundling des dépendances de Vite est aussi inspiré de Snowpack v1 (qui est devenu [`esinstall`](https://github.com/snowpackjs/snowpack/tree/main/esinstall)). Les plus grosses différences entre les deux projets sont :
 
-**Build de production**
+**Compilation de production**
 
-La sortie de build par défaut de Snowpack n’est pas un bundle : il transforme chaque fichier en plusieurs modules buildés, qui peuvent ensuite être passés à différents « optimisateurs » (_"optimizers"_) qui s’occupent du bundling. L’intérêt est que vous pouvez choisir entre différents bundlers finaux pour répondre à des besoins spécifiques (par exemple, webpack, Rollup, et même esbuild), et le côté pervers est que l’expérience est relativement fragmentée — par exemple, l’optimisateur esbuild est toujours instable, l’optimisateur Rollup n’est pas maintenu officiellement, et différents optimisateurs ne rendent pas la même chose en sortie et ne sont pas configurés de la même façon.
+La sortie de compilation par défaut de Snowpack n’est pas un bundle : il transforme chaque fichier en plusieurs modules compilatés, qui peuvent ensuite être passés à différents « optimisateurs » (_"optimizers"_) qui s’occupent du bundling. L’intérêt est que vous pouvez choisir entre différents bundlers finaux pour répondre à des besoins spécifiques (par exemple, webpack, Rollup, et même esbuild), et le côté pervers est que l’expérience est relativement fragmentée — par exemple, l’optimisateur esbuild est toujours instable, l’optimisateur Rollup n’est pas maintenu officiellement, et différents optimisateurs ne rendent pas la même chose en sortie et ne sont pas configurés de la même façon.
 
-Vite choisit d’avoir une intégration plus poussée d’un seul bundler (Rollup) afin de fournir une expérience plus structurée. Cela permet aussi à Vite de proposer une [API universelle pour plugin](./api-plugin) qui fonctionne à la fois pour le développement et pour le build.
+Vite choisit d’avoir une intégration plus poussée d’un seul bundler (Rollup) afin de fournir une expérience plus structurée. Cela permet aussi à Vite de proposer une [API universelle pour plugin](./api-plugin) qui fonctionne à la fois pour le développement et pour la compilation.
 
-Grâce au process de build plus intégré, Vite supporte quelques fonctionnalités qui ne sont pour l’instant pas disponibles avec les optimisateurs de build de Snowpack :
+Grâce au process de compilation plus intégré, Vite supporte quelques fonctionnalités qui ne sont pour l’instant pas disponibles avec les optimisateurs de compilation de Snowpack :
 
 - [Support du multi-pages](./build#application-multi-pages)
 - [Mode librairie](./build#mode-librairie)
@@ -44,6 +44,6 @@ WMR est surtout fait pour les projets [Preact](https://preactjs.com/), et propos
 
 [@web/dev-server](https://modern-web.dev/docs/dev-server/overview/) (autrefois `es-dev-server`) est un bon projet et le serveur basé sur Koa de Vite 1.0 en est inspiré.
 
-`@web/dev-server` est un peu plus bas-niveau en termes de périmètre. Il ne fournit pas d’intégrations officielles pour les frameworks, et requiert de configurer manuellement Rollup pour le build de production.
+`@web/dev-server` est un peu plus bas-niveau en termes de périmètre. Il ne fournit pas d’intégrations officielles pour les frameworks, et requiert de configurer manuellement Rollup pour la compilation de production.
 
 De manière générale, Vite est un outil plus _opinionated_ / haut-niveau et vise à fournir des comportements par défaut qui conviennent la plupart du temps. Ceci étant dit, le projet `@web` contient beaucoup d’autres outils qui sont excellents et qui peuvent aussi être utiles pour les utilisateurs de Vite.

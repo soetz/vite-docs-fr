@@ -1,6 +1,6 @@
-# Build de production
+# Compilation de production
 
-Lorsqu’il est temps de déployer votre application en production, lancez simplement la commande `vite build`. Par défaut, elle utilise `<racine>/index.html` comme point d’entrée du build, et produit un bundle d’application qu’il est possible de servir avec un service d’hébergement statique. Vous pouvez retrouver des guides pour les services les plus populaires sur la page [Déployer un site statique](./static-deploy).
+Lorsqu’il est temps de déployer votre application en production, lancez simplement la commande `vite build`. Par défaut, elle utilise `<racine>/index.html` comme point d’entrée de compilation, et produit un bundle d’application qu’il est possible de servir avec un service d’hébergement statique. Vous pouvez retrouver des guides pour les services les plus populaires sur la page [Déployer un site statique](./static-deploy).
 
 ## Compatibilité navigateur
 
@@ -22,13 +22,13 @@ Les navigateurs plus anciens peuvent être supportés à l’aide de [@vitejs/pl
 
 Si vous déployez votre projet sous un chemin public imbriqué, spécifiez l’[option de configuration `base`](/config/#base) et tous les chemins de ressources seront réécris en conséquence. Cette option peut aussi être spécifiée via l’interface en ligne de commande, par exemple `vite build --base=/mon/chemin/public/`.
 
-Les URLs de ressources importées par le JavaScript, les références `url()` dans le CSS, et les références à des ressources dans vos fichiers `.html` sont toutes ajustées automatiquement pour respecter cette option pendant le build.
+Les URLs de ressources importées par le JavaScript, les références `url()` dans le CSS, et les références à des ressources dans vos fichiers `.html` sont toutes ajustées automatiquement pour respecter cette option pendant la compilation.
 
-La seule exception est quand vous devez concaténer dynamiquement des URLs à la volée. Dans ce cas, utilisez la variable injectée globalement `import.meta.env.BASE_URL` qui contiendra le chemin public de base. Notez que cette variable est remplacée statiquement pendant le build alors elle doit apparaître telle quelle (par exemple `import.meta.env['BASE_URL']` ne fonctionnera pas).
+La seule exception est quand vous devez concaténer dynamiquement des URLs à la volée. Dans ce cas, utilisez la variable injectée globalement `import.meta.env.BASE_URL` qui contiendra le chemin public de base. Notez que cette variable est remplacée statiquement pendant la compilation alors elle doit apparaître telle quelle (par exemple `import.meta.env['BASE_URL']` ne fonctionnera pas).
 
-## Customiser le build
+## Customiser la compilation
 
-Le build peut être customisé à l’aide de ses diverses [options de configuration](/config/#options-du-build). Plus spécifiquement, vous pouvez ajuster les [options du Rollup](https://rollupjs.org/guide/en/#big-list-of-options) sous-jacent avec `build.rollupOptions` :
+La compilation peut être customisé à l’aide de ses diverses [options de configuration](/config/#options-de-compilation). Plus spécifiquement, vous pouvez ajuster les [options du Rollup](https://rollupjs.org/guide/en/#big-list-of-options) sous-jacent avec `build.rollupOptions` :
 
 ```js
 // vite.config.js
@@ -41,9 +41,9 @@ module.exports = defineConfig({
 })
 ```
 
-Par exemple, vous pouvez spécifier plusieurs sorties Rollup à l’aide de plugins qui ne sont appliqués que pour le build.
+Par exemple, vous pouvez spécifier plusieurs sorties Rollup à l’aide de plugins qui ne sont appliqués que pour la compilation.
 
-## Refaire le build lorsque les fichiers sont modifiés
+## Refaire la compilation lorsque les fichiers sont modifiés
 
 Vous pouvez activer le watcher Rollup avec `vite build --watch`. Ou alors vous pouvez directement ajuster les [`WatcherOptions`](https://rollupjs.org/guide/en/#watch-options) dans `build.watch` :
 
@@ -74,7 +74,7 @@ Supposons que votre code source a la structure suivante :
 
 Pendant la développement, naviguez à `/nested/` — cela fonctionne comme attendu, du moins dans le contexte d’un serveur de fichiers statiques.
 
-Pour le build, tout ce que vous aurez à faire est de spécifier plusieurs fichiers `.html` comme points d’entrée :
+Pour la compilation, tout ce que vous aurez à faire est de spécifier plusieurs fichiers `.html` comme points d’entrée :
 
 ```js
 // vite.config.js
@@ -120,7 +120,7 @@ module.exports = defineConfig({
       external: ['vue'],
       output: {
         // assurez-vous de fournir les variables globales à utiliser dans le
-        // build UMD pour les dépendances externalisées
+        // compilation UMD pour les dépendances externalisées
         globals: {
           vue: 'Vue'
         }
