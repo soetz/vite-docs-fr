@@ -154,12 +154,12 @@ Le script `dev` de `package.json` devrait également être modifié pour plutôt
   }
 ```
 
-## Compilation de production
+## Compilation en production
 
 Pour mettre en production un projet usant du rendu côté serveur, on doit :
 
-1. Produire une compilation client normal, et
-2. Produire une compilation de rendu côté serveur, qui peut être chargé directement par `require()` afin que l’on n’ait pas besoin de repasser dans le `ssrLoadModule` de Vite.
+1. Produire une compilation du client normale, et
+2. Produire une compilation de rendu côté serveur, qui peut être chargée directement par `require()` afin que l’on n’ait pas besoin de repasser dans le `ssrLoadModule` de Vite.
 
 Les scripts de `package.json` ressembleront à ça :
 
@@ -263,11 +263,11 @@ Avant Vite 2.7, cette information était passée aux hooks de plugin à l’aide
 
 ## Cible de rendu côté serveur
 
-La cible par défaut de compilation de rendu côté serveur est un environnement Node, mais vous pouvez également exécuter le serveur dans un web worker. La différence réside dans la résolution de l’entrée du package qui est différente suivant la plateforme. Vous pouvez configurer la cible pour qu’elle soit un web worker en définissant `ssr.target` sur `'webworker'`.
+La cible par défaut de la compilation de rendu côté serveur est un environnement Node, mais vous pouvez également exécuter le serveur dans un web worker. La différence réside dans la résolution de l’entrée du package qui est différente suivant la plateforme. Vous pouvez configurer la cible pour qu’elle soit un web worker en définissant `ssr.target` sur `'webworker'`.
 
 ## Bundle de rendu côté serveur
 
-Dans certains cas, comme lorsque le runtime est `webworker`, il se peut que vous souhaitiez que votre compilation de rendu côté serveur soit bundlé en un seul fichier JavaScript. Vous pouvez obtenir ce comportement en définissant `ssr.noExternal` à `true`. Cela aura deux effets :
+Dans certains cas, comme lorsque le runtime est `webworker`, il se peut que vous souhaitiez que votre compilation de rendu côté serveur soit bundlée en un seul fichier JavaScript. Vous pouvez obtenir ce comportement en définissant `ssr.noExternal` à `true`. Cela aura deux effets :
 
 - Toutes les dépendances seront traitées comme `noExternal`
 - Une erreur sera déclenchée si une fonctionnalité intégrée à Node.js est importée

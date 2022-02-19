@@ -18,7 +18,7 @@ Vous pouvez en apprendre plus sur les raisons qui motivent le projet sur la page
 
 ## Support navigateur
 
-- La configuration par défaut cible les navigateurs qui supportent à la fois les [modules ES natifs à travers les balises script](https://caniuse.com/es6-module) et l’[import dynamique de modules ES natifs](https://caniuse.com/es6-module-dynamic-import). Les navigateurs antérieurs peuvent être supportés à l’aide du plugin officiel [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) — voir la page [Compilation de production](./build) pour plus de détails.
+- La configuration par défaut cible les navigateurs qui supportent à la fois les [modules ES natifs à travers les balises script](https://caniuse.com/es6-module) et l’[import dynamique de modules ES natifs](https://caniuse.com/es6-module-dynamic-import). Les navigateurs antérieurs peuvent être supportés à l’aide du plugin officiel [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) — voir la page [Compilation en production](./build) pour plus de détails.
 
 ## Essayer Vite en ligne
 

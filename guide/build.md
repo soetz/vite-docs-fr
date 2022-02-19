@@ -1,6 +1,6 @@
-# Compilation de production
+# Compilation en production
 
-Lorsqu’il est temps de déployer votre application en production, lancez simplement la commande `vite build`. Par défaut, elle utilise `<racine>/index.html` comme point d’entrée de compilation, et produit un bundle d’application qu’il est possible de servir avec un service d’hébergement statique. Vous pouvez retrouver des guides pour les services les plus populaires sur la page [Déployer un site statique](./static-deploy).
+Lorsqu’il est temps de déployer votre application en production, lancez simplement la commande `vite build`. Par défaut, elle utilise `<racine>/index.html` comme point d’entrée pour la compilation, et produit un bundle d’application qu’il est possible de servir avec un service d’hébergement statique. Vous pouvez retrouver des guides pour les services les plus populaires sur la page [Déployer un site statique](./static-deploy).
 
 ## Compatibilité navigateur
 
@@ -28,8 +28,7 @@ La seule exception est quand vous devez concaténer dynamiquement des URLs à la
 
 ## Customiser la compilation
 
-La compilation peut être customisé à l’aide de ses diverses [options de configuration](/config/#options-de-compilation). Plus spécifiquement, vous pouvez ajuster les [options du Rollup](https://rollupjs.org/guide/en/#big-list-of-options) sous-jacent avec `build.rollupOptions` :
-
+La compilation peut être personnalisée à l’aide de ses diverses [options de configuration](/config/#options-de-compilation). Plus spécifiquement, vous pouvez ajuster les [options du Rollup](https://rollupjs.org/guide/en/#big-list-of-options) sous-jacent avec `build.rollupOptions` :
 ```js
 // vite.config.js
 module.exports = defineConfig({
@@ -119,8 +118,8 @@ module.exports = defineConfig({
       // bundle de votre librairie
       external: ['vue'],
       output: {
-        // assurez-vous de fournir les variables globales à utiliser dans le
-        // compilation UMD pour les dépendances externalisées
+        // assurez-vous de fournir les variables globales à utiliser pour la
+        // compilation UMD des dépendances externalisées
         globals: {
           vue: 'Vue'
         }

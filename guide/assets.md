@@ -12,7 +12,7 @@ import imgUrl from './img.png'
 document.getElementById('hero-img').src = imgUrl
 ```
 
-Par exemple, `imgUrl` sera `/img.png` pendant le développement, et deviendra `/assets/img.2d8efhg.png` pour la compilation de production.
+Par exemple, `imgUrl` sera `/img.png` pendant le développement, et deviendra `/assets/img.2d8efhg.png` lors de la compilation en production.
 
 Le comportement est similaire au `file-loader` de webpack. La différence est que l’import peut utiliser au choix un chemin absolu (par rapport à la racine du projet pendant le développement) ou un chemin relatif.
 
@@ -48,7 +48,8 @@ import shaderString from './shader.glsl?raw'
 Les scripts peuvent être importés en tant que web workers à l’aide des suffixes `?worker` et `?sharedworker`.
 
 ```js
-// il sera inclut à un morceau (chunk) différent pour la compilation de production
+// il sera inclus à un morceau (chunk) différent pour la compilation de production
+
 import Worker from './shader.js?worker'
 const worker = new Worker()
 ```

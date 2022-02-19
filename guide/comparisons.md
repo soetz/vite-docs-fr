@@ -4,9 +4,9 @@
 
 [Snowpack](https://www.snowpack.dev/) est aussi un serveur de développement no-bundle reposant sur les bundles ES natifs qui est très similaire à Vite en termes de périmètre. En dehors des détails d’implémentation qui diffèrent, les deux projets ont beaucoup en commun en termes d’avantages techniques par rapport au tooling traditionnel. Le pré-bundling des dépendances de Vite est aussi inspiré de Snowpack v1 (qui est devenu [`esinstall`](https://github.com/snowpackjs/snowpack/tree/main/esinstall)). Les plus grosses différences entre les deux projets sont :
 
-**Compilation de production**
+**Compilation en production**
 
-La sortie de compilation par défaut de Snowpack n’est pas un bundle : il transforme chaque fichier en plusieurs modules compilatés, qui peuvent ensuite être passés à différents « optimisateurs » (_"optimizers"_) qui s’occupent du bundling. L’intérêt est que vous pouvez choisir entre différents bundlers finaux pour répondre à des besoins spécifiques (par exemple, webpack, Rollup, et même esbuild), et le côté pervers est que l’expérience est relativement fragmentée — par exemple, l’optimisateur esbuild est toujours instable, l’optimisateur Rollup n’est pas maintenu officiellement, et différents optimisateurs ne rendent pas la même chose en sortie et ne sont pas configurés de la même façon.
+La sortie de la compilation par défaut de Snowpack n’est pas un bundle : il transforme chaque fichier en plusieurs modules compilés, qui peuvent ensuite être passés à différents « optimisateurs » (_"optimizers"_) qui s’occupent du bundling. L’intérêt est que vous pouvez choisir entre différents bundlers finaux pour répondre à des besoins spécifiques (par exemple, webpack, Rollup, et même esbuild), et le côté pervers est que l’expérience est relativement fragmentée — par exemple, l’optimisateur esbuild est toujours instable, l’optimisateur Rollup n’est pas maintenu officiellement, et différents optimisateurs ne rendent pas la même chose en sortie et ne sont pas configurés de la même façon.
 
 Vite choisit d’avoir une intégration plus poussée d’un seul bundler (Rollup) afin de fournir une expérience plus structurée. Cela permet aussi à Vite de proposer une [API universelle pour plugin](./api-plugin) qui fonctionne à la fois pour le développement et pour la compilation.
 
