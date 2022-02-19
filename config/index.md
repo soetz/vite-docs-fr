@@ -135,7 +135,7 @@ export default defineConfig(async ({ command, mode }) => {
 
   Définit des constantes globales. Les valeurs saisies seront définies comme des variables globales en développement et remplacées statiquement pendant le build.
 
-  - Depuis la version `2.0.0-beta.70`, les chaînes de caractères sont utilisées comme des expressions brutes, donc si vous définissez une chaîne de caractères constante, elle doit être explicitement mise entre crochets (avec `JSON.stringify` par exemple).
+  - Depuis la version `2.0.0-beta.70`, les chaînes de caractères sont utilisées comme des expressions brutes, donc si vous définissez une chaîne de caractères constante, elle doit être explicitement mise entre guillemets (avec `JSON.stringify` par exemple).
 
   - Les remplacements sont faits seulement lorsque la correspondance est entourée par des délimiteurs de mots (`\b`).
 
