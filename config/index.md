@@ -794,7 +794,7 @@ export default defineConfig(async ({ command, mode }) => {
 - **Valeur par défaut :** `undefined`
 - **Voir aussi :** [Rendu côté serveur (SSR)](/guide/ssr)
 
-  Définit si la compilation doit être orienté vers un rendu côté serveur. La valeur peut être une chaîne spécifiant directement l’entrée de rendu côté serveur, ou `true`, ce qui requiert de spécifier l’entrée de rendu côté serveur à l’aide de `rollupOptions.input`.
+  Définit si la compilation doit être orientée vers un rendu côté serveur. La valeur peut être une chaîne spécifiant directement l’entrée de rendu côté serveur, ou `true`, ce qui requiert de spécifier l’entrée de rendu côté serveur à l’aide de `rollupOptions.input`.
 
 ### build.minify
 
