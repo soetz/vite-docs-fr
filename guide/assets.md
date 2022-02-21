@@ -48,7 +48,8 @@ import shaderString from './shader.glsl?raw'
 Les scripts peuvent être importés en tant que web workers à l’aide des suffixes `?worker` et `?sharedworker`.
 
 ```js
-// il sera inclus à un morceau (chunk) différent pour la compilation de production
+// il sera inclus à un morceau (chunk) différent pour la compilation de
+// production
 
 import Worker from './shader.js?worker'
 const worker = new Worker()
