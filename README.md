@@ -14,16 +14,16 @@
 
 # Vite ⚡
 
-> Le tooling front-end nouvelle génération
+> L'outil front-end nouvelle génération
 
-- 💡 Démarrage instantané du serveur
-- ⚡️ Rafraîchissement des modules ultra rapide
+- 💡 Démarrage instantané
+- ⚡️ Rafraîchissement ultra-rapide
 - 🛠️ Riche en fonctionnalités
-- 📦 Build optimisé
-- 🔩 Interface universelle de plugins
+- 📦 Optimisation de la compilation
+- 🔩 Interface de plugins universelle
 - 🔑 APIs typées
 
-Vite (prononcé comme en français) est un outil de build frontend d’un nouveau genre qui améliore grandement l’expérience de développement. Il se compose de deux parties :
+Vite (prononcé comme en français) est un outil de compilation frontend d’un nouveau genre qui améliore grandement l’expérience de développement. Il se compose de deux parties :
 
 - Un serveur de développement qui sert les fichiers sous la forme de [modules ECMAScript](https://developer.mozilla.org/fr/docs/Web/JavaScript/Guide/Modules), qui propose de [nombreuses fonctionnalités](https://vitejs.dev/guide/features.html) et qui permet un [rafraîchissement des modules (HMR)](https://vitejs.dev/guide/features.html#hot-module-replacement) très rapide.
 
