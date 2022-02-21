@@ -3,13 +3,13 @@
 Lors du premier lancement de `vite`, vous aurez peut-être remarqué ce message :
 
 ```
-Optimizable dependencies detected:
-react, react-dom
-Pre-bundling them to speed up dev server page load...
-(this will be run only when your dependencies have changed)
+Pre-bundling dependencies:
+  react
+  react-dom
+(this will be run only when your dependencies or config have changed)
 ```
 
-> Dépendances optimisables détectées : react, react-dom. Nous sommes en train de les pré-bundler pour accélérer le chargement des pages du serveur de développement… (cela ne sera effectué que lorsque vos dépendances changent)
+> Pré-bundling de dépendances : react, react-dom. (cela ne sera effectué que lorsque vos dépendances ou votre configuration changent)
 
 ## Pourquoi
 
@@ -30,6 +30,8 @@ Pre-bundling them to speed up dev server page load...
 
    En pré-bundlant `lodash-es` en un unique module, il n’y a plus besoin que d’une requête HTTP !
 
+Notez que cela ne s’applique qu’en mode développement.
+
 ## Découverte automatique des dépendances
 
 Si aucun cache existant n’est trouvé, Vite crawlera votre code source et essaiera de découvrir automatiquement les imports de dépendances (autrement dit les « imports bruts », ceux qui sont résolus depuis `node_modules`) et les utilisera comme points d’entrée du pré-bundle. Le pré-bundling est fait à l’aide d’`esbuild` alors il est normalement très rapide.
@@ -40,9 +42,25 @@ Après que le serveur ait démarré, si un nouvel import de dépendance est renc
 
 Dans une configuration monorepo, une dépendance peut être un package lié du même dépôt. Vite détecte automatiquement les dépendances qui ne sont pas résolues depuis `node_modules` et les traite comme du code source. Il n’essaiera pas de bundler la dépendance liée, et analysera sa liste de dépendances à la place.
 
-::: warning Note
-Les dépendances liées peuvent ne pas fonctionner correctement dans le build final à cause de différences dans la façon de résoudre les dépendances.
-Utilisez plutôt `npm pack` pour toutes les dépendances locales afin d’éviter d’avoir des problèmes dans le build final (ceci n’est nécessaire que lorsque le code source lié n’exporte que du code CommonJS ; s’il exporte des modules ES alors ça ne l’est pas).
+Ceci dit, cela requiert que la dépendance liée soit exportée en modules ES. Si ce n’est pas le cas, vous pouvez ajouter la dépendance à [`optimizeDeps.include`](/config/#optimizedeps-include) et [`build.commonjsOptions.include`](/config/#build-commonjsoptions) dans votre configuration.
+
+```js
+export default defineConfig({
+  optimizeDeps: {
+    include: ['linked-dep']
+  },
+  build: {
+    commonjsOptions: {
+      include: [/linked-dep/, /node_modules/]
+    }
+  }
+})
+```
+
+Lorsque vous faites des modifications à la dépendance liée, redémarrez le serveur de développement avec le signal `--force` pour que les changements soient pris en compte.
+
+::: warning Déduplication
+En raison de différences dans la façon de résoudre les dépendances liées, les dépendances transitives peuvent être mal dédupliquées, ce qui cause des soucis si on les exécute. Si vous êtes touché(e) par ce problème, utilisez `npm pack` sur la dépendance liée pour le régler.
 :::
 
 ## Modifier le comportement
