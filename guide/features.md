@@ -300,6 +300,22 @@ const modules = {
 }
 ```
 
+`import.meta.glob` et `import.meta.globEager` supportent également le fait d’importer des fichiers sous la forme de chaînes de caractères, à la manière de l’[import d’une ressource en tant que chaîne de caractères](/guide/assets.html#importer-une-ressource-en-tant-que-chaine-de-caracteres). Nous utilisons ici la syntaxe d’[assertion d’import (_Import Assertions_)](https://github.com/tc39/proposal-import-assertions#synopsis).
+
+```js
+const modules = import.meta.glob('./dir/*.js', { assert: { type: 'raw' } })
+```
+
+Le code ci-dessus sera transformé en ce qui suit :
+
+```js
+// code produit par Vite
+const modules = {
+  './dir/foo.js': '{\n  "msg": "foo"\n}\n',
+  './dir/bar.js': '{\n  "msg": "bar"\n}\n'
+}
+```
+
 Notez bien que :
 
 - Ceci est une fonctionnalité spécifique à Vite et ne fait partie d’aucun standard ES ou web.
