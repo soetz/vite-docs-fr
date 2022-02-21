@@ -925,7 +925,7 @@ export default defineConfig(async ({ command, mode }) => {
 
 - **Type :** `string | string[]`
 
-  Par défaut, Vite crawlera votre index.html pour détecter des dépendances à pré-bundler. Si build.rollupOptions.input est spécifié, Vite crawlera ces points d’entrée à la place.
+  Par défaut, Vite crawlera votre `index.html` pour détecter des dépendances à pré-bundler. Si `build.rollupOptions.input` est spécifié, Vite crawlera ces points d’entrée à la place.
 
   Si ni l’un ni l’autre de ces comportements ne vous convient, vous pouvez spécifier des entrées à l’aide de cette option — la valeur doit être un [motif fast-glob](https://github.com/mrmlnc/fast-glob#basic-syntax) ou un array de motifs relatifs à la racine du projet. Ceci remplacera complétement le mécanisme par défaut.
 
