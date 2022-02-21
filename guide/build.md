@@ -28,7 +28,8 @@ La seule exception est quand vous devez concaténer dynamiquement des URLs à la
 
 ## Customiser la compilation
 
-La compilation peut être personnalisée à l’aide de ses diverses [options de configuration](/config/#options-de-compilation). Plus spécifiquement, vous pouvez ajuster les [options du Rollup](https://rollupjs.org/guide/en/#big-list-of-options) sous-jacent avec `build.rollupOptions` :
+La compilation peut être personnalisée à l’aide de ses diverses [options de configuration](/config/#options-de-compilation). Plus spécifiquement, vous pouvez ajuster les [options de Rollup](https://rollupjs.org/guide/en/#big-list-of-options) sous-jacent avec `build.rollupOptions` :
+
 ```js
 // vite.config.js
 module.exports = defineConfig({
