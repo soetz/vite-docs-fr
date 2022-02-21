@@ -19,7 +19,7 @@
 - 💡 Démarrage instantané
 - ⚡️ Rafraîchissement ultra-rapide
 - 🛠️ Riche en fonctionnalités
-- 📦 Compilations optimisée
+- 📦 Optimisation de la compilation
 - 🔩 Interface de plugins universelle
 - 🔑 APIs typées
 
