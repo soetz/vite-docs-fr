@@ -774,19 +774,19 @@ export default defineConfig(async ({ command, mode }) => {
 
 ### build.manifest
 
-- **Type :** `boolean`
+- **Type :** `boolean | string`
 - **Valeur par défaut :** `false`
 - **Voir aussi :** [Intégration du back-end](/guide/backend-integration)
 
-  Quand cette option est à `true`, le build générera également un fichier `manifest.json` contenant un mapping entre les noms de fichiers de ressources non-hashés et leurs versions hashées, qui peut ensuite être utilisé par un framework serveur afin de rendre les bons liens de ressources.
+  Quand cette option est à `true`, le build générera également un fichier `manifest.json` contenant un mapping entre les noms de fichiers de ressources non-hashés et leurs versions hashées, qui peut ensuite être utilisé par un framework serveur afin de rendre les bons liens de ressources. Si la valeur est une chaîne de caractères, elle sera utilisée comme nom pour le fichier du manifeste.
 
 ### build.ssrManifest
 
-- **Type :** `boolean`
+- **Type :** `boolean | string`
 - **Valeur par défaut :** `false`
 - **Voir aussi :** [Rendu côté serveur (SSR)](/guide/ssr)
 
-  Quand cette option est à `true`, le build générera également un manifeste de rendu côté serveur permettant de déterminer les liens de style ainsi que les directives de pré-chargement (_preload directives_) des ressources en production.
+  Quand cette option est à `true`, le build générera également un manifeste de rendu côté serveur permettant de déterminer les liens de style ainsi que les directives de pré-chargement (_preload directives_) des ressources en production. Si la valeur est une chaîne de caractères, elle sera utilisée comme nom pour le fichier du manifeste.
 
 ### build.ssr
 
