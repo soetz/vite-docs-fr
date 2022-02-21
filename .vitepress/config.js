@@ -114,7 +114,7 @@ const pkg = require('../package.json')
               link: '/guide/assets'
             },
             {
-              text: 'Build de production',
+              text: 'Compilation de production',
               link: '/guide/build'
             },
             {

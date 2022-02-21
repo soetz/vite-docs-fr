@@ -6,11 +6,11 @@
 
 ## Vue d’ensemble
 
-Vite (prononcé comme en français<button style="border:none;padding:3px;border-radius:4px" id="play-vite-audio" onclick="document.getElementById('vite-audio').play();"><img src="/voice.svg" height="15"></button>) est un outil de build qui vise à proposer une expérience de développement plus rapide et légère pour les projets web modernes. Il se découpe en deux grandes parties :
+Vite (prononcé comme en français<button style="border:none;padding:3px;border-radius:4px" id="play-vite-audio" onclick="document.getElementById('vite-audio').play();"><img src="/voice.svg" height="15"></button>) est un outil de compilation qui vise à proposer une expérience de développement plus rapide et légère pour les projets web modernes. Il se découpe en deux grandes parties :
 
 - Un serveur de développement qui propose de [nombreuses fonctionnalités](./features) à travers les [modules ES natifs](https://developer.mozilla.org/fr/docs/Web/JavaScript/Guide/Modules), y compris un [rafraîchissement des modules à la volée (_HMR_)](./features#rafraichissement-des-modules-a-la-volee-hmr) ultra rapide.
 
-- Une commande de build qui bundle votre code à l’aide de [Rollup](https://rollupjs.org), qui est pré-configuré pour optimiser grandement la taille des ressources statiques en production.
+- Une commande de compilation qui bundle votre code à l’aide de [Rollup](https://rollupjs.org), qui est pré-configuré pour optimiser grandement la taille des ressources statiques en production.
 
 Vite est « _opinionated_ » et propose certains comportements par défaut qui conviendront dans la plupart des cas, et il est aussi possible de l’étendre grâce à son [API pour plugin](./api-plugin) et son [API JavaScript](./api-javascript).
 
@@ -18,11 +18,11 @@ Vous pouvez en apprendre plus sur les raisons qui motivent le projet sur la page
 
 ## Support navigateur
 
-- La configuration par défaut cible les navigateurs qui supportent à la fois les [modules ES natifs à travers les balises script](https://caniuse.com/es6-module) et l’[import dynamique de modules ES natifs](https://caniuse.com/es6-module-dynamic-import). Les navigateurs antérieurs peuvent être supportés à l’aide du plugin officiel [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) — voir la page [Build de production](./build) pour plus de détails.
+- La configuration par défaut cible les navigateurs qui supportent à la fois les [modules ES natifs à travers les balises script](https://caniuse.com/es6-module) et l’[import dynamique de modules ES natifs](https://caniuse.com/es6-module-dynamic-import). Les navigateurs antérieurs peuvent être supportés à l’aide du plugin officiel [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) — voir la page [Compilation en production](./build) pour plus de détails.
 
 ## Essayer Vite en ligne
 
-Vous pouvez essayer Vite en ligne sur [StackBlitz](https://vite.new/). Le site exécute une configuration de build basée sur Vite directement dans le navigateur, alors l’expérience est quasiment la même qu’en local, sans avoir besoin d’installer quoi que ce soit sur votre machine. Vous pouvez naviguer sur `vite.new/{template}` pour utiliser un framework.
+Vous pouvez essayer Vite en ligne sur [StackBlitz](https://vite.new/). Le site exécute une configuration de compilation basée sur Vite directement dans le navigateur, alors l’expérience est quasiment la même qu’en local, sans avoir besoin d’installer quoi que ce soit sur votre machine. Vous pouvez naviguer sur `vite.new/{template}` pour utiliser un framework.
 
 Les templates supportés sont :
 
@@ -121,8 +121,9 @@ Dans un projet dans lequel Vite est installé, vous pouvez utiliser le binaire `
   "scripts": {
     "dev": "vite", // démarre le serveur de développement
                    // alias : `vite dev`, `vite serve`
-    "build": "vite build",    // effectue le build de production
-    "preview": "vite preview" // prévisualise le build de production en local
+    "build": "vite build",    // effectue la compilation de production
+    "preview": "vite preview" // prévisualise la compilation de production
+                              // en local
   }
 }
 ```
@@ -131,7 +132,7 @@ Des options de ligne de commande supplémentaires comme `--port` ou `--https` so
 
 ## Utiliser des commits inédits
 
-Si vous voulez tester les dernières fonctionnalités sans attendre de nouvelle version, vous devrez cloner le [dépôt vite](https://github.com/vitejs/vite) sur votre machine, le builder et le lier (_link_) vous-même ([pnpm](https://pnpm.io/) doit être installé) :
+Si vous voulez tester les dernières fonctionnalités sans attendre de nouvelle version, vous devrez cloner le [dépôt vite](https://github.com/vitejs/vite) sur votre machine, le compiler et le lier (_link_) vous-même ([pnpm](https://pnpm.io/) doit être installé) :
 
 ```bash
 git clone https://github.com/vitejs/vite.git

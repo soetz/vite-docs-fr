@@ -10,7 +10,7 @@ sidebar: false
 
 Nous sommes très heureux d’annoncer aujourd’hui la sortie officielle de Vite 2.0 !
 
-Vite (du mot français) est un outil de build web front-end d’un nouveau genre. Vous pouvez le voir comme un combo entre un serveur de développement pré-configuré et un bundler, mais en plus léger et plus rapide. Il s’appuie sur le support des [modules ES natifs](https://developer.mozilla.org/fr/docs/Web/JavaScript/Guide/Modules) de votre navigateur et sur des outils écrits dans des langages compilés comme [esbuild](https://esbuild.github.io/) pour fournir une expérience de développement vive et moderne.
+Vite (du mot français) est un outil de compilation web front-end d’un nouveau genre. Vous pouvez le voir comme un combo entre un serveur de développement pré-configuré et un bundler, mais en plus léger et plus rapide. Il s’appuie sur le support des [modules ES natifs](https://developer.mozilla.org/fr/docs/Web/JavaScript/Guide/Modules) de votre navigateur et sur des outils écrits dans des langages compilés comme [esbuild](https://esbuild.github.io/) pour fournir une expérience de développement vive et moderne.
 
 Pour vous faire une idée d’à quel point Vite est rapide, regardez cette [comparaison vidéo](https://twitter.com/amasad/status/1355379680275128321) entre démarrer une application React sur Repl.it en utilisant Vite et en utilisant `create-react-app` (CRA).
 
@@ -28,7 +28,7 @@ Vite 2.0 capitalise sur ce que nous avons appris en cours de route et il a été
 
 ### Nouveau format de plugins et API
 
-Le nouveau système de plugins, inspiré par [WMR](https://github.com/preactjs/wmr), étend l’interface pour plugins de Rollup et est [compatible avec beaucoup de plugins Rollup](https://vite-rollup-plugins.patak.dev/) sans qu’il n’y ait besoin d’adaptations. Les plugins peuvent utiliser les hooks de Rollup, ainsi que des hooks et des propriétés supplémentaires spécifiques à Vite (par exemple pour différencier entre développement et build ou pour gérer différemment le rafraîchissement des modules à la volée).
+Le nouveau système de plugins, inspiré par [WMR](https://github.com/preactjs/wmr), étend l’interface pour plugins de Rollup et est [compatible avec beaucoup de plugins Rollup](https://vite-rollup-plugins.patak.dev/) sans qu’il n’y ait besoin d’adaptations. Les plugins peuvent utiliser les hooks de Rollup, ainsi que des hooks et des propriétés supplémentaires spécifiques à Vite (par exemple pour différencier entre développement et compilation ou pour gérer différemment le rafraîchissement des modules à la volée).
 
 L’[API programmatique](https://vitejs.dev/guide/api-javascript.html) a également été beaucoup améliorée pour faciliter l’apparition d’outils ou de frameworks de plus haut niveau par-dessus Vite.
 
@@ -46,7 +46,7 @@ Vite réserve un traitement de faveur à CSS et supporte les fonctionnalités su
 
 ### Support du rendu côté serveur (_SSR_)
 
-Vite 2.0 est livré avec le [support expérimental du rendu côté serveur](https://vitejs.dev/guide/ssr.html). Vite fournit des APIs afin de charger et de mettre à jour efficacement le code source ESM en Node.js pendant le développement (presque comme du rafraîchissement de modules à la volée côté serveur), et externalise automatiquement les dépendances compatibles avec CommonJS pour accélérer la vitesse du build. Le serveur de production peut être complètement découplé de Vite, et le même setup peut être facilement adapté pour permettre le pré-rendu / la génération statique (_SSG_).
+Vite 2.0 est livré avec le [support expérimental du rendu côté serveur](https://vitejs.dev/guide/ssr.html). Vite fournit des APIs afin de charger et de mettre à jour efficacement le code source ESM en Node.js pendant le développement (presque comme du rafraîchissement de modules à la volée côté serveur), et externalise automatiquement les dépendances compatibles avec CommonJS pour rendre la compilation plus rapide. Le serveur de production peut être complètement découplé de Vite, et le même setup peut être facilement adapté pour permettre le pré-rendu / la génération statique (_SSG_).
 
 Le rendu côté serveur de Vite est proposé comme une fonctionnalité bas-niveau, et nous nous attendons à ce que des frameworks plus haut-niveau s’appuient dessus.
 

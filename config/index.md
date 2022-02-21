@@ -75,7 +75,7 @@ export default defineConfig(({ command, mode }) => {
   } else {
     // command === 'build'
     return {
-      // configuration spécifique au mode build
+      // configuration spécifique au mode compilation
     }
   }
 })
@@ -133,7 +133,7 @@ export default defineConfig(async ({ command, mode }) => {
 
 - **Type :** `Record<string, string>`
 
-  Définit des constantes globales. Les valeurs saisies seront définies comme des variables globales en développement et remplacées statiquement pendant le build.
+  Définit des constantes globales. Les valeurs saisies seront définies comme des variables globales en développement et remplacées statiquement pendant la compilation.
 
   - Depuis la version `2.0.0-beta.70`, les chaînes de caractères sont utilisées comme des expressions brutes, donc si vous définissez une chaîne de caractères constante, elle doit être explicitement mise entre guillemets (avec `JSON.stringify` par exemple).
 
@@ -166,7 +166,7 @@ export default defineConfig(async ({ command, mode }) => {
 - **Type :** `string | false`
 - **Valeur par défaut :** `"public"`
 
-  Répertoire d’où servir les ressources statiques. Les fichiers de ce répertoires sont servis à `/` pendant le développement et copiés à la racine de `outDir` pendant le build, et ils sont toujours servis ou copiés tels quels sans aucune transformation. La valeur peut être soit un chemin absolu sur tout le système de fichiers, soit un chemin relatif à la racine du projet. La valeur par défaut est `.vite` quand aucun package.json n’est détecté.
+  Répertoire d’où servir les ressources statiques. Les fichiers de ce répertoires sont servis à `/` pendant le développement et copiés à la racine de `outDir` pendant la compilation, et ils sont toujours servis ou copiés tels quels sans aucune transformation. La valeur peut être soit un chemin absolu sur tout le système de fichiers, soit un chemin relatif à la racine du projet. La valeur par défaut est `.vite` quand aucun package.json n’est détecté.
 
   Définir `publicDir` à `false` désactive cette fonctionnalité.
 
@@ -196,7 +196,7 @@ export default defineConfig(async ({ command, mode }) => {
   Si vous avez des duplications d’une même dépendance dans votre app (probablement à cause du hoisting ou de packages liés dans les monorepos), utilisez cette option pour forcer Vite à toujours résoudre les dépendances à la même copie (celle à la racine du projet).
 
   :::warning SSR + ESM
-  Pour les builds SSR, la déduplication ne fonctionne pas pour les builds ESM configurés via `build.rollupOptions.output`. Vous pouvez contourner cette limitation en utilisant des builds CJS en attendant qu’ESM propose un meilleur support des plugins pour le chargement de modules.
+  Pour les compilations SSR, la déduplication ne fonctionne pas pour la compilation en ESM configurée via `build.rollupOptions.output`. Vous pouvez contourner cette limitation en utilisant une compilation CJS en attendant qu’ESM propose un meilleur support des plugins pour le chargement de modules.
   :::
 
 ### resolve.conditions
@@ -657,7 +657,7 @@ export default defineConfig(async ({ command, mode }) => {
   })
   ```
 
-## Options du build
+## Options de compilation
 
 ### build.target
 
@@ -674,7 +674,7 @@ export default defineConfig(async ({ command, mode }) => {
 
   La transformation est réalisée à l’aide d’esbuild et la valeur doit être une [option target d’esbuild](https://esbuild.github.io/api/#target) valide. Les valeurs spécifiées peuvent être soit une version d’ECMAScript (par exemple `es2015`), une version de navigateur (par exemple `chrome58`), ou un array de plusieurs cibles comme celles-ci.
 
-  Notez que le build échouera s’il y a des fonctionnalités qui ne peuvent pas être transpilées par esbuild. Voir la [documentation d’esbuild](https://esbuild.github.io/content-types/#javascript) pour de plus amples détails.
+  Notez que la compilation échouera s’il y a des fonctionnalités qui ne peuvent pas être transpilées par esbuild. Voir la [documentation d’esbuild](https://esbuild.github.io/content-types/#javascript) pour de plus amples détails.
 
 ### build.polyfillModulePreload
 
@@ -683,7 +683,7 @@ export default defineConfig(async ({ command, mode }) => {
 
   Définit si le [polyfill de module preload](https://guybedford.com/es-module-preloading-integrity#modulepreload-polyfill) doit être injecté automatiquement.
 
-  Si cette option est définie à `true`, le polyfill est automatiquement injecté au module proxy de chaque entrée `index.html`. Si le build est configuré pour utiliser une entrée spécifique non-HTML à l’aide de `build.rollupOptions.input`, alors il faut importer manuellement le polyfill dans ladite entrée :
+  Si cette option est définie à `true`, le polyfill est automatiquement injecté au module proxy de chaque entrée `index.html`. Si la compilation est configurée pour utiliser une entrée spécifique non-HTML à l’aide de `build.rollupOptions.input`, alors il faut importer manuellement le polyfill dans ladite entrée :
 
   ```js
   import 'vite/modulepreload-polyfill'
@@ -778,7 +778,7 @@ export default defineConfig(async ({ command, mode }) => {
 - **Valeur par défaut :** `false`
 - **Voir aussi :** [Intégration du back-end](/guide/backend-integration)
 
-  Quand cette option est à `true`, le build générera également un fichier `manifest.json` contenant un mapping entre les noms de fichiers de ressources non-hashés et leurs versions hashées, qui peut ensuite être utilisé par un framework serveur afin de rendre les bons liens de ressources. Si la valeur est une chaîne de caractères, elle sera utilisée comme nom pour le fichier du manifeste.
+  Quand cette option est à `true`, la compilation générera également un fichier `manifest.json` contenant un mapping entre les noms de fichiers de ressources non-hashés et leurs versions hashées, qui peut ensuite être utilisé par un framework serveur afin de rendre les bons liens de ressources. Si la valeur est une chaîne de caractères, elle sera utilisée comme nom pour le fichier du manifeste.
 
 ### build.ssrManifest
 
@@ -786,7 +786,7 @@ export default defineConfig(async ({ command, mode }) => {
 - **Valeur par défaut :** `false`
 - **Voir aussi :** [Rendu côté serveur (SSR)](/guide/ssr)
 
-  Quand cette option est à `true`, le build générera également un manifeste de rendu côté serveur permettant de déterminer les liens de style ainsi que les directives de pré-chargement (_preload directives_) des ressources en production. Si la valeur est une chaîne de caractères, elle sera utilisée comme nom pour le fichier du manifeste.
+  Quand cette option est à `true`, la compilation générera également un manifeste de rendu côté serveur permettant de déterminer les liens de style ainsi que les directives de pré-chargement (_preload directives_) des ressources en production. Si la valeur est une chaîne de caractères, elle sera utilisée comme nom pour le fichier du manifeste.
 
 ### build.ssr
 
@@ -794,7 +794,7 @@ export default defineConfig(async ({ command, mode }) => {
 - **Valeur par défaut :** `undefined`
 - **Voir aussi :** [Rendu côté serveur (SSR)](/guide/ssr)
 
-  Définit si le build doit être orienté vers un rendu côté serveur. La valeur peut être une chaîne spécifiant directement l’entrée de rendu côté serveur, ou `true`, ce qui requiert de spécifier l’entrée de rendu côté serveur à l’aide de `rollupOptions.input`.
+  Définit si la compilation doit être orientée vers un rendu côté serveur. La valeur peut être une chaîne spécifiant directement l’entrée de rendu côté serveur, ou `true`, ce qui requiert de spécifier l’entrée de rendu côté serveur à l’aide de `rollupOptions.input`.
 
 ### build.minify
 
@@ -823,7 +823,7 @@ export default defineConfig(async ({ command, mode }) => {
 - **Type :** `boolean`
 - **Valeur par défaut :** `true` si `outDir` est dans `root`
 
-  Par défaut, Vite videra le `outDir` lors du build s’il se trouve dans la racine projet. Il émettra un avertissement si `outDir` est en dehors de la racine projet pour empêcher de retirer accidentellement des fichiers importants. Vous pouvez définir explicitement cette option pour retirer l’avertissement. Elle est également disponible avec l’interface en ligne de commande en tant que `--emptyOutDir`.
+  Par défaut, Vite videra le `outDir` lors de la compilation s’il se trouve dans la racine projet. Il émettra un avertissement si `outDir` est en dehors de la racine projet pour empêcher de retirer accidentellement des fichiers importants. Vous pouvez définir explicitement cette option pour retirer l’avertissement. Elle est également disponible avec l’interface en ligne de commande en tant que `--emptyOutDir`.
 
 ### build.reportCompressedSize
 
@@ -844,7 +844,7 @@ export default defineConfig(async ({ command, mode }) => {
 - **Type :** [`WatcherOptions`](https://rollupjs.org/guide/en/#watch-options)`| null`
 - **Valeur par défaut :** `null`
 
-  Définissez cette option à `{}` pour activer le watcher de Rollup. Cette option est surtout utile dans des contextes où les plugins sont build-only ou pour les process d’intégration.
+  Définissez cette option à `{}` pour activer l'observateur de fichier de Rollup. Cette option est surtout utile dans des contextes où les plugins sont build-only ou pour les process d’intégration.
 
 ## Options de l’aperçu (_preview_)
 
@@ -991,7 +991,7 @@ Il est possibles que les options relatives au rendu côté serveur soient légè
 - **Type :** `'node' | 'webworker'`
 - **Valeur par défaut :** `node`
 
-  Environnement ciblé pour le build côté serveur.
+  Environnement ciblé pour la compilation côté serveur.
 
 ## Options du worker
 

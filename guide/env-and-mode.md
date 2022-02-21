@@ -96,7 +96,7 @@ Dans votre application, vous pouvez rendre le titre en utilisant `import.meta.en
 
 Cependant, il est important de comprendre que le **mode** est un concept plus large que simplement développement ou production. Un exemple typique est que vous pourriez vouloir disposer d’un mode « staging » qui aurait un comportement similaire à la production, mais avec des variables d’environnement légèrement différentes de celle-ci.
 
-Vous pouvez surcharger le mode utilisé par défaut pour une commande en passant l’option `--mode` en ligne de commande. Par exemple, si vous souhaitez builder votre app pour notre mode staging hypothétique :
+Vous pouvez surcharger le mode utilisé par défaut pour une commande en passant l’option `--mode` en ligne de commande. Par exemple, si vous souhaitez compiler votre app pour notre mode staging hypothétique :
 
 ```bash
 vite build --mode staging
