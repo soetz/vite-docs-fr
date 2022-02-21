@@ -26,7 +26,7 @@ Pre-bundling dependencies:
 
 2. **La performance :** Vite convertit les dépendances ESM ayant beaucoup de modules internes en un module unique pour améliorer la performance de chargement.
 
-   Certains packages fournissent leurs builds en modules ES sous la forme de plein de fichiers différents qui s’importent les uns les autres. Par exemple, [`lodash-es` a plus de 600 modules internes](https://unpkg.com/browse/lodash-es/) ! Lorsque l’on écrit `import { debounce } from 'lodash-es'`, le navigateur doit effectuer plus de 600 requêtes HTTP en même temps ! Même si le serveur peut les supporter, le grand nombre de requêtes crée un embouteillage du côté du navigateur, ce qui rend le chargement de la page nettement plus lent.
+   Certains packages fournissent leurs modules compilés au format ES en plein de fichiers différents qui s’importent les uns les autres. Par exemple, [`lodash-es` a plus de 600 modules internes](https://unpkg.com/browse/lodash-es/) ! Lorsque l’on écrit `import { debounce } from 'lodash-es'`, le navigateur doit effectuer plus de 600 requêtes HTTP en même temps ! Même si le serveur peut les supporter, le grand nombre de requêtes crée un embouteillage du côté du navigateur, ce qui rend le chargement de la page nettement plus lent.
 
    En pré-bundlant `lodash-es` en un unique module, il n’y a plus besoin que d’une requête HTTP !
 

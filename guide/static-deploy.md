@@ -15,32 +15,32 @@ Les guides suivants partent du principe que les affirmations suivantes sont vrai
 }
 ```
 
-Il est important de noter que `vite preview` est fait pour prévisualiser le build localement et pas pour être un serveur de production.
+Il est important de noter que `vite preview` est fait pour prévisualiser la compilation localement et pas pour être un serveur de production.
 
 ::: tip NOTE
 Ces guides fournissent des instructions pour effectuer un déploiement statique de votre site Vite. Vite propose également un support expérimental du rendu côté serveur (_server side rendering_). Le rendu côté serveur fait référence aux frameworks front-end qui supportent le fait d’exécuter une application dans Node.js, qui font un pré-rendu en HTML, et qui l’« hydratent » côté client en bout de course. Allez voir le [guide du rendu côté serveur](./ssr) pour en savoir plus sur cette fonctionnalité. Autrement, si vous souhaitez intégrer votre application à un framework côté serveur classique, allez plutôt voir le [guide d’intégration du back-end](./backend-integration).
 :::
 
-## Builder l’application
+## Compiler l’application
 
-Vous pouvez lancer la commande `npm run build` pour builder l’application.
+Vous pouvez lancer la commande `npm run build` pour compiler l’application.
 
 ```bash
 $ npm run build
 ```
 
-Par défaut, la sortie du build sera placée dans `dist`. Vous pouvez déployer ce dossier `dist` à l’aide de la plateforme de votre choix.
+Par défaut, la sortie de compilation sera placée dans `dist`. Vous pouvez déployer ce dossier `dist` à l’aide de la plateforme de votre choix.
 
 ### Tester l’application localement
 
-Une fois que vous avez buildé l’application, vous pouvez la tester localement avec la commande `npm run preview`.
+Une fois que vous avez compilé l’application, vous pouvez la tester localement avec la commande `npm run preview`.
 
 ```bash
 $ npm run build
 $ npm run preview
 ```
 
-La commande `vite preview` va démarrer un serveur web statique local qui sert les fichiers du dossier `dist` sur `http://localhost:4173`. C’est un moyen facile de vérifier que le build de production fonctionne en local.
+La commande `vite preview` va démarrer un serveur web statique local qui sert les fichiers du dossier `dist` sur `http://localhost:4173`. C’est un moyen facile de vérifier que la compilation de production fonctionne en local.
 
 Vous pouvez configurer le port du serveur en passant l’option `--port` comme argument.
 
@@ -70,10 +70,10 @@ Maintenant le script `preview` lancera le serveur à `http://localhost:8080`.
    # annuler s’il y a une erreur
    set -e
 
-   # build
+   # compilation
    npm run build
 
-   # naviguer au répertoire de sortie du build
+   # naviguer au répertoire de sortie de compilation
    cd dist
 
    # si vous déployez vers un domaine personnalisé
@@ -140,7 +140,7 @@ Vous pouvez aussi lancer le script ci-dessus dans votre configuration CI pour d�
 
    Si vous dépolyez sur `https://<NOM D’UTILISATEUR ou GROUPE>.gitlab.io/<DÉPÔT>/`, par exemple si l’adresse de votre dépôt est `https://gitlab.com/<NOM D’UTILISATEUR>/<DÉPÔT>`, alors définissez `base` à `'/<DÉPÔT>/'`.
 
-2. Créez un fichier nommé `.gitlab-ci.yml` à la racine de votre projet avec le contenu ci-dessous. Cela va builder et déployer votre site chaque fois que vous en modifiez le contenu :
+2. Créez un fichier nommé `.gitlab-ci.yml` à la racine de votre projet avec le contenu ci-dessous. Cela va compiler et déployer votre site chaque fois que vous en modifiez le contenu :
 
    ```yaml
    image: node:16.5.0
@@ -317,6 +317,6 @@ Vous pouvez déployer votre application Vite rapidement avec le service Microsof
 
 Installez l’extension sur VS Code et naviguez à la racine de votre application. Ouvrez l’extension, connectez-vous à Azure, et cliquez sur le signe « + » pour créer une nouvelle Static Web App. On vous demandera quelle clé de souscription utiliser.
 
-Suivez les instructions de l’extension pour donner un nom à votre application, choisissez un preset de framework, et donnez la racine de l’application (le plus souvent `/`) ainsi que l’emplacement des fichiers buildés `/dist`. Une action GitHub sera créée dans votre dépôt dans un dossier `.github`.
+Suivez les instructions de l’extension pour donner un nom à votre application, choisissez un preset de framework, et donnez la racine de l’application (le plus souvent `/`) ainsi que l’emplacement des fichiers compilés `/dist`. Une action GitHub sera créée dans votre dépôt dans un dossier `.github`.
 
 L’action déploiera votre application (vous pouvez suivre la progression dans l’onglet Actions de votre dépôt) et, lorsque le process réussit, vous permettra de voir votre application à l’adresse fournie en cliquant sur le bouton « Browse Website » de la fenêtre de progression de l’extension, qui apparaît une fois que l’action GitHub s’est exécutée.

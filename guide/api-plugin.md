@@ -1,6 +1,6 @@
 # API pour plugin
 
-Les plugins Vite étendent la très bonne interface pour plugin de Rollup avec quelques options spécifiques à Vite. L’intérêt est que vous pouvez créer un seul plugin et qu’il fonctionnera à la fois en développement et pour le build.
+Les plugins Vite étendent la très bonne interface pour plugin de Rollup avec quelques options spécifiques à Vite. L’intérêt est que vous pouvez créer un seul plugin et qu’il fonctionnera à la fois en développement et pour la compilation.
 
 **Il est recommandé de lire [la documentation des plugins Rollup](https://rollupjs.org/guide/en/#plugin-development) (en anglais) avant ce qui suit.**
 
@@ -109,7 +109,7 @@ Voir l’exemple de la [section suivante](#convention-pour-les-modules-virtuels)
 
 ## Convention pour les modules virtuels
 
-Les modules virtuels sont un procédé utile qui permet de passer des informations aux fichiers source au moment du build avec une syntaxe d’import de module ES normale.
+Les modules virtuels sont un procédé utile qui permet de passer des informations aux fichiers source au moment de la compilation avec une syntaxe d’import de module ES normale.
 
 ```js
 export default function myPlugin() {
@@ -141,13 +141,13 @@ import { msg } from '@my-virtual-module'
 console.log(msg)
 ```
 
-La convention de Vite pour les modules virtuels est de préfixer le chemin visible par l’utilisateur par `virtual:`. Si possible le nom du plugin devrait être utilisé comme un namespace pour éviter d’entrer en conflit avec les autres plugins de l’écosystème. Par exemple, `vite-plugin-posts` pourrait demander aux utilisateurs d’importer un module virtuel `virtual:posts` ou `virtual:posts/helpers` pour obtenir des informations au moment du build. En interne, les plugins qui utilisent des modules virtuels doivent préfixer l’identifiant par `\0` lorsqu’ils résolvent l’identifiant (c’est une convention de l’écosystème Rollup). Cela évite que d’autres plugins essayent de traiter le même identifiant (comme la résolution des nœuds), et les fonctionnalités intégrées à Vite comme les sourcemaps peuvent se servir de cette information pour différencier les modules virtuels des fichiers classiques. `\0` n’est pas un caractère autorisé dans les URLs d’import alors nous devons le remplacer pendant l’analyse de l’import. Dans le navigateur, un identifiant virtuel `\0{id}` sera encodé sous la forme `/@id/__x00__{id}` pour le développement. Cet identifiant sera à nouveau décodé avant d’entrer dans la pipeline de plugins, alors cette mécanique n’est pas visible par les hooks de plugins.
+La convention de Vite pour les modules virtuels est de préfixer le chemin visible par l’utilisateur par `virtual:`. Si possible le nom du plugin devrait être utilisé comme un namespace pour éviter d’entrer en conflit avec les autres plugins de l’écosystème. Par exemple, `vite-plugin-posts` pourrait demander aux utilisateurs d’importer un module virtuel `virtual:posts` ou `virtual:posts/helpers` pour obtenir des informations au moment de la compilation. En interne, les plugins qui utilisent des modules virtuels doivent préfixer l’identifiant par `\0` lorsqu’ils résolvent l’identifiant (c’est une convention de l’écosystème Rollup). Cela évite que d’autres plugins essayent de traiter le même identifiant (comme la résolution des nœuds), et les fonctionnalités intégrées à Vite comme les sourcemaps peuvent se servir de cette information pour différencier les modules virtuels des fichiers classiques. `\0` n’est pas un caractère autorisé dans les URLs d’import alors nous devons le remplacer pendant l’analyse de l’import. Dans le navigateur, un identifiant virtuel `\0{id}` sera encodé sous la forme `/@id/__x00__{id}` pour le développement. Cet identifiant sera à nouveau décodé avant d’entrer dans la pipeline de plugins, alors cette mécanique n’est pas visible par les hooks de plugins.
 
 Notez que les modules directement tirés d’un vrai fichier, comme c’est le cas d’un module de script dans un composant à fichier unique (_SFC_) (un composant à fichier unique .vue ou .svelte par exemple) n’ont pas besoin de suivre cette convention. Les composants à fichier unique génèrent en général une série de sous-modules lorsqu’ils sont traités mais le code de ceux-ci peut-être relié au système de fichiers. Utiliser `\0` pour ces sous-modules empêcherait les sourcemaps de fonctionner correctement.
 
 ## Hooks universels
 
-Pendant le développement, le serveur de Vite crée un conteneur de plugin qui invoque les [hooks de build de Rollup](https://rollupjs.org/guide/en/#build-hooks) de la même façon que le fait Rollup.
+Pendant le développement, le serveur de Vite crée un conteneur de plugin qui invoque les [hooks de compilation de Rollup](https://rollupjs.org/guide/en/#build-hooks) de la même façon que le fait Rollup.
 
 Les hooks suivants sont appelés une fois lors du démarrage du serveur :
 
@@ -303,14 +303,14 @@ Les plugins Vite peuvent aussi fournir des hooks qui servent uniquement pour Vit
   }
   ```
 
-  Notez que `configureServer` n’est pas appelé au moment du build de production alors vos autres hooks doivent gérer le cas où l’instance de serveur est absente.
+  Notez que `configureServer` n’est pas appelé au moment de la compilation de production alors vos autres hooks doivent gérer le cas où l’instance de serveur est absente.
 
 ### `transformIndexHtml`
 
 - **Type :** `IndexHtmlTransformHook | { enforce?: 'pre' | 'post', transform: IndexHtmlTransformHook }`
 - **Genre :** `asynchrone`, `séquentiel`
 
-  Hook dédié au fait de transformer `index.html`. Le hook reçoit le HTML actuel sous la forme d’une chaîne de caractères et un contexte de transformation. Le contexte expose l’instance du [`ViteDevServer`](./api-javascript#vitedevserver) pendant le développement, et expose le bundle de sortie de Rollup pendant le build.
+  Hook dédié au fait de transformer `index.html`. Le hook reçoit le HTML actuel sous la forme d’une chaîne de caractères et un contexte de transformation. Le contexte expose l’instance du [`ViteDevServer`](./api-javascript#vitedevserver) pendant le développement, et expose le bundle de sortie de Rollup pendant la compilation.
 
   Le hook peut être asynchrone et retourne un des formats suivants :
 
@@ -425,13 +425,13 @@ Un plugin Vite peut également spécifier une propriété `enforce` (à la mani�
 - Plugins utilisateur avec `enforce: 'pre'`.
 - Plugins internes à Vite.
 - Plugins utilisateur sans valeur pour enforce.
-- Plugins de build de Vite.
+- Plugins de compilation de Vite.
 - Plugins utilisateur avec `enforce: 'post'`.
-- Plugins de build finaux de Vite (minification, manifeste, reporting).
+- Plugins de compilation finaux de Vite (minification, manifeste, reporting).
 
 ## Application conditionnelle
 
-Par défaut les plugins sont invoqués à la fois pour serve et build. Dans les cas où un plugin ne doit être appliqué conditionnellement que pour serve ou build, utilisez la propriété `apply` pour seulement l’invoquer durant `'build'` ou `'serve'` :
+Par défaut les plugins sont invoqués à la fois pour `serve` et `build`. Dans les cas où un plugin ne doit être appliqué conditionnellement que pour serve ou `build`, utilisez la propriété `apply` pour seulement l’invoquer durant `'build'` ou `'serve'` :
 
 ```js
 function myPlugin() {
@@ -446,7 +446,7 @@ Un fonction peut aussi être utilisée, pour plus de contrôle :
 
 ```js
 apply(config, { command }) {
-  // appliquer seulement pour le build et pas pour le rendu côté serveur
+  // appliquer seulement pour la compilation et pas pour le rendu côté serveur
   return command === 'build' && !config.build.ssr
 }
 ```
@@ -460,7 +460,7 @@ En général, tant qu’un plugin Rollup respecte les critères suivants il devr
 - Il n’utilise pas le hook [`moduleParsed`](https://rollupjs.org/guide/en/#moduleparsed).
 - Sa phase de bundling et sa phase d’output sont découplées.
 
-Si un plugin Rollup n’a de sens que pour la phase de build, alors il peut être spécifié sous `build.rollupOptions.plugins`.
+Si un plugin Rollup n’a de sens que pour la phase de compilation, alors il peut être spécifié sous `build.rollupOptions.plugins`.
 
 Vous pouvez aussi agrémenter un plugin Rollup existant de propriétés propres à Vite :
 

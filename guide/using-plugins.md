@@ -40,11 +40,11 @@ Vous pouvez également trouver les plugins qui suivent les [conventions recomman
 
 ## Forcer l’ordre des plugins
 
-Pour assurer la compatibilité avec certains plugins Rollup, il est possible qu’il soit nécessaire de forcer l’ordre d’un plugin ou de seulement l’appliquer pour le build. Cela devrait être un détail d’implémentation des plugins Vite. Vous pouvez forcer la position d’un plugin avec le modifieur `enforce` :
+Pour assurer la compatibilité avec certains plugins Rollup, il est possible qu’il soit nécessaire de forcer l’ordre d’un plugin ou de seulement l’appliquer pour la compilation. Cela devrait être un détail d’implémentation des plugins Vite. Vous pouvez forcer la position d’un plugin avec le modifieur `enforce` :
 
 - `pre` : invoque le plugin avant les plugins du noyau de Vite
 - par défaut : invoque le plugin après les plugins du noyau de Vite
-- `post` : invoque le plugin après les plugins de build de Vite
+- `post` : invoque le plugin après les plugins de compilation de Vite
 
 ```js
 // vite.config.js
@@ -65,7 +65,7 @@ Allez voir le [Guide de l’API pour plugin](./api-plugin.md#ordre-du-plugin) po
 
 ## Application conditionnelle
 
-Par défaut, les plugins sont invoqués à la fois pour le développement et pour le build. Dans les cas où un plugin doit être appliqué conditionnellement seulement pour le développement ou pour le build, utilisez la propriété `apply` pour l’invoquer seulement durant `'build'` ou `'serve'` :
+Par défaut, les plugins sont invoqués à la fois pour le développement et pour la compilation. Dans les cas où un plugin doit être appliqué conditionnellement seulement pour le développement ou pour la compilation, utilisez la propriété `apply` pour l’invoquer seulement durant `'build'` ou `'serve'` :
 
 ```js
 // vite.config.js

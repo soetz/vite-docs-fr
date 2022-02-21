@@ -6,7 +6,7 @@ Si vous souhaitez servir le HTML à l’aide d’un back-end traditionnel (par e
 Si vous avez besoin d’une intégration particulière, vous pouvez suivre ce guide pour la configurer manuellement.
 :::
 
-1. Dans votre configuration Vite, configurez l’entrée et activez le manifeste de build :
+1. Dans votre configuration Vite, configurez l’entrée et activez le manifeste de compilation :
 
    ```js
    // vite.config.js
