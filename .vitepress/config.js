@@ -10,6 +10,9 @@ const pkg = require('../package.json')
   lang: 'fr',
   description: 'Le tooling front-end nouvelle génération.',
   head: [['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }]],
+  vue: {
+    reactivityTransform: true
+  },
   themeConfig: {
     repo: pkg.repository,
     logo: '/logo.svg',
