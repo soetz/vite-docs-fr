@@ -42,7 +42,7 @@ Dans une configuration monorepo, une dépendance peut être un package lié du m
 
 ::: warning Note
 Les dépendances liées peuvent ne pas fonctionner correctement dans le build final à cause de différences dans la façon de résoudre les dépendances.
-Utilisez plutôt `npm package` pour toutes les dépendances locales pour éviter d’avoir des problèmes dans le build final.
+Utilisez plutôt `npm pack` pour toutes les dépendances locales afin d’éviter d’avoir des problèmes dans le build final (ceci n’est nécessaire que lorsque le code source lié n’exporte que du code CommonJS ; s’il exporte des modules ES alors ça ne l’est pas).
 :::
 
 ## Modifier le comportement
