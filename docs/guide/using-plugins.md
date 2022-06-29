@@ -31,10 +31,10 @@ Les plugins falsy seront ignorés, ce qui peut être utilisé pour activer ou d�
 ## Trouver des plugins
 
 :::tip NOTE
-Vite tente de supporter les patterns de développement web les plus courants sans qu’il n’y ait besoin de plugins. Avant de partir à la recherche d’un plugin Vite ou Rollup qui soit compatible, faites un tour sur le [guide des fonctionnalités](.md). Souvent, les cas où un plugin serait nécessaire pour un projet Rollup sont déjà couverts par Vite.
+Vite tente de supporter les patterns de développement web les plus courants sans qu’il n’y ait besoin de plugins. Avant de partir à la recherche d’un plugin Vite ou Rollup qui soit compatible, faites un tour sur le [guide des fonctionnalités](/guide/features.md). Souvent, les cas où un plugin serait nécessaire pour un projet Rollup sont déjà couverts par Vite.
 :::
 
-Allez voir la [page Plugins](../plugins/) pour plus d’informations sur les plugins officiels. Sinon, les plugins de la communauté sont référencés par [Awesome Vite](https://github.com/vitejs/awesome-vite#plugins). Pour les plugins Rollup compatibles, allez voir [Vite Rollup Plugins](https://vite-rollup-plugins.patak.dev) qui liste les plugins officiels Rollup compatibles et fournit des instructions d’utilisation, ou la [section Compatibilité des plugins Rollup](/api-plugin#compatibilite-des-plugins-rollup) au cas où le plugin qui vous intéresse ne serait pas inclus.
+Allez voir la [page Plugins](../plugins/) pour plus d’informations sur les plugins officiels. Sinon, les plugins de la communauté sont référencés par [Awesome Vite](https://github.com/vitejs/awesome-vite#plugins). Pour les plugins Rollup compatibles, allez voir [Vite Rollup Plugins](https://vite-rollup-plugins.patak.dev) qui liste les plugins officiels Rollup compatibles et fournit des instructions d’utilisation, ou la [section Compatibilité des plugins Rollup](/guide/api-plugin#compatibilite-des-plugins-rollup) au cas où le plugin qui vous intéresse ne serait pas inclus.
 
 Vous pouvez également trouver les plugins qui suivent les [conventions recommandées](api-plugin.md#conventions) en faisant une [recherche npm de vite-plugin](https://www.npmjs.com/search?q=vite-plugin&ranking=popularity) pour les plugins Vite ou une [recherche npm de rollup-plugin](https://www.npmjs.com/search?q=rollup-plugin&ranking=popularity) pour les plugins Rollup.
 

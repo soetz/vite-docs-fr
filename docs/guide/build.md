@@ -10,7 +10,7 @@ Ce bundle de production part du principe que le JavaScript moderne est supporté
 defaults and supports es6-module and supports es6-module-dynamic-import, not opera > 0, not samsung > 0, not and_qq > 0
 ```
 
-Vous pouvez spécifier des cibles personnalisées à l’aide de l’[option de configuration `build.target`](/docs/config/#build-target), sachant que la cible minimum est `es2015`.
+Vous pouvez spécifier des cibles personnalisées à l’aide de l’[option de configuration `build.target`](/config/#build-target), sachant que la cible minimum est `es2015`.
 
 Notez que par défaut, Vite ne s’occupe que des transformations de syntaxe et **n’insère pas de polyfill**. Regardez du côté de [Polyfill.io](https://polyfill.io/v3/) qui est un service qui génère automatiquement des bundles de polyfills en se basant sur la chaîne de caractères de l’agent utilisateur.
 
@@ -20,7 +20,7 @@ Les navigateurs plus anciens peuvent être supportés à l’aide de [@vitejs/pl
 
 - Voir aussi : [Gestion des ressources statiques](./assets)
 
-Si vous déployez votre projet sous un chemin public imbriqué, spécifiez l’[option de configuration `base`](/docs/config/#base) et tous les chemins de ressources seront réécris en conséquence. Cette option peut aussi être spécifiée via l’interface en ligne de commande, par exemple `vite build --base=/mon/chemin/public/`.
+Si vous déployez votre projet sous un chemin public imbriqué, spécifiez l’[option de configuration `base`](/config/#base) et tous les chemins de ressources seront réécris en conséquence. Cette option peut aussi être spécifiée via l’interface en ligne de commande, par exemple `vite build --base=/mon/chemin/public/`.
 
 Les URLs de ressources importées par le JavaScript, les références `url()` dans le CSS, et les références à des ressources dans vos fichiers `.html` sont toutes ajustées automatiquement pour respecter cette option pendant la compilation.
 
@@ -28,7 +28,7 @@ La seule exception est quand vous devez concaténer dynamiquement des URLs à la
 
 ## Customiser la compilation
 
-La compilation peut être personnalisée à l’aide de ses diverses [options de configuration](/docs/config/#options-de-compilation). Plus spécifiquement, vous pouvez ajuster les [options de Rollup](https://rollupjs.org/guide/en/#big-list-of-options) sous-jacent avec `build.rollupOptions` :
+La compilation peut être personnalisée à l’aide de ses diverses [options de configuration](/config/#options-de-compilation). Plus spécifiquement, vous pouvez ajuster les [options de Rollup](https://rollupjs.org/guide/en/#big-list-of-options) sous-jacent avec `build.rollupOptions` :
 
 ```js
 // vite.config.js
@@ -99,7 +99,7 @@ Si vous spécifiez une racine différente, souvenez-vous que `__dirname` sera to
 
 Lorsque vous développerez une librairie à destination du navigateur, vous passerez sûrement une bonne partie de votre temps sur une page de démo ou de test qui importe votre librairie. Avec Vite, vous pouvez utiliser le `index.html` pour cela, et profiter d’une meilleure expérience de développement.
 
-Lorsqu’il est temps de faire le bundle de votre librairie pour commencer à la distribuer, utilisez l’[option de configuration `build.lib`](/docs/config/#build-lib). Assurez vous d’externaliser les dépendances que vous ne souhaitez pas retrouver dans votre bundle de librairie, comme `vue` ou `react` par exemple :
+Lorsqu’il est temps de faire le bundle de votre librairie pour commencer à la distribuer, utilisez l’[option de configuration `build.lib`](/config/#build-lib). Assurez vous d’externaliser les dépendances que vous ne souhaitez pas retrouver dans votre bundle de librairie, comme `vue` ou `react` par exemple :
 
 
 ```js

@@ -6,7 +6,7 @@ Vite expose des variables d’environnement via l’objet spécial **`import.met
 
 - **`import.meta.env.MODE`**: {string} le [mode](#modes) avec lequel l’application est exécutée.
 
-- **`import.meta.env.BASE_URL`**: {string} la base de l’URL sur laquelle l’application est servie. Elle est déterminée par l’[option de configuration `base`](/docs/config/#base).
+- **`import.meta.env.BASE_URL`**: {string} la base de l’URL sur laquelle l’application est servie. Elle est déterminée par l’[option de configuration `base`](/config/#base).
 
 - **`import.meta.env.PROD`**: {boolean} si l’application est exécutée en production.
 
@@ -24,7 +24,7 @@ Ces chaînes seront aussi remplacées lorsqu’elles apparaîssent dans des cha�
 
 ## Fichiers `.env`
 
-Vite utilise [dotenv](https://github.com/motdotla/dotenv) pour charger des variables d’environnement depuis les fichiers suivants de votre [répertoire d’environnement](/docs/config/#envdir) :
+Vite utilise [dotenv](https://github.com/motdotla/dotenv) pour charger des variables d’environnement depuis les fichiers suivants de votre [répertoire d’environnement](/config/#envdir) :
 
 ```
 .env                # chargé dans tous les cas
@@ -53,7 +53,7 @@ VITE_SOME_KEY=123
 
 seule `VITE_SOME_KEY` sera exposée à votre code source client (en tant que `import.meta.env.VITE_SOME_KEY`), `DB_PASSWORD` ne le sera pas.
 
-Si vous voulez customiser le préfixe des variables d’environnement, utilisez l’option [envPrefix](/docs/config/index#envprefix).
+Si vous voulez customiser le préfixe des variables d’environnement, utilisez l’option [envPrefix](/config/index#envprefix).
 
 :::warning NOTES DE SÉCURITÉ
 

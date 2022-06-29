@@ -6,13 +6,13 @@ Les plugins Vite étendent la très bonne interface pour plugin de Rollup avec q
 
 ## Créer un plugin
 
-Vite s’efforce de permettre l’utilisation des patterns les plus courants sans qu’il n’y ait besoin de plugin, alors avant d’en faire un nouveau assurez-vous d’avoir bien lu le [guide des fonctionnalités](/docs/guide/features) pour savoir si votre besoin n’est pas déjà couvert. Vérifiez aussi parmis les plugins de la communauté, à la fois sous la forme de [plugins Rollup compatibles](https://github.com/rollup/awesome) ou de [plugins spécifiques à Vite](https://github.com/vitejs/awesome-vite#plugins).
+Vite s’efforce de permettre l’utilisation des patterns les plus courants sans qu’il n’y ait besoin de plugin, alors avant d’en faire un nouveau assurez-vous d’avoir bien lu le [guide des fonctionnalités](/guide/features.md) pour savoir si votre besoin n’est pas déjà couvert. Vérifiez aussi parmis les plugins de la communauté, à la fois sous la forme de [plugins Rollup compatibles](https://github.com/rollup/awesome) ou de [plugins spécifiques à Vite](https://github.com/vitejs/awesome-vite#plugins).
 
 Lorsque vous créez un plugin, vous pouvez le mettre inline dans votre `vite.config.js`. Il n’y a pas spécialement besoin de créer un nouveau package. Une fois que vous constatez qu’un plugin a été utile pour l’un de vos projets, vous pouvez envisager de le partager pour aider d’autres personnes [dans l’écosystème](https://chat.vitejs.dev).
 
 ::: tip
 Si vous apprenez, débuggez, ou écrivez des plugins nous recommandons d’inclure [vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect) à votre projet. Il vous permet d’inspecter les états intermédiaires des plugins Vite. Après l’avoir installé, vous pouvez aller voir `localhost:3000/__inspect/` pour inspecter les modules et les transformations de votre projet. Les instructions d’installation se trouvent dans la [documentation de vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect).
-![vite-plugin-inspect](/docs/imagesmages/vite-plugin-inspect.png)
+![vite-plugin-inspect](/images/vite-plugin-inspect.png)
 :::
 
 ## Conventions

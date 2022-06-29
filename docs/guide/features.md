@@ -114,7 +114,7 @@ Les fichiers `.jsx` et `.tsx` sont également supportés. La transpilation du JS
 
 Les utilisateurs de Vue doivent utiliser le plugin officiel [@vitejs/plugin-vue-jsx](https://github.com/vitejs/vite/tree/main/packages/plugin-vue-jsx), qui fournit des fonctionnalités spécifiques à Vue 3, y compris le rafraîchissement des modules à la volée, la résolution des composants globaux, les directives et les slots.
 
-Si vous n’utilisez pas JSX avec React ou Vue, vous pouvez configurer un `jsxFactory` et un `jsxFragment` spécifiques à l’aide de l’[option `esbuild`](/docs/config/#esbuild). Par exemple pour Preact :
+Si vous n’utilisez pas JSX avec React ou Vue, vous pouvez configurer un `jsxFactory` et un `jsxFragment` spécifiques à l’aide de l’[option `esbuild`](/config/#esbuild). Par exemple pour Preact :
 
 ```js
 // vite.config.js
@@ -173,7 +173,7 @@ import classes from './example.module.css'
 document.getElementById('foo').className = classes.red
 ```
 
-Le comportement des modules CSS peut être configuré à l’aide de l’[option `css.modules`](/docs/config/#css-modules).
+Le comportement des modules CSS peut être configuré à l’aide de l’[option `css.modules`](/config/#css-modules).
 
 Si `css.modules.localsConvention` est configuré pour activer les noms en camelCase (par exemple avec `localsConvention: 'camelCaseOnly'`), vous pourrez aussi utiliser des imports nommés :
 
@@ -300,7 +300,7 @@ const modules = {
 }
 ```
 
-`import.meta.glob` et `import.meta.globEager` supportent également le fait d’importer des fichiers sous la forme de chaînes de caractères, à la manière de l’[import d’une ressource en tant que chaîne de caractères](/docs/guide/assets.html#importer-une-ressource-en-tant-que-chaine-de-caracteres). Nous utilisons ici la syntaxe d’[assertion d’import (_Import Assertions_)](https://github.com/tc39/proposal-import-assertions#synopsis).
+`import.meta.glob` et `import.meta.globEager` supportent également le fait d’importer des fichiers sous la forme de chaînes de caractères, à la manière de l’[import d’une ressource en tant que chaîne de caractères](/guide/assets.html#importer-une-ressource-en-tant-que-chaine-de-caracteres). Nous utilisons ici la syntaxe d’[assertion d’import (_Import Assertions_)](https://github.com/tc39/proposal-import-assertions#synopsis).
 
 ```js
 const modules = import.meta.glob('./dir/*.js', { assert: { type: 'raw' } })
@@ -378,7 +378,7 @@ import MyWorker from './worker?worker&inline'
 
 Vite extrait automatiquement le CSS utilisé par les modules dans un morceau (_chunk_) asynchrone et génère un fichier séparé. Le fichier CSS est automatiquement chargé via une balise `<link>` quand le morceau asynchrone associé est chargé, et le morceau asynchrone n’est évalué qu’après le chargement du CSS pour éviter les [FOUCs](https://fr.wikipedia.org/wiki/FOUC).
 
-Si vous préférez que tout le CSS soit extrait dans un même fichier, vous pouvez désactiver le fractionnement du CSS en définissant [`build.cssCodeSplit`](/docs/config/#build-csscodesplit) à `false`.
+Si vous préférez que tout le CSS soit extrait dans un même fichier, vous pouvez désactiver le fractionnement du CSS en définissant [`build.cssCodeSplit`](/config/#build-csscodesplit) à `false`.
 
 ### Génération des directives de pré-chargement (_preload directives_)
 
@@ -388,7 +388,7 @@ Vite génère automatiquement des directives `<link rel="modulepreload">` pour l
 
 Dans les applications réelles, Rollup génère souvent des morceaux « communs » —  du code qui est partagé par deux morceaux ou plus. Si l’on combine ça avec des imports dynamiques, il est courant d’avoir le scénario suivant :
 
-![graph](/docs/imagesmages/graph.png)
+![graph](/images/graph.png)
 
 Dans un scénario non-optimisé, quand le morceau asynchrone `A` est importé, le navigateur devra faire la requête pour `A` et le lire avant de pouvoir comprendre qu’il a aussi besoin du morceau commun `C`. Cela résulte en un aller-retour supplémentaire sur le réseau :
 

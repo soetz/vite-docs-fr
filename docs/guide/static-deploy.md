@@ -2,7 +2,7 @@
 
 Les guides suivants partent du principe que les affirmations suivantes sont vraies :
 
-- Vous utilisez l’emplacement de sortie par défaut (`dist`). Cet emplacement [peut être modifié par l’option `build.outDir`](/docs/config/#build-outdir), et vous devrez adapter les instructions de ces guides si c’est votre cas.
+- Vous utilisez l’emplacement de sortie par défaut (`dist`). Cet emplacement [peut être modifié par l’option `build.outDir`](/config/#build-outdir), et vous devrez adapter les instructions de ces guides si c’est votre cas.
 - Vous utilisez npm. Vous pouvez utiliser les commandes équivalentes pour lancer les scripts si vous utilisez Yarn ou d’autres gestionnaires de paquets.
 - Vite est installé comme dépendance locale dans votre projet, et les scripts npm suivants sont configurés :
 

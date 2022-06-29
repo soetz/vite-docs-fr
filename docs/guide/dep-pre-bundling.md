@@ -42,7 +42,7 @@ Après que le serveur ait démarré, si un nouvel import de dépendance est renc
 
 Dans une configuration monorepo, une dépendance peut être un package lié du même dépôt. Vite détecte automatiquement les dépendances qui ne sont pas résolues depuis `node_modules` et les traite comme du code source. Il n’essaiera pas de bundler la dépendance liée, et analysera sa liste de dépendances à la place.
 
-Ceci dit, cela requiert que la dépendance liée soit exportée en modules ES. Si ce n’est pas le cas, vous pouvez ajouter la dépendance à [`optimizeDeps.include`](/docs/config/#optimizedeps-include) et [`build.commonjsOptions.include`](/docs/config/#build-commonjsoptions) dans votre configuration.
+Ceci dit, cela requiert que la dépendance liée soit exportée en modules ES. Si ce n’est pas le cas, vous pouvez ajouter la dépendance à [`optimizeDeps.include`](/config/#optimizedeps-include) et [`build.commonjsOptions.include`](/config/#build-commonjsoptions) dans votre configuration.
 
 ```js
 export default defineConfig({
@@ -65,7 +65,7 @@ En raison de différences dans la façon de résoudre les dépendances liées, l
 
 ## Modifier le comportement
 
-Les heuristiques de découverte de dépendance ne sont pas toujours souhaitables. Dans les cas où vous voudriez inclure ou exclure explicitement des dépendances de la liste, utilisez l’[option de configuration `optimizeDeps`](/docs/config/#options-d%E2%80%99optimisation-des-dependances).
+Les heuristiques de découverte de dépendance ne sont pas toujours souhaitables. Dans les cas où vous voudriez inclure ou exclure explicitement des dépendances de la liste, utilisez l’[option de configuration `optimizeDeps`](/config/#options-d%E2%80%99optimisation-des-dependances).
 
 Un cas d’usage typique d’`optimizeDeps.include` et/ou de `optimizeDeps.exclude` est quand vous avez un import qui n’est pas directement découvrable dans le code source. Par exemple, l’import peut être créé suite à une transformation d’un plugin. Cela signifie que Vite ne pourra pas découvrir l’import lors de son scan initial — il ne peut le découvrir qu’une fois le fichier requêté par le navigateur et transformé. Dans ce cas, le serveur re-bundlera immédiatement après son démarrage.
 

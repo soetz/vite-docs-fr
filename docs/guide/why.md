@@ -24,9 +24,9 @@ Vite raccourcit la durée du démarrage du serveur en divisant d’abord les mod
 
   Vite sert le code source à travers les [modules ES natifs](https://developer.mozilla.org/fr/docs/Web/JavaScript/Guide/Modules). Cela consiste essentiellement à laisser le navigateur prendre en charge une partie du travail d’un bundler : Vite n’a plus qu’à transformer et servir le code source à la demande lorsque le navigateur le demande. Le code usant d’imports dynamiques n’est traité que s’il est effectivement utilisé sur l’écran actuel.
 
-  ![bundler based dev server](/docs/imagesmages/bundler.png)
+  ![bundler based dev server](/images/bundler.png)
 
-  ![esm based dev server](/docs/imagesmages/esm.png)
+  ![esm based dev server](/images/esm.png)
 
 ### Rafraîchissement lent
 

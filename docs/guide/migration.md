@@ -8,15 +8,15 @@
   - `transforms`
   - `indexHtmlTransforms`
 
-- `jsx` et `enableEsbuild` ont été retirées ; utilisez plutôt la nouvelle [option `esbuild`](/docs/config/#esbuild).
+- `jsx` et `enableEsbuild` ont été retirées ; utilisez plutôt la nouvelle [option `esbuild`](/config/#esbuild).
 
-- Les [options en lien avec le CSS](/docs/config/#css-modules) sont désormais regroupées sous `css`.
+- Les [options en lien avec le CSS](/config/#css-modules) sont désormais regroupées sous `css`.
 
-- Toutes les [options spécifiques à la compilation](/docs/config/#options-de-compilation) sont désormais regroupées sous `build`.
+- Toutes les [options spécifiques à la compilation](/config/#options-de-compilation) sont désormais regroupées sous `build`.
 
-  - `rollupInputOptions` et `rollupOutputOptions` sont remplacées par [`build.rollupOptions`](/docs/config/#build-rollupoptions).
-  - `esbuildTarget` est désormais [`build.target`](/docs/config/#build-target).
-  - `emitManifest` est désormais [`build.manifest`](/docs/config/#build-manifest).
+  - `rollupInputOptions` et `rollupOutputOptions` sont remplacées par [`build.rollupOptions`](/config/#build-rollupoptions).
+  - `esbuildTarget` est désormais [`build.target`](/config/#build-target).
+  - `emitManifest` est désormais [`build.manifest`](/config/#build-manifest).
   - Les options suivantes ont été retirées puisqu’elles peuvent être configurées à l’aide des hooks de plugins ou d’autres options :
     - `entry`
     - `rollupDedupe`
@@ -25,19 +25,19 @@
     - `shouldPreload`
     - `configureBuild`
 
-- Toutes les [options spécifiques au serveur](/docs/config/#options-du-serveur) sont désormais regroupées sous `server`.
+- Toutes les [options spécifiques au serveur](/config/#options-du-serveur) sont désormais regroupées sous `server`.
 
-  - `hostname` est désormais [`server.host`](/docs/config/#server-host).
-  - `httpsOptions` a été retirée. [`server.https`](/docs/config/#server-https) prend directement l’objet d’options.
-  - `chokidarWatchOptions` est désormais [`server.watch`](/docs/config/#server-watch).
+  - `hostname` est désormais [`server.host`](/config/#server-host).
+  - `httpsOptions` a été retirée. [`server.https`](/config/#server-https) prend directement l’objet d’options.
+  - `chokidarWatchOptions` est désormais [`server.watch`](/config/#server-watch).
 
-- [`assetsInclude`](/docs/config/#assetsinclude) prend désormais un `string | RegExp | (string | RegExp)[]` plutôt qu’une fonction.
+- [`assetsInclude`](/config/#assetsinclude) prend désormais un `string | RegExp | (string | RegExp)[]` plutôt qu’une fonction.
 
 - Toutes les options spécifiques à Vue sont retirées ; passez-les au plugin Vue à la place.
 
 ## Changement du comportement d’alias
 
-[`alias`](/docs/config/#resolve-alias) est désormais passé à `@rollup/plugin-alias` et ne requiert plus de slash au début et à la fin. Son comportement consiste maintenant en un remplacement direct, alors vous devrez retirer le slash de fin des alias de répertoires au format 1.0 :
+[`alias`](/config/#resolve-alias) est désormais passé à `@rollup/plugin-alias` et ne requiert plus de slash au début et à la fin. Son comportement consiste maintenant en un remplacement direct, alors vous devrez retirer le slash de fin des alias de répertoires au format 1.0 :
 
 ```diff
 - alias: { '/@foo/': path.resolve(__dirname, 'some-special-dir') }

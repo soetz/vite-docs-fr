@@ -22,7 +22,7 @@ Si vous avez besoin d’une intégration particulière, vous pouvez suivre ce gu
    })
    ```
 
-   Si vous n’avez pas désactivé le [polyfill de module preload](/docs/config/#build-polyfillmodulepreload), vous devrez aussi l’importer dans votre entrée
+   Si vous n’avez pas désactivé le [polyfill de module preload](/config/#build-polyfillmodulepreload), vous devrez aussi l’importer dans votre entrée
 
    ```js
    // ajoutez au début de votre entrée d’application

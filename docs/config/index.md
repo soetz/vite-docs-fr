@@ -8,7 +8,7 @@ title: Configurer Vite
 
 ### Résolution du fichier de configuration
 
-Lorsque vous lancez `vite` depuis l’interface en ligne de commande, Vite cherchera automatiquement un fichier de configuration nommé `vite.config.js` à la [racine du projet](/docs/guide/#index-html-et-racine-du-projet).
+Lorsque vous lancez `vite` depuis l’interface en ligne de commande, Vite cherchera automatiquement un fichier de configuration nommé `vite.config.js` à la [racine du projet](/guide/#index-html-et-racine-du-projet).
 
 Le fichier de configuration le plus basique ressemble à ça :
 
@@ -64,7 +64,7 @@ Vite supporte aussi les fichiers de configuration en TypeScript. Pour ce faire v
 
 ### Configuration conditionnelle
 
-Si la configuration doit déterminer certaines options selon la commande (`dev`/`serve` ou `build`) ou le [mode](/docs/guide/env-and-mode) utilisé, elle devrait plutôt exporter une fonction :
+Si la configuration doit déterminer certaines options selon la commande (`dev`/`serve` ou `build`) ou le [mode](/guide/env-and-mode) utilisé, elle devrait plutôt exporter une fonction :
 
 ```js
 export default defineConfig(({ command, mode }) => {
@@ -105,7 +105,7 @@ export default defineConfig(async ({ command, mode }) => {
 
   Dossier racine du projet (où se trouve `index.html`). Cela peut être un chemin absolu, ou un chemin relatif à la position du fichier de configuration.
 
-  Voir [`index.html` et racine du projet](/docs/guide/#index-html-et-racine-du-projet) pour plus de détails.
+  Voir [`index.html` et racine du projet](/guide/#index-html-et-racine-du-projet) pour plus de détails.
 
 ### base
 
@@ -118,7 +118,7 @@ export default defineConfig(async ({ command, mode }) => {
   - l’URL complète, comme `https://foo.com/`
   - une chaîne vide ou `./` (pour le déploiement intégré)
 
-  Voir [Chemin public de base](/docs/guide/build#chemin-public-de-base) pour plus de détails.
+  Voir [Chemin public de base](/guide/build#chemin-public-de-base) pour plus de détails.
 
 ### mode
 
@@ -127,7 +127,7 @@ export default defineConfig(async ({ command, mode }) => {
 
   Spécifier cette option dans la configuration remplacera le mode par défaut **à la fois pour `serve` et `build`**. Elle peut aussi être spécifiée grâce à l’option de ligne de commande `--mode`.
 
-  Voir [Variables d’environnement et modes](/docs/guide/env-and-mode) pour plus de détails.
+  Voir [Variables d’environnement et modes](/guide/env-and-mode) pour plus de détails.
 
 ### define
 
@@ -159,7 +159,7 @@ export default defineConfig(async ({ command, mode }) => {
 
 - **Type :** `(Plugin | Plugin[])[]`
 
-  Liste des plugins à utiliser. Les plugins falsy sont ignorés et les listes de plugins sont aplaties. Voir [API pour plugin](/docs/guide/api-plugin) pour plus de détails sur les plugins Vite.
+  Liste des plugins à utiliser. Les plugins falsy sont ignorés et les listes de plugins sont aplaties. Voir [API pour plugin](/guide/api-plugin) pour plus de détails sur les plugins Vite.
 
 ### publicDir
 
@@ -170,7 +170,7 @@ export default defineConfig(async ({ command, mode }) => {
 
   Définir `publicDir` à `false` désactive cette fonctionnalité.
 
-  Voir [Le répertoire `public`](/docs/guide/assets#le-repertoire-public) pour plus de détails.
+  Voir [Le répertoire `public`](/guide/assets#le-repertoire-public) pour plus de détails.
 
 ### cacheDir
 
@@ -187,7 +187,7 @@ export default defineConfig(async ({ command, mode }) => {
 
   Utilisez toujours des chemins absolus lorsque vous définissez des alias de chemin vers le système de fichiers. Les alias relatifs seront utilisés tel quels et ne seront pas résolus en tant que chemins du système de fichiers.
 
-  Une résolution plus fine peut être faite avec des [plugins](/docs/guide/api-plugin).
+  Une résolution plus fine peut être faite avec des [plugins](/guide/api-plugin).
 
 ### resolve.dedupe
 
@@ -346,7 +346,7 @@ export default defineConfig(async ({ command, mode }) => {
 ### assetsInclude
 
 - **Type :** `string | RegExp | (string | RegExp)[]`
-- **Voir aussi :** [Gestion des ressources statiques](/docs/guide/assets)
+- **Voir aussi :** [Gestion des ressources statiques](/guide/assets)
 
   Spécifie des [patterns picomatch](https://github.com/micromatch/picomatch) supplémentaires à traiter comme des ressources statiques afin :
 
@@ -384,7 +384,7 @@ export default defineConfig(async ({ command, mode }) => {
 
   Le répertoire à partir duquel les fichiers `.env` sont chargés. Cela peut être un chemin absolu, ou un chemin relatif à la racine du projet.
 
-  Voir [cette section](/docs/guide/env-and-mode#fichiers-env) pour plus d’informations sur les fichiers d’environnement.
+  Voir [cette section](/guide/env-and-mode#fichiers-env) pour plus d’informations sur les fichiers d’environnement.
 
 ### envPrefix
 
@@ -501,7 +501,7 @@ export default defineConfig(async ({ command, mode }) => {
 ### server.force
 
 - **Type :** `boolean`
-- **Voir aussi :** [Pré-bundler des dépendances](/docs/guide/dep-pre-bundling)
+- **Voir aussi :** [Pré-bundler des dépendances](/guide/dep-pre-bundling)
 
   Définissez cette option à `true` pour forcer le pré-bundling des dépendances.
 
@@ -552,7 +552,7 @@ export default defineConfig(async ({ command, mode }) => {
   - `'ssr'` désactivera la logique servant le HTML de Vite et vous devrez servir `index.html` manuellement.
   - `'html'` activera la logique servant le HTML de Vite.
 
-- **Voir aussi :** [SSR - Paramétrer le serveur de développement](/docs/guide/ssr#parametrer-le-serveur-de-developpement)
+- **Voir aussi :** [SSR - Paramétrer le serveur de développement](/guide/ssr#parametrer-le-serveur-de-developpement)
 
 - **Exemple :**
 
@@ -593,14 +593,14 @@ export default defineConfig(async ({ command, mode }) => {
 
   Restreint les fichiers pouvant être servis via `/@fs/`. Quand `server.fs.strict` est définie à `true`, accéder à des fichiers hors de cette liste de répertoires qui ne sont pas importés par un fichier autorisé donnera une 403.
 
-  Par défaut, Vite cherchera successivement dans les dossiers parents de la [racine du projet](/docs/guide/#index-html-et-racine-du-projet) un éventuel espace de travail (_workspace_) et l’utilisera pour savoir ce qu’il peut servir ou non. Un espace de travail valide remplit l’une des conditions suivantes, et si aucun espace de travail n’est trouvé Vite se rabattra sur la racine du projet.
+  Par défaut, Vite cherchera successivement dans les dossiers parents de la [racine du projet](/guide/#index-html-et-racine-du-projet) un éventuel espace de travail (_workspace_) et l’utilisera pour savoir ce qu’il peut servir ou non. Un espace de travail valide remplit l’une des conditions suivantes, et si aucun espace de travail n’est trouvé Vite se rabattra sur la racine du projet.
 
   - un fichier `package.json` contenu dans le dossier comporte un champ `workspaces`
   - le dossier contient l’un des fichiers suivants :
     - `lerna.json`
     - `pnpm-workspace.yaml`
 
-  Cette option accepte un chemin spécifiant la racine d’un espace de travail personnalisé. Cela peut être un chemin absolu ou un chemin relatif à la [racine du projet](/docs/guide/#index-html-et-racine-du-projet). Par exemple :
+  Cette option accepte un chemin spécifiant la racine d’un espace de travail personnalisé. Cela peut être un chemin absolu ou un chemin relatif à la [racine du projet](/guide/#index-html-et-racine-du-projet). Par exemple :
 
   ```js
   export default defineConfig({
@@ -663,7 +663,7 @@ export default defineConfig(async ({ command, mode }) => {
 
 - **Type :** `string | string[]`
 - **Valeur par défaut :** `'modules'`
-- **Voir aussi :** [Compatibilité navigateur](/docs/guide/build#compatibilite-navigateur)
+- **Voir aussi :** [Compatibilité navigateur](/guide/build#compatibilite-navigateur)
 
   Cible de compatibilité navigateur du bundle final. La valeur par défaut est spécifique à Vite (`'modules'`), et correspond aux [navigateurs supportant les modules ES](https://caniuse.com/es6-module).
 
@@ -689,14 +689,14 @@ export default defineConfig(async ({ command, mode }) => {
   import 'vite/modulepreload-polyfill'
   ```
 
-  Note : le polyfill ne sera **pas** appliqué en [mode librairie](/docs/guide/build#mode-librairie). Si vous devez supporter des navigateurs sans import dynamique natif, vous devriez probablement éviter de l’utiliser pour votre librairie.
+  Note : le polyfill ne sera **pas** appliqué en [mode librairie](/guide/build#mode-librairie). Si vous devez supporter des navigateurs sans import dynamique natif, vous devriez probablement éviter de l’utiliser pour votre librairie.
 
 ### build.outDir
 
 - **Type :** `string`
 - **Valeur par défaut :** `dist`
 
-  Spécifie le répertoire de sortie (par rapport à la [racine du projet](/docs/guide/#index-html-et-racine-du-projet)).
+  Spécifie le répertoire de sortie (par rapport à la [racine du projet](/guide/#index-html-et-racine-du-projet)).
 
 ### build.assetsDir
 
@@ -732,7 +732,7 @@ export default defineConfig(async ({ command, mode }) => {
 ### build.cssTarget
 
 - **Type :** `string | string[]`
-- **Valeur par défaut :** la même que [`build.target`](/docs/config/#build-target)
+- **Valeur par défaut :** la même que [`build.target`](/config/#build-target)
 
   Cette option permet de définir une cible de compatibilité navigateur pour la minification du CSS qui diffère de celle utilisée pour la transpilation JavaScript.
 
@@ -768,7 +768,7 @@ export default defineConfig(async ({ command, mode }) => {
 ### build.lib
 
 - **Type :** `{ entry: string, name?: string, formats?: ('es' | 'cjs' | 'umd' | 'iife')[], fileName?: string | ((format: ModuleFormat) => string) }`
-- **Voir aussi :** [Mode librairie](/docs/guide/build#mode-librairie)
+- **Voir aussi :** [Mode librairie](/guide/build#mode-librairie)
 
   Active le mode librairie. `entry` est requise puisque la librairie ne peut utiliser de HTML comme entrée. `name` est la variable globale qui sera exposée et est requise quand `formats` contient `'umd'` ou `'iife'`. Les `formats` par défaut sont `['es', 'umd']`. `fileName` est le nom du fichier de package en sortie, par défaut il s’agit du champ `name` du package.json. Il peut aussi être défini comme une fonction prenant le `format` comme argument.
 
@@ -776,7 +776,7 @@ export default defineConfig(async ({ command, mode }) => {
 
 - **Type :** `boolean | string`
 - **Valeur par défaut :** `false`
-- **Voir aussi :** [Intégration du back-end](/docs/guide/backend-integration)
+- **Voir aussi :** [Intégration du back-end](/guide/backend-integration)
 
   Quand cette option est à `true`, la compilation générera également un fichier `manifest.json` contenant un mapping entre les noms de fichiers de ressources non-hashés et leurs versions hashées, qui peut ensuite être utilisé par un framework serveur afin de rendre les bons liens de ressources. Si la valeur est une chaîne de caractères, elle sera utilisée comme nom pour le fichier du manifeste.
 
@@ -784,7 +784,7 @@ export default defineConfig(async ({ command, mode }) => {
 
 - **Type :** `boolean | string`
 - **Valeur par défaut :** `false`
-- **Voir aussi :** [Rendu côté serveur (SSR)](/docs/guide/ssr)
+- **Voir aussi :** [Rendu côté serveur (SSR)](/guide/ssr)
 
   Quand cette option est à `true`, la compilation générera également un manifeste de rendu côté serveur permettant de déterminer les liens de style ainsi que les directives de pré-chargement (_preload directives_) des ressources en production. Si la valeur est une chaîne de caractères, elle sera utilisée comme nom pour le fichier du manifeste.
 
@@ -792,7 +792,7 @@ export default defineConfig(async ({ command, mode }) => {
 
 - **Type :** `boolean | string`
 - **Valeur par défaut :** `undefined`
-- **Voir aussi :** [Rendu côté serveur (SSR)](/docs/guide/ssr)
+- **Voir aussi :** [Rendu côté serveur (SSR)](/guide/ssr)
 
   Définit si la compilation doit être orientée vers un rendu côté serveur. La valeur peut être une chaîne spécifiant directement l’entrée de rendu côté serveur, ou `true`, ce qui requiert de spécifier l’entrée de rendu côté serveur à l’aide de `rollupOptions.input`.
 
@@ -816,7 +816,7 @@ export default defineConfig(async ({ command, mode }) => {
 - **Type :** `boolean`
 - **Valeur par défaut :** `true`
 
-  Définissez cette option à `false` pour empêcher de stocker le bundle sur le disque. Cette option est surtout utilisée dans le contexte des [appels programmatiques à `build()`](/docs/guide/api-javascript#build) où le bundle doit encore passer par une phase de polissage avant de pouvoir être stocké.
+  Définissez cette option à `false` pour empêcher de stocker le bundle sur le disque. Cette option est surtout utilisée dans le contexte des [appels programmatiques à `build()`](/guide/api-javascript#build) où le bundle doit encore passer par une phase de polissage avant de pouvoir être stocké.
 
 ### build.emptyOutDir
 
@@ -919,7 +919,7 @@ export default defineConfig(async ({ command, mode }) => {
 
 ## Options d’optimisation des dépendances
 
-- **Voir aussi :** [Pré-bundler des dépendances](/docs/guide/dep-pre-bundling)
+- **Voir aussi :** [Pré-bundler des dépendances](/guide/dep-pre-bundling)
 
 ### optimizeDeps.entries
 
@@ -972,7 +972,7 @@ export default defineConfig(async ({ command, mode }) => {
 Il est possibles que les options relatives au rendu côté serveur soient légèrement modifiées dans des versions mineures.
 :::
 
-- **Voir aussi :** [Externalisation](/docs/guide/ssr#externalisation)
+- **Voir aussi :** [Externalisation](/guide/ssr#externalisation)
 
 ### ssr.external
 

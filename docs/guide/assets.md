@@ -1,7 +1,7 @@
 # Gestion des ressources statiques
 
 - Voir aussi : [Chemin public de base](./build#chemin-public-de-base)
-- Voir aussi : [option de configuration `assetsInclude`](/docs/config/#assetsinclude)
+- Voir aussi : [option de configuration `assetsInclude`](/config/#assetsinclude)
 
 ## Importer une ressource en tant qu’URL
 
@@ -20,11 +20,11 @@ Le comportement est similaire au `file-loader` de webpack. La différence est qu
 
 - Si vous utilisez le plugin Vue, les références à des ressources dans le template d’un composant à fichier unique (_SFC_) sont convertis en imports.
 
-- Les types de fichiers les plus courants pour les images, les medias, ou les polices de caractères sont détectés automatiquement comme étant des ressources. Vous pouvez étendre la liste interne avec l’[option `assetsInclude`](/docs/config/#assetsinclude).
+- Les types de fichiers les plus courants pour les images, les medias, ou les polices de caractères sont détectés automatiquement comme étant des ressources. Vous pouvez étendre la liste interne avec l’[option `assetsInclude`](/config/#assetsinclude).
 
 - Les ressources référencées sont incluses au graphe des ressources de compilation, se voient assigner un nom de fichier haché, et peuvent être transformées par des plugins d’optimisation.
 
-- Les ressources plus petites (en octets) que l’[option `assetsInlineLimit`](/docs/config/#build-assetsinlinelimit) seront mises inline comme URLs de données base64.
+- Les ressources plus petites (en octets) que l’[option `assetsInlineLimit`](/config/#build-assetsinlinelimit) seront mises inline comme URLs de données base64.
 
 ### Imports URL explicites
 
@@ -78,7 +78,7 @@ Si vous avez des ressources :
 
 alors vous pouvez les placer dans le répertoire spécial `public` à la racine de votre projet. Les ressources dans ce répertoire seront servies à la racine `/` pendant le développement, et copiées à la racine du répertoire `dist` telles quelles lors de la compilation.
 
-Le répertoire par défaut est `<racine>/public`, mais cela peut-être modifié à l’aide de l’[option `publicDir`](/docs/config/#publicdir).
+Le répertoire par défaut est `<racine>/public`, mais cela peut-être modifié à l’aide de l’[option `publicDir`](/config/#publicdir).
 
 Notez que :
 
