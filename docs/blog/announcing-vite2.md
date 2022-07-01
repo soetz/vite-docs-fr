@@ -14,7 +14,7 @@ Vite (du mot français) est un outil de compilation web front-end d’un nouveau
 
 Pour vous faire une idée d’à quel point Vite est rapide, regardez cette [comparaison vidéo](https://twitter.com/amasad/status/1355379680275128321) entre démarrer une application React sur Repl.it en utilisant Vite et en utilisant `create-react-app` (CRA).
 
-Si vous n’aviez jamais entendu parler de Vite jusqu’ici et que vous voudriez en savoir plus, nous avons une page expliquant les [raisons qui motivent le projet](https://vitejs.dev/guide/why.html). Si vous vous demandez en quoi Vite diffère des outils similaires, nous avons aussi une page de [comparaisons](https://vitejs.dev/guide/comparisons.html).
+Si vous n’aviez jamais entendu parler de Vite jusqu’ici et que vous voudriez en savoir plus, nous avons une page expliquant les [raisons qui motivent le projet](/guide/why.html). Si vous vous demandez en quoi Vite diffère des outils similaires, nous avons aussi une page de [comparaisons](/guide/comparisons.html).
 
 ## Les nouveautés de la version 2.0
 
@@ -30,23 +30,23 @@ Vite 2.0 capitalise sur ce que nous avons appris en cours de route et il a été
 
 Le nouveau système de plugins, inspiré par [WMR](https://github.com/preactjs/wmr), étend l’interface pour plugins de Rollup et est [compatible avec beaucoup de plugins Rollup](https://vite-rollup-plugins.patak.dev/) sans qu’il n’y ait besoin d’adaptations. Les plugins peuvent utiliser les hooks de Rollup, ainsi que des hooks et des propriétés supplémentaires spécifiques à Vite (par exemple pour différencier entre développement et compilation ou pour gérer différemment le rafraîchissement des modules à la volée).
 
-L’[API programmatique](https://vitejs.dev/guide/api-javascript.html) a également été beaucoup améliorée pour faciliter l’apparition d’outils ou de frameworks de plus haut niveau par-dessus Vite.
+L’[API programmatique](/guide/api-javascript.html) a également été beaucoup améliorée pour faciliter l’apparition d’outils ou de frameworks de plus haut niveau par-dessus Vite.
 
 ### Pré-bundling des dépendances à l’aide d’esbuild
 
-Puisque Vite est un serveur de développement basé sur les modules ES natifs, il pré-bundle les dépendances pour réduire le nombre de requêtes et gérer les conversions de CommonJS à ESM. Auparavant, Vite effectuait cette opération à l’aide de Rollup, et pour cette 2.0 il utilise désormais `esbuild`, ce qui permet une diminution entre 10 et 100 fois de la durée de cette phase. À titre d’exemple, démarrer à froid une application de test avec de grosses dépendances comme React Material UI prenait auparavant 28 secondes sur un Macbook Pro à processeur M1, et cela prend désormais environ 1,5 secondes. Attendez-vous à des améliorations de cet ordre-là si votre setup actuel utilise un bundler traditionnel.
+Puisque Vite est un serveur de développement basé sur les modules ES natifs, il pré-bundle les dépendances pour réduire le nombre de requêtes et gérer les conversions de CommonJS en des modules ES. Auparavant, Vite effectuait cette opération à l’aide de Rollup, et pour cette 2.0 il utilise désormais `esbuild`, ce qui permet une diminution entre 10 et 100 fois de la durée de cette phase. À titre d’exemple, démarrer à froid une application de test avec de grosses dépendances comme React Material UI prenait auparavant 28 secondes sur un Macbook Pro à processeur M1, et cela prend désormais environ 1,5 secondes. Attendez-vous à des améliorations de cet ordre-là si votre setup actuel utilise un bundler traditionnel.
 
 ### Support privilégié de CSS
 
 Vite réserve un traitement de faveur à CSS et supporte les fonctionnalités suivantes directement :
 
-- **Modification par le résolveur** : les chemins en `@import` ou `url()` de CSS sont modifiés à l’aide du résolveur de Vite afin de respecter les alias et les dépendances npm.
-- **Réécriture de la base des URLs** : les chemis en `url()` voient leur base automatiquement réécrite, peu importe d’où le fichier est importé.
+- **Modification par le résolveur** : les chemins en `@import` ou `url()` dans le CSS sont modifiés à l’aide du résolveur de Vite afin de respecter les alias et les dépendances npm.
+- **Réécriture de la base des URLs** : les chemis en `url()` voient leur base automatiquement réécrite, peu importe où se trouve le fichier importé.
 - **Fractionnement (_code splitting_) du CSS** : un morceau (_chunk_) en JS émet également le CSS correspondant, qui sera automatiquement chargé en parallèle de ce dernier.
 
 ### Support du rendu côté serveur (_SSR_)
 
-Vite 2.0 est livré avec le [support expérimental du rendu côté serveur](https://vitejs.dev/guide/ssr.html). Vite fournit des APIs afin de charger et de mettre à jour efficacement le code source ESM en Node.js pendant le développement (presque comme du rafraîchissement de modules à la volée côté serveur), et externalise automatiquement les dépendances compatibles avec CommonJS pour rendre la compilation plus rapide. Le serveur de production peut être complètement découplé de Vite, et le même setup peut être facilement adapté pour permettre le pré-rendu / la génération statique (_SSG_).
+Vite 2.0 est livré avec le [support expérimental du rendu côté serveur](/guide/ssr.html). Vite fournit des APIs afin de charger et de mettre à jour efficacement le code source sous forme de modules ES en Node.js pendant le développement (presque comme du rafraîchissement de modules à la volée côté serveur), et externalise automatiquement les dépendances compatibles avec CommonJS pour rendre la compilation plus rapide. Le serveur de production peut être complètement découplé de Vite, et le même setup peut être facilement adapté pour permettre le pré-rendu / la génération statique (_SSG_).
 
 Le rendu côté serveur de Vite est proposé comme une fonctionnalité bas-niveau, et nous nous attendons à ce que des frameworks plus haut-niveau s’appuient dessus.
 
@@ -62,4 +62,4 @@ Tout ça fait beaucoup de fonctionnalités, mais commencer un projet à l’aide
 npm init @vitejs/app
 ```
 
-Ensuite, vous pouvez suivre [ce guide](https://vitejs.dev/guide/) pour voir ce que Vite a à proposer. Vous pouvez également voir le code source sur [GitHub](https://github.com/vitejs/vite), suivre les mises à jour sur [Twitter](https://twitter.com/vite_js), ou venir discuter avec d’autres utilisateurs de Vite sur le [serveur Discord](http://chat.vitejs.dev/).
+Ensuite, vous pouvez suivre [ce guide](/guide/) pour voir ce que Vite a à proposer. Vous pouvez également voir le code source sur [GitHub](https://github.com/vitejs/vite), suivre les mises à jour sur [Twitter](https://twitter.com/vite_js), ou venir discuter avec d’autres utilisateurs de Vite sur le [serveur Discord](http://chat.vitejs.dev/).
