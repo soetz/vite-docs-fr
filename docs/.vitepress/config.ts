@@ -136,7 +136,7 @@ export default defineConfig({
               link: '/guide/using-plugins'
             },
             {
-              text: 'Pré-bundler des dépendances',
+              text: 'Pré-bundling des dépendances',
               link: '/guide/dep-pre-bundling'
             },
             {

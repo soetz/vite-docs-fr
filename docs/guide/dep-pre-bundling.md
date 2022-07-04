@@ -1,4 +1,4 @@
-# Pré-bundler des dépendances
+# Pré-bundling des dépendances
 
 Lors du premier lancement de `vite`, vous aurez peut-être remarqué ce message :
 
@@ -15,7 +15,7 @@ Pre-bundling dependencies:
 
 À ce moment-là, Vite effectue ce qu’on appelle le « pré-bundling des dépendances ». Cela a deux intérêts :
 
-1. **La compatibilité avec CommonJS et UMD :** Pendant le développement, le serveur de développement de Vite sert tout le code en tant que modules ES natifs. Ainsi, Vite doit d’abord convertir les dépendances qui sont livrées en CommonJS ou en UMD en modules ES.
+1. **La compatibilité avec CommonJS et UMD :** Pendant le développement, le serveur de développement de Vite sert tout le code en tant que modules ES natifs. Ainsi, Vite doit d’abord convertir les dépendances qui sont livrées au format CommonJS ou UMD en modules ES.
 
    Lors de la conversion de dépendances CommonJS, Vite effectue une analyse des imports afin que les imports nommés vers des modules CommonJS fonctionnent comme prévu même si les exports sont assignés dynamiquement (comme c’est le cas avec React)
 
@@ -24,13 +24,15 @@ Pre-bundling dependencies:
    import React, { useState } from 'react'
    ```
 
-2. **La performance :** Vite convertit les dépendances ESM ayant beaucoup de modules internes en un module unique pour améliorer la performance de chargement.
+2. **La performance :** Vite convertit les dépendances ES ayant beaucoup de modules internes en un module unique pour améliorer la performance de chargement.
 
-   Certains packages fournissent leurs modules compilés au format ES en plein de fichiers différents qui s’importent les uns les autres. Par exemple, [`lodash-es` a plus de 600 modules internes](https://unpkg.com/browse/lodash-es/) ! Lorsque l’on écrit `import { debounce } from 'lodash-es'`, le navigateur doit effectuer plus de 600 requêtes HTTP en même temps ! Même si le serveur peut les supporter, le grand nombre de requêtes crée un embouteillage du côté du navigateur, ce qui rend le chargement de la page nettement plus lent.
+   Certains packages fournissent leurs modules compilés au format ES sous la forme de nombreux fichiers qui s’importent les uns les autres. Par exemple, [`lodash-es` a plus de 600 modules internes](https://unpkg.com/browse/lodash-es/) ! Lorsque l’on écrit `import { debounce } from 'lodash-es'`, le navigateur doit effectuer plus de 600 requêtes HTTP en même temps ! Même si le serveur peut les supporter, le grand nombre de requêtes crée un embouteillage du côté du navigateur, ce qui rend le chargement de la page nettement plus lent.
 
    En pré-bundlant `lodash-es` en un unique module, il n’y a plus besoin que d’une requête HTTP !
 
-Notez que cela ne s’applique qu’en mode développement.
+::: tip NOTE
+Notez que le pré-bundling des dépendances ne s’applique qu’en mode développement, et fait usage d’`esbuild` pour convertir les dépendances en modules ES. Pour le build de production, c’est `@rollup/plugin-commonjs` qui est utilisé.
+:::
 
 ## Découverte automatique des dépendances
 
@@ -42,7 +44,7 @@ Après que le serveur ait démarré, si un nouvel import de dépendance est renc
 
 Dans une configuration monorepo, une dépendance peut être un package lié du même dépôt. Vite détecte automatiquement les dépendances qui ne sont pas résolues depuis `node_modules` et les traite comme du code source. Il n’essaiera pas de bundler la dépendance liée, et analysera sa liste de dépendances à la place.
 
-Ceci dit, cela requiert que la dépendance liée soit exportée en modules ES. Si ce n’est pas le cas, vous pouvez ajouter la dépendance à [`optimizeDeps.include`](/config/#optimizedeps-include) et [`build.commonjsOptions.include`](/config/#build-commonjsoptions) dans votre configuration.
+Ceci dit, cela requiert que la dépendance liée soit exportée sous la forme de module(s) ES. Si ce n’est pas le cas, vous pouvez ajouter la dépendance à [`optimizeDeps.include`](/config/#optimizedeps-include) et [`build.commonjsOptions.include`](/config/#build-commonjsoptions) dans votre configuration.
 
 ```js
 export default defineConfig({
@@ -60,7 +62,7 @@ export default defineConfig({
 Lorsque vous faites des modifications à la dépendance liée, redémarrez le serveur de développement avec le signal `--force` pour que les changements soient pris en compte.
 
 ::: warning Déduplication
-En raison de différences dans la façon de résoudre les dépendances liées, les dépendances transitives peuvent être mal dédupliquées, ce qui cause des soucis si on les exécute. Si vous êtes touché(e) par ce problème, utilisez `npm pack` sur la dépendance liée pour le régler.
+En raison de différences dans la façon de résoudre les dépendances liées, les dépendances transitives peuvent être mal dédupliquées, ce qui cause des soucis si on les exécute. Si vous êtes touché·e par ce problème, utilisez `npm pack` sur la dépendance liée pour le régler.
 :::
 
 ## Modifier le comportement
@@ -87,7 +89,7 @@ Si pour une raison quelconque vous voulez forcer Vite à re-bundler les dépenda
 
 ### Cache navigateur
 
-Les requêtes vers des dépendances résolues sont fortement mises en cache à l’aide des en-têtes HTTP `max-age=31536000,immutable` afin d’améliorer la performance du rechargement de la page en développement. Une fois mises en cache, ces requêtes n’iront plus jamais au serveur de développement. Elles sont automatiquement invalidées par la version suffixée si une version différente est installée (tout comme dans le lockfile du gestionnaire de paquets). Si vous souhaitez débugger vos dépendances et faire des modifications en local, vous pouvez :
+Les requêtes vers des dépendances résolues sont fortement mises en cache à l’aide des en-têtes HTTP `max-age=31536000,immutable` afin d’améliorer la performance du rechargement de la page en développement. Une fois mises en cache, ces requêtes n’iront plus jamais au serveur de développement. Elles sont automatiquement invalidées par la version suffixée si une version différente est installée (comme c’est le cas pour le lockfile du gestionnaire de paquets). Si vous souhaitez débugger vos dépendances et faire des modifications en local, vous pouvez :
 
 1. Désactiver temporairement le cache dans l’onglet Network des devtools de votre navigateur ;
 2. Redémarrer le serveur de développement avec le signal `--force` pour re-bundler les dépendances ;
