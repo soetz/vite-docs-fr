@@ -48,9 +48,7 @@ import shaderString from './shader.glsl?raw'
 Les scripts peuvent être importés en tant que web workers à l’aide des suffixes `?worker` et `?sharedworker`.
 
 ```js
-// il sera inclus à un morceau (chunk) différent pour la compilation de
-// production
-
+// sera inclus à un morceau (chunk) différent en production
 import Worker from './shader.js?worker'
 const worker = new Worker()
 ```
@@ -74,7 +72,7 @@ Si vous avez des ressources :
 
 - qui ne sont jamais référencées dans le code source (par exemple `robots.txt`),
 - qui doivent garder exactement le même nom de fichier (sans hachage),
-- … ou tout simplement que vous ne voulez pas avoir à importer pour accéder à leur URL,
+- … ou tout simplement que vous ne voulez pas avoir à importer comme ressource pour accéder à leur URL,
 
 alors vous pouvez les placer dans le répertoire spécial `public` à la racine de votre projet. Les ressources dans ce répertoire seront servies à la racine `/` pendant le développement, et copiées à la racine du répertoire `dist` telles quelles lors de la compilation.
 
@@ -97,7 +95,7 @@ document.getElementById('hero-img').src = imgUrl
 
 Cela fonctionne nativement avec les navigateurs modernes — en fait, Vite n’a pas du tout besoin de traiter ce code pour le développement !
 
-Ce pattern fonctionne aussi avec une URL dynamique usant d’un littéral de gabarit (_template literal_) :
+Ce pattern fonctionne aussi avec une URL dynamique usant d’un gabarit de texte (_template literal_) :
 
 ```js
 function getImageUrl(name) {
@@ -105,8 +103,17 @@ function getImageUrl(name) {
 }
 ```
 
-Pendant la compilation de production, Vite fera les transformations nécessaires pour que les URLs pointent toujours au bon endroit même après le bundling et le hachage des ressources.
+Pendant la compilation de production, Vite fera les transformations nécessaires pour que les URLs pointent toujours au bon endroit même après le bundling et le hachage des ressources. Cependant, la chaîne de caractères de l’URL doit être statique afin de pouvoir être analysée, sinon le code sera laissé tel quel, ce qui peut causer des erreurs à l’exécution si `build.target` ne supporte pas `import.meta.url`.
 
-::: warning Note : Ne fonctionne pas avec le rendu côté serveur (SSR)
+```js
+// Vite ne transformera pas ce qui suit
+const imgUrl = new URL(imagePath, import.meta.url).href
+```
+
+::: warning Ne fonctionne pas avec le rendu côté serveur (_SSR_)
 Ce pattern ne fonctionnera pas si vous utilisez Vite pour du rendu côté serveur, parce qu’`import.meta.url` a une sémantique différente dans le navigateur et dans Node.js. Le bundle serveur ne peut de toute façon pas déterminer l’URL cliente en amont.
+:::
+
+::: warning `target` doit être configuré à `es2020` minimum
+Ce pattern ne fonctionnera pas si [build.target](/config/#build-target) ou [optimizeDeps.esbuildOptions.target](/config/#optimizedeps-esbuildoptions) sont définis sur une valeur inférieure à `es2020`.
 :::
