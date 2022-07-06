@@ -4,11 +4,12 @@ Lorsqu’il est temps de déployer votre application en production, lancez simpl
 
 ## Compatibilité navigateur
 
-Ce bundle de production part du principe que le JavaScript moderne est supporté. Par défaut, Vite cible les navigateurs qui supportent les [balises script de modules ES natifs](https://caniuse.com/es6-module) et les [imports dynamiques de modules ES natifs](https://caniuse.com/es6-module-dynamic-import). Pour référence, Vite utilise cette requête [browserslist](https://github.com/browserslist/browserslist) :
+Ce bundle de production part du principe que le JavaScript moderne est supporté. Par défaut, Vite cible les navigateurs qui supportent les [modules ES natifs](https://caniuse.com/es6-module), les [imports dynamiques de modules ES natifs](https://caniuse.com/es6-module-dynamic-import) et [`import.meta`](https://caniuse.com/mdn-javascript_statements_import_meta) :
 
-```
-defaults and supports es6-module and supports es6-module-dynamic-import, not opera > 0, not samsung > 0, not and_qq > 0
-```
+- Chrome ⩾ 87
+- Firefox ⩾ 78
+- Safari ⩾ 13
+- Edge ⩾ 88
 
 Vous pouvez spécifier des cibles personnalisées à l’aide de l’[option de configuration `build.target`](/config/#build-target), sachant que la cible minimum est `es2015`.
 
@@ -28,7 +29,7 @@ La seule exception est quand vous devez concaténer dynamiquement des URLs à la
 
 ## Customiser la compilation
 
-La compilation peut être personnalisée à l’aide de ses diverses [options de configuration](/config/#options-de-compilation). Plus spécifiquement, vous pouvez ajuster les [options de Rollup](https://rollupjs.org/guide/en/#big-list-of-options) sous-jacent avec `build.rollupOptions` :
+La compilation peut être personnalisée à l’aide de ses diverses [options de configuration](/config/#options-de-compilation). Plus spécifiquement, vous pouvez ajuster les [options du Rollup](https://rollupjs.org/guide/en/#big-list-of-options) sous-jacent avec `build.rollupOptions` :
 
 ```js
 // vite.config.js
@@ -42,6 +43,20 @@ module.exports = defineConfig({
 ```
 
 Par exemple, vous pouvez spécifier plusieurs sorties Rollup à l’aide de plugins qui ne sont appliqués que pour la compilation.
+
+## Stratégie de découpage en morceaux (_chunks_)
+
+Vous pouvez configurer la façon dont sont découpés les morceaux à l’aide de `build.rollupOptions.output.manualChunks` (voir la [documentation de Rollup](https://rollupjs.org/guide/en/#outputmanualchunks)). Jusqu’à Vite 2.8, la stratégie de découpage des morceaux par défaut séparait les morceaux entre `index` et `vendor`. C’est une bonne stratégie la plupart du temps pour les applications monopages (_SPAs_), mais il est difficile de fournir une solution appropriée à chaque cas d’usage de Vite. À partir de Vite 2.9, `manualChunks` n’est plus modifiée par défaut. Vous pouvez toujours utiliser l’ancienne stratégie en ajoutant le `splitVendorChunkPlugin` dans votre fichier de configuration :
+
+```js
+// vite.config.js
+import { splitVendorChunkPlugin } from 'vite'
+module.exports = defineConfig({
+  plugins: [splitVendorChunkPlugin()]
+})
+```
+
+Cette stratégie est aussi fournie sous la forme d’une fonction fabrique (_factory_) `splitVendorChunk({ cache: SplitVendorChunkCache })`, au cas où il soit requis d’inclure de la logique propre. `cache.reset()` doit être appelée lors du `buildStart` pour que la recompilation lorsque les fichiers sont modifiés fonctionne.
 
 ## Refaire la compilation lorsque les fichiers sont modifiés
 
@@ -57,6 +72,8 @@ module.exports = defineConfig({
   }
 })
 ```
+
+Avec le signal `--watch`, les changements faits à `vite.config.js` ou à n’importe quel fichier bundlé donnera lieu à une recompilation.
 
 ## Application multi-pages
 
@@ -112,15 +129,16 @@ module.exports = defineConfig({
     lib: {
       entry: path.resolve(__dirname, 'lib/main.js'),
       name: 'MyLib',
-      fileName: (format) => `my-lib.${format}.js`
+      // les extensions nécessaires seront ajoutées
+      fileName: 'my-lib'
     },
     rollupOptions: {
-      // externalisez les dépendances que vous ne souhaitez pas inclure au
-      // bundle de votre librairie
+      // externalisez les dépendances que vous ne souhaitez pas inclure
+      // au bundle de votre librairie
       external: ['vue'],
       output: {
-        // assurez-vous de fournir les variables globales à utiliser pour la
-        // compilation UMD des dépendances externalisées
+        // assurez-vous de fournir les variables globales à utiliser
+        // pour la compilation UMD des dépendances externalisées
         globals: {
           vue: 'Vue'
         }
@@ -128,6 +146,15 @@ module.exports = defineConfig({
     }
   }
 })
+```
+
+Le fichier d’entrée doit contenir les exports qui seront importés par les utilisateurs de votre package :
+
+```js
+// lib/main.js
+import Foo from './Foo.vue'
+import Bar from './Bar.vue'
+export { Foo, Bar }
 ```
 
 Lancer `vite build` avec cette configuration exploite un preset de Rollup qui est fait pour livrer des librairies et qui produit des bundles sous deux formats : `es` et `umd` (configurables avec `build.lib`) :
@@ -146,12 +173,56 @@ Le `package.json` recommandé pour votre librairie :
   "name": "my-lib",
   "files": ["dist"],
   "main": "./dist/my-lib.umd.js",
-  "module": "./dist/my-lib.es.js",
+  "module": "./dist/my-lib.mjs",
   "exports": {
     ".": {
-      "import": "./dist/my-lib.es.js",
+      "import": "./dist/my-lib.mjs",
       "require": "./dist/my-lib.umd.js"
     }
   }
 }
+```
+
+## Options avancées du chemin de base
+
+::: warning Expérimental
+Cette fonctionnalité est expérimentale ; l’API pourra très bien changer dans une future version mineure sans suivre le SemVer. Fixez la version mineure de Vite si vous l’utilisez.
+:::
+
+Pour les cas d’usage avancés, les ressources déployées et les fichiers publics pourraient se trouver sous des chemins différents, par exemple pour utiliser différentes stratégies de cache :
+
+- Les fichiers HTML d’entrée générés (qui peuvent aussi être traités par le rendu côté serveur)
+- Les ressources hachées générées (JS, CSS, et les autres types de fichier comme les images)
+- Les [fichiers publics](assets.md#le-repertoire-public) copiés
+
+Un seul [chemin de base](#chemin-public-de-base) ne suffit pas dans ces cas. Vite fournit un support expérimental pour des options avancées lors de la compilation, avec `experimental.renderBuiltUrl`.
+
+```js
+experimental: {
+  renderBuiltUrl: (filename: string, { hostType: 'js' | 'css' | 'html' }) => {
+    if (hostType === 'js') {
+      return { runtime: `window.__toCdnUrl(${JSON.stringify(filename)})` }
+    } else {
+      return { relative: true }
+    }
+  }
+}
+```
+
+Si les ressources hachées et les fichiers publics ne sont pas déployés ensemble, des options pour chaque groupe peuvent être définies différement à l’aide du paramètre `type` du second argument passé à la fonction.
+
+```js
+  experimental: {
+    renderBuiltUrl(filename: string, { hostType: 'js' | 'css' | 'html', type: 'public' | 'asset' }) {
+      if (type === 'public') {
+        return 'https://www.domain.com/' + filename
+      }
+      else if (path.extname(importer) === '.js') {
+        return { runtime: `window.__assetsPath(${JSON.stringify(filename)})` }
+      }
+      else {
+        return 'https://cdn.domain.com/assets/' + filename
+      }
+    }
+  }
 ```
