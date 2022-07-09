@@ -5,13 +5,13 @@ Le support du rendu côté serveur est toujours expérimental et vous risquez de
 :::
 
 :::tip Note
-Le rendu côté serveur fait référence aux frameworks front-end (par exemple React, Preact, Vue ou Svelte) qui supportent le fait d’exécuter une application dans Node.js, qui font un pré-rendu en HTML, et qui l’« hydratent » côté client en bout de course. Si vous souhaitez intégrer votre application à un framework côté serveur classique, allez plutôt voir le [guide d’intégration du back-end](./backend-integration).
+Le rendu côté serveur fait référence aux frameworks front-end (par exemple React, Preact, Vue ou Svelte) qui supportent le fait d’exécuter l’application dans Node.js, qui génére un pré-rendu en HTML, et qui l’« hydratent » côté client en bout de course. Si vous souhaitez intégrer votre application à un framework côté serveur classique, allez plutôt voir le [guide d’intégration du back-end](./backend-integration).
 
 Le guide qui suit part également du principe que vous avez déjà un peu d’expérience avec le rendu côté serveur du framework de votre choix, et ne se concentre que sur les détails d’intégration spécifiques à Vite.
 :::
 
 :::warning API bas-niveau
-Ceci est une API bas-niveau plutôt faite pour les auteurs de librairies et de frameworks. Si votre but est de créer une application, allez d’abord voir les plugins et outils plus haut-niveau de la [section SSR d’Awesome Vite](https://github.com/vitejs/awesome-vite#ssr). Ceci étant dit, beaucoup d’applications fonctionneront bien en étant basées sur l’API bas-niveau de Vite.
+Ceci est une API bas-niveau plutôt faite pour les auteurs de librairies et de frameworks. Si votre but est de créer une application, allez d’abord voir les plugins et outils plus haut-niveau de la [section SSR d’Awesome Vite](https://github.com/vitejs/awesome-vite#ssr). Ceci étant dit, beaucoup d’applications fonctionnent bien tout en étant basées sur l’API bas-niveau de Vite.
 :::
 
 :::tip Aide
@@ -22,8 +22,8 @@ Si vous avez des questions, le [Discord de Vite a un channel #ssr](https://disco
 
 Vite intègre le support du rendu côté serveur (_SSR_). Le playground de Vite propose des exemples de configurations de rendu côté serveur pour Vue 3 et React, qui peuvent servir de référence pour ce guide :
 
-- [Vue 3](https://github.com/vitejs/vite/tree/main/packages/playground/ssr-vue)
-- [React](https://github.com/vitejs/vite/tree/main/packages/playground/ssr-react)
+- [Vue 3](https://github.com/vitejs/vite/tree/main/playground/ssr-vue)
+- [React](https://github.com/vitejs/vite/tree/main/playground/ssr-react)
 
 ## Structure de la source
 
@@ -33,10 +33,11 @@ Une application reposant sur le rendu côté serveur aura typiquement la structu
 - index.html
 - server.js # serveur principal de l’application
 - src/
-  - main.js # exporte du code qui n’est pas lié à un environnement spécifique
+  - main.js # exporte du code qui n’est pas lié à un environnement
+            # en particulier
   - entry-client.js # monte l’application sur un élément de DOM
-  - entry-server.js # fait le rendu de l’application à l’aide de l’API de rendu
-                      côté serveur du framework
+  - entry-server.js # fait le rendu de l’application à l’aide de l’API
+                    # de rendu côté serveur du framework
 ```
 
 L’`index.html` devra référencer `entry-client.js` et inclure un placeholder là où les balises rendues côté serveur devront être insérées :
@@ -58,7 +59,7 @@ if (import.meta.env.SSR) {
 }
 ```
 
-Cette variable est remplacée statiquement, ce qui signifie que le code des branches inutilisées pourra être éliminé (_tree-shaking_).
+Cette variable est remplacée statiquement lors de la compilation, ce qui signifie que le code des branches inutilisées pourra être éliminé (_tree-shaking_).
 
 ## Paramétrer le serveur de développement
 
@@ -66,32 +67,33 @@ Lorsque vous développez une application reposant sur le rendu côté serveur, i
 
 **server.js**
 
-```js{18-20}
-const fs = require('fs')
-const path = require('path')
-const express = require('express')
-const { createServer: createViteServer } = require('vite')
+```js{17-20}
+import fs from 'fs'
+import path from 'path'
+import express from 'express'
+import {createServer as createViteServer} from 'vite'
 
 async function createServer() {
   const app = express()
 
-  // Crée le serveur Vite en mode middleware. Cela désactive la logique de
-  // service du HTML de Vite et laisse le serveur parent prendre le contrôle.
-  //
-  // En mode middleware, si vous voulez utiliser la logique de service du HTML
-  // de Vite utilisez le `middlewareMode` `'html'`
-  // (voir https://fr.vitejs.dev/config/#server-middlewaremode)
+  // créer le serveur Vite en mode middleware et configure le type
+  // d’application sur 'custom', ce qui désactive la logique de service du
+  // HTML de Vite et laisse le serveur prendre le contrôle
   const vite = await createViteServer({
-    server: { middlewareMode: 'ssr' }
+    server: { middlewareMode: true },
+    appType: 'custom'
   })
-  // utiliser l’instance de connexion de Vite comme middleware
+
+  // utiliser l’instance connect de Vite comme middleware
+  // si vous utilisez votre propre routeur express (express.Router()), vous
+  // devriez utiliser router.use
   app.use(vite.middlewares)
 
   app.use('*', async (req, res) => {
-    // servir index.html — nous verrons ça plus tard
+    // servir index.html - nous verrons ça plus tard
   })
 
-  app.listen(3000)
+  app.listen(5173)
 }
 
 createServer()
@@ -106,39 +108,39 @@ app.use('*', async (req, res, next) => {
   const url = req.originalUrl
 
   try {
-    // 1. Lire index.html
+    // 1. lire index.html
     let template = fs.readFileSync(
       path.resolve(__dirname, 'index.html'),
       'utf-8'
     )
 
-    // 2. Appliquer les transformations HTML de Vite. Cela injecte le client de
-    //    rafraîchissement des modules à la volée (HMR client) et applique les
-    //    transformations HTML des plugins Vite, par exemple les préambules
-    //    globaux de @vitejs/plugin-react.
+    // 2. appliquer les transformations HTML de Vite. cela injecte le
+    //    client de rafraîchissement des modules à la volée (HMR client) de
+    //    Vite et applique les transformations HTML des plugins Vite, par
+    //    exemple les préambules globaux de @vitejs/plugin-react.
     template = await vite.transformIndexHtml(url, template)
 
-    // 3. Charger l’entrée serveur. vite.ssrLoadModule transforme
+    // 3. charger l’entrée serveur. vite.ssrLoadModule transforme
     //    automatiquement votre code source au format modules ES pour qu’il
-    //    soit utilisable dans Node.js ! Aucun bundling n’est nécessaire, et
-    //    l’invalidation fournie est efficace, à la manière du rafraîchissement
-    //    des modules à la volée.
+    //    soit utilisable dans Node.js ! Aucun bundling n’est nécessaire,
+    //    et l’invalidation fournie est efficace, à la manière du
+    //    rafraîchissement des modules à la volée.
     const { render } = await vite.ssrLoadModule('/src/entry-server.js')
 
-    // 4. Rendre le HTML de l’application. Cela part du principe que la fonction
-    //    `render` exportée par entry-server.js fait appel aux bonnes APIs de
-    //    rendu côté serveur du framework, comme par exemple
+    // 4. rendre le HTML de l’application. cela part du principe que la
+    //    fonction `render` exportée par entry-server.js fait appel aux
+    //    bonnes APIs de rendu côté serveur du framework, comme par exemple
     //    ReactDOMServer.renderToString()
     const appHtml = await render(url)
 
-    // 5. Injecter le HTML rendu par l’application dans le template.
+    // 5. injecter le HTML rendu par l’application dans le template.
     const html = template.replace(`<!--ssr-outlet-->`, appHtml)
 
-    // 6. Renvoyer le HTML rendu.
+    // 6. renvoyer le HTML rendu.
     res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
   } catch (e) {
-    // Si une erreur est signalée, on laisse Vite réécrire la stacktrace afin
-    // que l’erreur pointe bien sur le code source problématique.
+    // si une erreur est signalée, on laisse Vite réécrire la stacktrace
+    // afin que l’erreur pointe bien sur le code source problématique.
     vite.ssrFixStacktrace(e)
     next(e)
   }
@@ -175,15 +177,15 @@ Les scripts de `package.json` ressembleront à ça :
 
 Notez que le signal `--ssr` indique qu’il s’agit d’une compilation de rendu côté serveur. Il devrait également indiquer l’entrée de rendu côté serveur.
 
-Ensuite, dans `server.js`, on doit ajouter de la logique spécifique à la production en se référant à `process.env.NODE_ENV` :
+Ensuite, dans `server.js`, on doit ajouter de la logique spécifique à la production en se référant à `{{ 'process.env.' + 'NODE_ENV' }}` :
 
 - Au lieu de lire le `index.html` racine, utilisez plutôt `dist/client/index.html` comme template, puisqu’il contient les bons liens vers les ressources pour la compilation client.
 
-- Au lieu d’`await vite.ssrLoadModule('/src/entry-server.js')`, utilisez plutôt `require('./dist/server/entry-server.js')` (ce fichier est le résultat de la compilation de rendu côté serveur).
+- Au lieu d’`await vite.ssrLoadModule('/src/entry-server.js')`, utilisez plutôt `import('./dist/server/entry-server.js')` (ce fichier est le résultat de la compilation de rendu côté serveur).
 
-- Déplacez la création et tous les usages du serveur du développement `vite` derrière des branches conditionnelles spécifiques au développement, et ajoutez des middlewares servant les fichiers statiques de `dist/client`.
+- Déplacez la création et tous les usages du serveur de développement `vite` derrière des branches conditionnelles spécifiques au développement, et ajoutez des middlewares servant les fichiers statiques de `dist/client`.
 
-Référez-vous aux démonstrations pour [Vue](https://github.com/vitejs/vite/tree/main/packages/playground/ssr-vue) et [React](https://github.com/vitejs/vite/tree/main/packages/playground/ssr-react) si vous avez besoin d’un exemple de configuration qui fonctionne.
+Référez-vous aux démonstrations pour [Vue](https://github.com/vitejs/vite/tree/main/playground/ssr-vue) et [React](https://github.com/vitejs/vite/tree/main/playground/ssr-react) si vous avez besoin d’un exemple de configuration qui fonctionne.
 
 ## Générer les directives de pré-chargement (_preload directives_)
 
@@ -204,19 +206,19 @@ Pour exploiter le manifeste, les frameworks doivent fournir un moyen de collecte
 // src/entry-server.js
 const ctx = {}
 const html = await vueServerRenderer.renderToString(app, ctx)
-// ctx.modules est maintenant une liste des identifiants de modules qui ont été
-// utilisés durant le rendu
+// ctx.modules est maintenant une liste des identifiants de modules qui ont
+// été utilisés durant le rendu
 ```
 
-Dans la branche de production de `server.js` on doit lire et passer le manifeste à la fonction `render` exportée par `src/entry-server.js`. Cela fournit suffisamment d’informations pour rendre des directives de pré-chargement pour les fichiers utilisés par les routes asynchrones ! Voir la [source de la démonstration](https://github.com/vitejs/vite/blob/main/packages/playground/ssr-vue/src/entry-server.js) pour un exemple complet.
+Dans la branche de production de `server.js` on doit lire et passer le manifeste à la fonction `render` exportée par `src/entry-server.js`. Cela fournit suffisamment d’informations pour rendre des directives de pré-chargement pour les fichiers utilisés par les routes asynchrones ! Voir la [source de la démonstration](https://github.com/vitejs/vite/blob/main/playground/ssr-vue/src/entry-server.js) pour un exemple complet.
 
 ## Pré-rendu / génération côté serveur (_SSG_)
 
-Si les routes et les données requises pour certaines routes sont connues à l’avance, on peut pré-rendre ces routes en HTML statique en usant de la même logique que pour le rendu côté serveur de production. Cela peut-être considéré comme une forme de génération côté serveur. Voir [le script de pré-rendu de démonstration](https://github.com/vitejs/vite/blob/main/packages/playground/ssr-vue/prerender.js) pour un exemple qui fonctionne.
+Si les routes et les données requises pour certaines routes sont connues à l’avance, on peut pré-rendre ces routes en HTML statique en usant de la même logique que pour le rendu côté serveur de production. Cela peut-être considéré comme une forme de génération côté serveur (_SSG_). Voir [le script de pré-rendu de démonstration](https://github.com/vitejs/vite/blob/main/playground/ssr-vue/prerender.js) pour un exemple qui fonctionne.
 
 ## Externalisation
 
-De nombreuses dépendances fournissent à la fois des fichiers de modules ES et CommonJS. Une dépendance fournissant une compilation CommonJS peut être « externalisée » de la transformation et du système de modules de rendu côté serveur de Vite lorsque le rendu côté serveur est utilisé, afin de rendre à la fois le serveur de développement et la compilation plus rapides. Par exemple, plutôte que de tirer la version modules ES de React et d’ensuite la re-transformer pour qu’elle soit compatible avec Node.js, il est plus efficace de simplement `require('react')`. Cela raccourcit aussi grandement la durée de compilation de rendu côté serveur.
+De nombreuses dépendances fournissent à la fois des fichiers de modules ES et CommonJS. Une dépendance fournissant une compilation au format CommonJS peut être « externalisée » de la transformation et du système de modules du rendu côté serveur de Vite lorsque le rendu côté serveur est utilisé, afin de rendre à la fois le serveur de développement et la compilation plus rapides. Par exemple, plutôte que de tirer la version modules ES de React et d’ensuite la re-transformer pour qu’elle soit compatible avec Node.js, il est plus efficace de simplement `require('react')`. Cela raccourcit aussi grandement la durée de compilation de rendu côté serveur.
 
 Vite réalise l’externalisation du rendu côté serveur automatiquement selon les heuristiques suivantes :
 
@@ -226,10 +228,10 @@ Vite réalise l’externalisation du rendu côté serveur automatiquement selon 
 
 Si les heuristiques mènent à des erreurs, vous pouvez ajuster manuellement l’externalisation du rendu côté serveur à l’aide des options de configuration `ssr.external` et `ssr.noExternal`.
 
-Dans le futur, ces heuristiques seront sans doute meilleures si le projet a le `type: "module"` d’activé, afin que Vite puisse aussi externaliser les dépendances qui fournissent des compilation ESM compatibles avec Node en les important avec `import()` pendant le rendu côté serveur.
+Dans le futur, ces heuristiques seront sans doute améliorées et vérifieront si le projet a le `type: "module"` d’activé, afin que Vite puisse aussi externaliser les dépendances qui fournissent des compilation ESM compatibles avec Node en les important avec des `import()` dynamiques pendant le rendu côté serveur.
 
 :::warning Gérer les alias
-Si vous avez configuré des alias qui redirigent un package vers un autre, vous pourriez plutôt vouloir faire des alias des véritables packages `node_modules` afin que cela fonctionne pour les dépendances externalisées pour le rendu côté serveur. [Yarn](https://classic.yarnpkg.com/en/docs/cli/add/#toc-yarn-add-alias) et [pnpm](https://pnpm.js.org/en/aliases) supportent tous deux les alias via le préfixe `npm:`.
+Si vous avez configuré des alias qui redirigent un package vers un autre, vous devriez sûrement plutôt faire des alias des véritables packages `node_modules` afin que cela fonctionne aussi pour les dépendances externalisées pour le rendu côté serveur. [Yarn](https://classic.yarnpkg.com/en/docs/cli/add/#toc-yarn-add-alias) et [pnpm](https://pnpm.js.org/en/aliases) supportent tous deux les alias via le préfixe `npm:`.
 :::
 
 ## Logique de plugin spécifique au rendu côté serveur
@@ -258,12 +260,12 @@ export function mySSRPlugin() {
 L’objet options de `load` et `transform` est optionnel, Rollup ne l’utilise pas pour le moment mais pourrait étendre ces hooks avec des metadata supplémentaires dans le futur.
 
 :::tip Note
-Avant Vite 2.7, cette information était passée aux hooks de plugin à l’aide d’un paramètre positionnel `ssr` au lieu de l’objet `options`. Tous les frameworks et plugins les plus populaires sont à jour mais il est possible que vous tombiez sur des posts qui ne le sont pas et qui utilisent l’ancienne API.
+Avant Vite 2.7, cette information était passée aux hooks de plugin à l’aide d’un paramètre positionnel `ssr` au lieu de l’objet `options`. Tous les frameworks et plugins les plus populaires sont à jour mais il est possible que vous tombiez sur de vieux posts qui ne le sont pas et qui utilisent l’ancienne API.
 :::
 
 ## Cible de rendu côté serveur
 
-La cible par défaut de la compilation de rendu côté serveur est un environnement Node, mais vous pouvez également exécuter le serveur dans un web worker. La différence réside dans la résolution de l’entrée du package qui est différente suivant la plateforme. Vous pouvez configurer la cible pour qu’elle soit un web worker en définissant `ssr.target` sur `'webworker'`.
+La cible par défaut de la compilation de rendu côté serveur est un environnement Node, mais vous pouvez également exécuter le serveur dans un web worker. La résolution de l’entrée du package diffère selon la plateforme. Vous pouvez configurer la cible pour qu’elle soit un web worker en définissant `ssr.target` sur `'webworker'`.
 
 ## Bundle de rendu côté serveur
 
@@ -271,3 +273,11 @@ Dans certains cas, comme lorsque le runtime est `webworker`, il se peut que vous
 
 - Toutes les dépendances seront traitées comme `noExternal`
 - Une erreur sera déclenchée si une fonctionnalité intégrée à Node.js est importée
+
+## Interface de commande Vite
+
+Les commandes `$ vite dev` et `$ vite preview` peuvent aussi être utilisées pour les applications usant du rendu côté serveur. Vous pouvez ajouter vos middlewares de rendu côté serveur au serveur de développement avec [`configureServer`](/guide/api-plugin#configureserver), et au serveur de preview avec [`configurePreviewServer`](/guide/api-plugin#configurepreviewserver).
+
+:::tip Note
+Utilisez un hook post pour que votre middleware de rendu côté serveur s’exécute _après_ les middlewares de Vite.
+:::
