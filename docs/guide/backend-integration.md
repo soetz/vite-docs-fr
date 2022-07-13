@@ -29,21 +29,25 @@ Si vous avez besoin d’une intégration particulière, vous pouvez suivre ce gu
    import 'vite/modulepreload-polyfill'
    ```
 
-2. Pour le développement, injectez ce qui suit dans le template HTML de votre serveur (remplacez `http://localhost:3000` par l’URL locale sur laquelle Vite est exposé) :
+2. Pour le développement, injectez ce qui suit dans le template HTML de votre serveur (remplacez `http://localhost:5173` par l’URL locale sur laquelle Vite est exposé) :
 
    ```html
    <!-- si en mode développement -->
-   <script type="module" src="http://localhost:3000/@vite/client"></script>
-   <script type="module" src="http://localhost:3000/main.js"></script>
+   <script type="module" src="http://localhost:5173/main.js"></script>
    ```
 
-   Assurez-vous également que le serveur soit configuré pour servir les ressources statiques du répertoire de Vite, sinon les ressources comme les images ne seront pas chargées correctement.
+   Pour servir correctement les assets, vous avez deux possibilités :
+
+   - Assurez-vous que le serveur est configuré pour proxyfier les requêtes pour des ressources statiques vers le serveur Vite
+   - Définissez [`server.origin`](/config/#server-origin) afin que les URLs de ressources générées soient résolues à l’aide de l’URL du serveur back-end plutôt qu’un chemin relatif
+
+   Ceci est requis pour que les ressources telles que les images soient chargées correctement.
 
    Notez que si vous utilisez React avec `@vitejs/plugin-react`, vous devrez aussi ajouter ceci avant le script ci-dessus, puisque le plugin ne peut pas modifier le HTML que vous servez :
 
    ```html
    <script type="module">
-     import RefreshRuntime from 'http://localhost:3000/@react-refresh'
+     import RefreshRuntime from 'http://localhost:5173/@react-refresh'
      RefreshRuntime.injectIntoGlobalHook(window)
      window.$RefreshReg$ = () => {}
      window.$RefreshSig$ = () => (type) => type
@@ -76,7 +80,7 @@ Si vous avez besoin d’une intégration particulière, vous pouvez suivre ce gu
    ```
 
    - Le manifeste a une structure au format `Record<nom, morceau>`.
-   - Pour les morceaux (_chunks_) d’entrée, la clé est le chemin relatif du src depuis la racine projet.
+   - Pour les morceaux (_chunks_) d’entrée et les morceaux dynamiques, la clé est le chemin relatif de la source depuis la racine projet.
    - Pour les morceaux qui ne sont pas d’entrée, la clé est le nom de base du fichier généré préfixé par `_`.
    - Les morceaux contiendront des informations sur leurs imports statiques et dynamiques (les deux sont des clés qui renvoient vers le morceau correspondant dans le manifeste), et aussi sur le CSS qui leur est associé (s’il y en a).
 
