@@ -1,13 +1,15 @@
 import { defineConfig } from 'vitepress'
 
-const ogDescription = 'Next Generation Frontend Tooling'
-const ogImage = 'https://fr.vitejs.dev/og-image.png'
+const ogDescription = 'Le tooling frontend nouvelle génération'
+const ogImage = 'https://main.vitejs.dev/og-image.png'
 const ogTitle = 'Vite'
 const ogUrl = 'https://fr.vitejs.dev'
 
 export default defineConfig({
+  lang: 'fr-FR',
   title: 'Vite',
-  description: 'Le tooling front-end nouvelle génération.',
+  description: 'Le tooling frontend nouvelle génération',
+
   head: [
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }],
     ['meta', { property: 'og:type', content: 'website' }],
@@ -20,11 +22,14 @@ export default defineConfig({
     ['meta', { property: 'twitter:image', content: ogImage }],
     ['meta', { property: 'twitter:url', content: ogUrl }]
   ],
+
   vue: {
     reactivityTransform: true
   },
+
   themeConfig: {
     logo: '/logo.svg',
+
     editLink: {
       pattern: 'https://github.com/vitejs/vite/edit/main/docs/:path',
       text: 'Suggérer une modification sur cette page'
@@ -45,7 +50,6 @@ export default defineConfig({
       }
     },
 
-    // TODO: What is that ?
     carbonAds: {
       code: 'CEBIEK3N',
       placement: 'vitejsdev'
@@ -63,9 +67,8 @@ export default defineConfig({
 
     footer: {
       message: 'Publication sous licence MIT',
-      copyright: 'Copyright © 2019-aujourd\'hui Evan You & les contributeurs de Vite'
+      copyright: 'Copyright © 2019-aujourd’hui Evan You & les contributeurs de Vite'
     },
-
 
     nav: [
       { text: 'Guide', link: '/guide/', activeMatch: '/guide/' },
@@ -79,7 +82,7 @@ export default defineConfig({
             link: 'https://twitter.com/vite_js'
           },
           {
-            text: 'Serveur Discord',
+            text: 'Discord Chat',
             link: 'https://chat.vitejs.dev'
           },
           {
@@ -87,11 +90,11 @@ export default defineConfig({
             link: 'https://github.com/vitejs/awesome-vite'
           },
           {
-            text: 'Communauté DEV.to',
+            text: 'DEV Community',
             link: 'https://dev.to/t/vite'
           },
           {
-            text: 'Compatibilité des plugins Rollup',
+            text: 'Rollup Plugins Compat',
             link: 'https://vite-rollup-plugins.patak.dev/'
           },
           {
@@ -133,7 +136,7 @@ export default defineConfig({
               link: '/guide/using-plugins'
             },
             {
-              text: 'Pré-bundler des dépendances',
+              text: 'Pré-bundling des dépendances',
               link: '/guide/dep-pre-bundling'
             },
             {
@@ -165,7 +168,7 @@ export default defineConfig({
               link: '/guide/comparisons'
             },
             {
-              text: 'Migration depuis la v1',
+              text: 'Migration depuis la v2',
               link: '/guide/migration'
             }
           ]
@@ -194,38 +197,38 @@ export default defineConfig({
       ],
       '/config/': [
         {
-          text: 'Config',
+          text: 'Configuration',
           items: [
             {
-              text: 'Configuring Vite',
+              text: 'Configurer Vite',
               link: '/config/'
             },
             {
-              text: 'Shared Options',
+              text: 'Options communes',
               link: '/config/shared-options'
             },
             {
-              text: 'Server Options',
+              text: 'Options du serveur',
               link: '/config/server-options'
             },
             {
-              text: 'Build Options',
+              text: 'Options de compilation',
               link: '/config/build-options'
             },
             {
-              text: 'Preview Options',
+              text: 'Options de l’aperçu (preview)',
               link: '/config/preview-options'
             },
             {
-              text: 'Dep Optimization Options',
+              text: 'Options d’optimisation des dépendances',
               link: '/config/dep-optimization-options'
             },
             {
-              text: 'SSR Options',
+              text: 'Options de rendu côté serveur (SSR)',
               link: '/config/ssr-options'
             },
             {
-              text: 'Worker Options',
+              text: 'Options du worker',
               link: '/config/worker-options'
             }
           ]

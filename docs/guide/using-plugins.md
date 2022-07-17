@@ -1,6 +1,6 @@
 # Utiliser des plugins
 
-Vite peut être étendu à l’aide de plugins, qui sont basés sur la très bonne interface pour plugin de Rollup, avec quelques options spécifiques à Vite en plus. Cela signifie que les utilisateurs de Vite peuvent se fier à l’écosystème de plugins de Rollup, qui est mature, tout en ayant la possibilité d’étendre le serveur de développement ou le rendu côté serveur si nécessaire.
+Vite peut être étendu à l’aide de plugins, qui sont basés sur la très bonne interface pour plugin de Rollup, avec quelques options spécifiques à Vite en plus. Cela signifie que les utilisateurs de Vite peuvent se fier à l’écosystème de plugins de Rollup, qui est mature, tout en profitant d’adaptations pour le serveur de développement ou le rendu côté serveur (_SSR_) si besoin.
 
 ## Ajouter un plugin
 
@@ -34,9 +34,9 @@ Les plugins falsy seront ignorés, ce qui peut être utilisé pour activer ou d�
 Vite tente de supporter les patterns de développement web les plus courants sans qu’il n’y ait besoin de plugins. Avant de partir à la recherche d’un plugin Vite ou Rollup qui soit compatible, faites un tour sur le [guide des fonctionnalités](/guide/features.md). Souvent, les cas où un plugin serait nécessaire pour un projet Rollup sont déjà couverts par Vite.
 :::
 
-Allez voir la [page Plugins](../plugins/) pour plus d’informations sur les plugins officiels. Sinon, les plugins de la communauté sont référencés par [Awesome Vite](https://github.com/vitejs/awesome-vite#plugins). Pour les plugins Rollup compatibles, allez voir [Vite Rollup Plugins](https://vite-rollup-plugins.patak.dev) qui liste les plugins officiels Rollup compatibles et fournit des instructions d’utilisation, ou la [section Compatibilité des plugins Rollup](/guide/api-plugin#compatibilite-des-plugins-rollup) au cas où le plugin qui vous intéresse ne serait pas inclus.
+Allez voir la [page Plugins](../plugins/) pour plus d’informations sur les plugins officiels. Sinon, les plugins de la communauté sont référencés par [Awesome Vite](https://github.com/vitejs/awesome-vite#plugins). [Vite Rollup Plugins](https://vite-rollup-plugins.patak.dev) fournit une liste des plugins officiels Rollup compatibles ainsi que des instructions d’utilisation. Si le plugin qui vous intéresse n’est pas inclus, la [section Compatibilité des plugins Rollup](/guide/api-plugin#compatibilite-des-plugins-rollup) vous indiquera dans les grandes lignes s’il a des chances de fonctionner ou non.
 
-Vous pouvez également trouver les plugins qui suivent les [conventions recommandées](api-plugin.md#conventions) en faisant une [recherche npm de vite-plugin](https://www.npmjs.com/search?q=vite-plugin&ranking=popularity) pour les plugins Vite ou une [recherche npm de rollup-plugin](https://www.npmjs.com/search?q=rollup-plugin&ranking=popularity) pour les plugins Rollup.
+Vous pouvez également trouver les plugins qui suivent les [conventions recommandées](api-plugin.md#conventions) en [recherchant vite-plugin sur npm](https://www.npmjs.com/search?q=vite-plugin&ranking=popularity) pour les plugins Vite ou [rollup-plugin](https://www.npmjs.com/search?q=rollup-plugin&ranking=popularity) pour les plugins Rollup.
 
 ## Forcer l’ordre des plugins
 

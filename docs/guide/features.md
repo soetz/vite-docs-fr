@@ -18,11 +18,11 @@ Le code ci-dessus provoquerait une erreur dans le navigateur. Vite va détecter 
 
 **Les dépendances sont fortement mises en cache**
 
-Vite met les dépendances en cache à l’aide d’en-têtes HTTP, alors si vous souhaitez éditer ou débugger une dépendance localement, suivez les instructions se trouvant [ici](./dep-pre-bundling#cache-navigateur).
+Vite met les dépendances en cache à l’aide d’en-têtes HTTP, alors si vous souhaitez éditer ou débugger une dépendance localement, suivez [ces instructions](./dep-pre-bundling#cache-navigateur).
 
 ## Rafraîchissement des modules à la volée (_HMR_)
 
-Vite fournit une [API de rafraîchissement à la volée](./api-hmr) à travers les modules ES natifs. Les frameworks supportant le rafraîchissement de modules à la volée peuvent s’appuyer sur cette API pour permettre des remplacements de modules rapides et précis sans qu’il n’y ait besoin de recharger la page ou de jeter l’état de l’application. Vite fournit des intégrations de première classe pour les [composants à fichier unique de Vue](https://github.com/vitejs/vite/tree/main/packages/plugin-vue) et pour [React Fast Refresh](https://github.com/vitejs/vite/tree/main/packages/plugin-react). Il existe aussi des intégrations officielles pour Preact via [@prefresh/vite](https://github.com/JoviDeCroock/prefresh/tree/main/packages/vite).
+Vite fournit une [API de rafraîchissement à la volée](./api-hmr) à travers les modules ES natifs. Les frameworks supportant le rafraîchissement de modules à la volée peuvent s’appuyer sur cette API pour permettre des remplacements de modules rapides et précis sans qu’il n’y ait besoin de recharger la page ou de perdre l’état de l’application. Vite fournit des intégrations de première classe du rafraîchissement à la volée pour les [composants à fichier unique de Vue](https://github.com/vitejs/vite/tree/main/packages/plugin-vue) et pour [React Fast Refresh](https://github.com/vitejs/vite/tree/main/packages/plugin-react). Il existe aussi des intégrations officielles pour Preact via [@prefresh/vite](https://github.com/JoviDeCroock/prefresh/tree/main/packages/vite).
 
 Notez que vous n’aurez normalement pas besoin de les configurer manuellement — quand vous [créez une application à l’aide de `create-vite`](./), le template sélectionné l’aura déjà fait pour vous.
 
@@ -30,7 +30,7 @@ Notez que vous n’aurez normalement pas besoin de les configurer manuellement �
 
 Vite supporte l’import de fichiers `.ts` par défaut.
 
-Vite ne fait que transpiler les fichiers `.ts` et n’effectue **AUCUNE** vérification des types (_type checking_). Il part du principe que c’est votre IDE et votre process de compilation qui prennent en charge la vérification des types (vous pouvez lancer `tsc --noEmit` dans le script de compilation ou installer `vue-tsc` et lancer `vue-tsc --noEmit` pour effectuer la vérification des types de vos fichiers `*.vue`).
+Vite ne fait que transpiler les fichiers `.ts` et n’effectue **AUCUNE** vérification des types (_type checking_). Il part du principe que ce sont votre IDE et votre process de compilation qui prennent en charge la vérification des types (vous pouvez lancer `tsc --noEmit` dans le script de compilation ou installer `vue-tsc` et lancer `vue-tsc --noEmit` pour effectuer la vérification des types de vos fichiers `*.vue`).
 
 Vite utilise [esbuild](https://github.com/evanw/esbuild) pour transpiler le TypeScript en JavaScript, ce qui est environ 20 à 30 fois plus rapide qu’avec `tsc`, et les remplacements de modules peuvent être faits en moins de 50 ms.
 
@@ -51,7 +51,9 @@ Doit être à `true`.
 
 Puisqu’`esbuild` ne transpile que sans les informations de types, il ne supporte pas certaines fonctionnalités comme les const enum ou les imports de types implicites.
 
-Vous devez définir `"isolatedModules": true` dans votre `tsconfig.json` au champ `compilerOptions`, afin que TS vous prévienne lorsque vous utilisez des fonctionnalités qui ne fonctionnent pas avec la transpilation isolée.
+Vous devez définir `"isolatedModules": true` dans votre `tsconfig.json` sous `compilerOptions`, afin que TS vous prévienne lorsque vous utilisez des fonctionnalités qui ne fonctionnent pas avec la transpilation isolée.
+
+Ceci dit, certaines librairies (comme [vue](https://github.com/vuejs/core/issues/1228)) fonctionnent mal avec `"isolatedModules": true`. Vous pouvez utiliser `"skipLibCheck": true` pour mettre temporairement les erreurs en sourdine le temps qu’elles soient résolues par les auteurs de la librairie.
 
 #### `useDefineForClassFields`
 
@@ -60,7 +62,7 @@ Vous devez définir `"isolatedModules": true` dans votre `tsconfig.json` au cham
 Ceci dit, cela peut être contre-intuitif pour ceux qui viennent d’autres langages de programmation ou de versions plus anciennes de TypeScript.
 Vous pouvez en apprendre plus sur la transition dans les [notes de version de TypeScript 3.7](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#the-usedefineforclassfields-flag-and-the-declare-property-modifier).
 
-Si vous utilisez une librairie qui repose fortement sur les champs de classe, soyez prudent(e) vis-à-vis de l’intention derrière l’usage qui en est fait.
+Si vous utilisez une librairie qui repose fortement sur les champs de classe, soyez prudent·e vis-à-vis de l’intention derrière l’usage qui en est fait.
 
 La plupart des librairies présument que `"useDefineForClassFields": true`, comme [MobX](https://mobx.js.org/installation.html#use-spec-compliant-transpilation-for-class-properties) par exemple, ou [Vue Class Components 8.x](https://github.com/vuejs/vue-class-component/issues/465).
 
@@ -94,7 +96,7 @@ Vous pouvez également ajouter `vite/client` au `compilerOptions.types` de votre
 }
 ```
 
-Cela permettra de fournir les types suivants :
+Cela permettra de fournir les remplacements de types suivants :
 
 - Les imports d’assets (par exemple lors de l’import d’un fichier `.svg`)
 - Les [variables d’environnement](./env-and-mode#variables-d%E2%80%99environnement) injectées par Vite dans `import.meta.env`
@@ -104,7 +106,7 @@ Cela permettra de fournir les types suivants :
 
 Vite fournit un support de première classe pour Vue :
 
-- Support des composants à fichier unique (SFC) de Vue 3 à l’aide de [@vitejs/plugin-vue](https://github.com/vitejs/vite/tree/main/packages/plugin-vue)
+- Support des composants à fichier unique (_SFC_) de Vue 3 à l’aide de [@vitejs/plugin-vue](https://github.com/vitejs/vite/tree/main/packages/plugin-vue)
 - Support du JSX pour Vue 3 à l’aide de [@vitejs/plugin-vue-jsx](https://github.com/vitejs/vite/tree/main/packages/plugin-vue-jsx)
 - Support de Vue 2 à l’aide de [underfin/vite-plugin-vue2](https://github.com/underfin/vite-plugin-vue2)
 
@@ -159,7 +161,7 @@ Si le projet contient une configuration PostCSS valide (les formats supportés s
 
 ### Modules CSS
 
-Tout fichier CSS dont le nom finit par `.module.css` est considéré comme étant un [fichier de module CSS](https://github.com/css-modules/css-modules). Importer l’un de ces fichiers retournera le fichier de module suivant :
+Tout fichier CSS dont le nom finit par `.module.css` est considéré comme étant un [fichier de module CSS](https://github.com/css-modules/css-modules). Importer l’un de ces fichiers retournera l’objet de module correspondant :
 
 ```css
 /* example.module.css */
@@ -185,9 +187,9 @@ document.getElementById('foo').className = applyColor
 
 ### Préprocesseurs CSS
 
-Puisque Vite ne cible que des navigateurs modernes, il est recommandé d’utiliser les variables CSS natives avec des plugins PostCSS qui implémentent les ébauches du CSSWG (par exemple [postcss-nesting](https://github.com/jonathantneal/postcss-nesting)) afin d’écrire du CSS pur et conforme aux futurs standards.
+Puisque Vite ne cible que des navigateurs modernes, il est recommandé d’utiliser les variables CSS natives avec des plugins PostCSS qui implémentent les ébauches du CSSWG (par exemple [postcss-nesting](https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-nesting)) afin d’écrire du CSS pur et conforme aux futurs standards.
 
-Ceci étant dit, Vite fournit le support pour les fichiers `.scss`, `.sass`, `.less`, `.styl` et `.stylus`. Il n’y a pas besoin d’installer de plugin spécifique à Vite pour cela, mais le préprocesseur correspondant doit être installé :
+Ceci étant dit, Vite fournit le support pour les fichiers `.scss`, `.sass`, `.less`, `.styl` et `.stylus`. Il n’y a pas besoin de plugin pour cela, mais le préprocesseur correspondant doit être installé :
 
 ```bash
 # .scss et .sass
@@ -200,7 +202,7 @@ npm add -D less
 npm add -D stylus
 ```
 
-Si vous utilisez les composants à fichier unique de Vue, cela permet automatiquement l’utilisation de `<style lang="sass">` et compagnie.
+Si vous utilisez les composants à fichier unique de Vue, cela permet aussi d’utiliser `<style lang="sass">` et les autres.
 
 Vite améliore la résolution des `@import` pour Sass et Less afin que les alias de Vite soient respectés. Les références à des `url()` relatives dans des fichiers Sass ou Less importés qui se trouvent des des dossiers différents de la racine voient aussi leur base automatiquement réécrite, afin d’assurer qu’elles soient toujours valides.
 
@@ -208,9 +210,18 @@ Les alias d’`@import` et la réécritures des bases d’URLs ne sont pas suppo
 
 Vous pouvez également utiliser des modules CSS en combinaison avec des préprocesseurs en préfixant l’extension de fichier avec `.module`, par exemple `style.module.scss`.
 
+### Désactiver l’injection du CSS sur la page
+
+L’injection automatique du CSS peut être désactivée à l’aide du paramètre de requête `?inline`. Dans ce cas, le CSS traité est retourné en tant qu’export par défaut du module comme d’habitude, mais les styles ne sont pas injectés sur la page.
+
+```js
+import styles from './foo.css' // sera injecté sur la page
+import otherStyles from './bar.css?inline' // ne le sera pas
+```
+
 ## Ressources statiques
 
-Importer une ressource statique retournera l’URL publique résolue :
+Importer une ressource statique retournera son URL publique résolue :
 
 ```js
 import imgUrl from './img.png'
@@ -220,12 +231,12 @@ document.getElementById('hero-img').src = imgUrl
 Des requêtes spéciales peuvent modifier la façon dont les ressources sont chargées :
 
 ```js
-// charge la ressource explicitement en tant qu’URL
+// charge la ressource comme URL explicitement
 import assetAsURL from './asset.js?url'
 ```
 
 ```js
-// charge la ressource en tant que chaîne de caractères
+// charge la ressource comme chaîne de caractères
 import assetAsString from './shader.glsl?raw'
 ```
 
@@ -235,8 +246,8 @@ import Worker from './worker.js?worker'
 ```
 
 ```js
-// charge un web worker qui est mis inline en chaîne de caractères base64 au
-// moment de la compilation
+// charge un web worker qui est mis inline en chaîne de caractères base64
+// au moment de la compilation
 import InlineWorker from './worker.js?worker&inline'
 ```
 
@@ -249,8 +260,8 @@ Les fichiers JSON peuvent être importés directement — les imports nommés 
 ```js
 // importe l’objet entier
 import json from './example.json'
-// importe un champ à la racine du fichier en tant qu’export nommé — cela aide
-// pour éliminer le code inutile (tree-shaking) !
+// importe un champ à la racine du fichier en tant qu’export nommé - cela
+// aide à éliminer le code inutilisé (tree-shaking) !
 import { field } from './example.json'
 ```
 
@@ -282,10 +293,10 @@ for (const path in modules) {
 }
 ```
 
-Les fichiers correspondants sont chargés de manière opportune (_lazy loaded_) à l’aide de l’import dynamique et seront séparés en différents morceaux (_chunks_) durant la compilation. Si vous préférez importer tous les modules directement (par exemple si vous avez besoin que des effets secondaires (_side-effects_) de ces modules soient d’abord appliqués), vous pouvez utiliser plutôt `import.meta.globEager` :
+Les fichiers correspondants sont chargés de manière opportune (_lazy loaded_) à l’aide de l’import dynamique et seront séparés en différents morceaux (_chunks_) durant la compilation. Si vous préférez importer tous les modules directement (par exemple si vous avez besoin que des effets secondaires (_side-effects_) de ces modules soient d’abord appliqués), vous pouvez passer un second argument `{ eager: true }` :
 
 ```js
-const modules = import.meta.globEager('./dir/*.js')
+const modules = import.meta.glob('./dir/*.js', { eager: true })
 ```
 
 Le code ci-dessus sera transformé en ce qui suit :
@@ -300,10 +311,12 @@ const modules = {
 }
 ```
 
-`import.meta.glob` et `import.meta.globEager` supportent également le fait d’importer des fichiers sous la forme de chaînes de caractères, à la manière de l’[import d’une ressource en tant que chaîne de caractères](/guide/assets.html#importer-une-ressource-en-tant-que-chaine-de-caracteres). Nous utilisons ici la syntaxe d’[assertion d’import (_Import Assertions_)](https://github.com/tc39/proposal-import-assertions#synopsis).
+### Format d’import
+
+`import.meta.glob` supporte également le fait d’importer des fichiers sous la forme de chaînes de caractères (à la manière de l’[import d’une ressource en tant que chaîne de caractères](/guide/assets.html#importer-une-ressource-en-tant-que-chaine-de-caracteres)) à l’aide de la syntaxe de [réflexion d’import (_Import Reflection_)](https://github.com/tc39/proposal-import-reflection).
 
 ```js
-const modules = import.meta.glob('./dir/*.js', { assert: { type: 'raw' } })
+const modules = import.meta.glob('./dir/*.js', { as: 'raw' })
 ```
 
 Le code ci-dessus sera transformé en ce qui suit :
@@ -311,28 +324,135 @@ Le code ci-dessus sera transformé en ce qui suit :
 ```js
 // code produit par Vite
 const modules = {
-  './dir/foo.js': '{\n  "msg": "foo"\n}\n',
-  './dir/bar.js': '{\n  "msg": "bar"\n}\n'
+  './dir/foo.js': 'export default "foo"\n',
+  './dir/bar.js': 'export default "bar"\n'
 }
 ```
+
+`{ as: 'url' }` est aussi supporté pour charger des ressources comme URLs.
+
+### Patterns multiples
+
+Le premier argument peut aussi être un array de globs, par exemple
+
+```js
+const modules = import.meta.glob(['./dir/*.js', './autre/*.js'])
+```
+
+### Patterns négatifs
+
+Les patterns négatifs sont également supportés (avec `!` comme préfixe). Pour ignorer certains fichiers, vous pouvez ajouter des patterns glob d’exclusion au premier argument :
+
+```js
+const modules = import.meta.glob(['./dir/*.js', '!**/bar.js'])
+```
+
+```js
+// code produit par Vite
+const modules = {
+  './dir/foo.js': () => import('./dir/foo.js')
+}
+```
+
+#### Imports nommés
+
+Il est possible de n’importer que certaines parties d’un module grâce à l’option import.
+
+```ts
+const modules = import.meta.glob('./dir/*.js', { import: 'setup' })
+```
+
+```ts
+// code produit par Vite
+const modules = {
+  './dir/foo.js': () => import('./dir/foo.js').then((m) => m.setup),
+  './dir/bar.js': () => import('./dir/bar.js').then((m) => m.setup)
+}
+```
+
+En combinaison avec `eager`, il est même possible de profiter de l’élimination du code inutile (_tree-shaking_).
+
+```ts
+const modules = import.meta.glob('./dir/*.js', { import: 'setup', eager: true })
+```
+
+```ts
+// code produit par Vite:
+import { setup as __glob__0_0 } from './dir/foo.js'
+import { setup as __glob__0_1 } from './dir/bar.js'
+const modules = {
+  './dir/foo.js': __glob__0_0,
+  './dir/bar.js': __glob__0_1
+}
+```
+
+Définissez `import` à `default` pour importer l’export par défaut du module.
+
+```ts
+const modules = import.meta.glob('./dir/*.js', {
+  import: 'default',
+  eager: true
+})
+```
+
+```ts
+// code produit par Vite:
+import __glob__0_0 from './dir/foo.js'
+import __glob__0_1 from './dir/bar.js'
+const modules = {
+  './dir/foo.js': __glob__0_0,
+  './dir/bar.js': __glob__0_1
+}
+```
+
+#### Requêtes personnalisées
+
+Vous pouvez aussi utiliser l’option `query` pour fournir des requêtes personnalisées pouvant être utilisées par d’autres plugins.
+
+```ts
+const modules = import.meta.glob('./dir/*.js', {
+  query: { foo: 'bar', bar: true }
+})
+```
+
+```ts
+// code produit par Vite:
+const modules = {
+  './dir/foo.js': () =>
+    import('./dir/foo.js?foo=bar&bar=true').then((m) => m.setup),
+  './dir/bar.js': () =>
+    import('./dir/bar.js?foo=bar&bar=true').then((m) => m.setup)
+}
+```
+
+### Inconvénients des imports glob
 
 Notez bien que :
 
 - Ceci est une fonctionnalité spécifique à Vite et ne fait partie d’aucun standard ES ou web.
-- Les patterns glob sont traités comme des spécifications d’imports : ils doivent être soit relatifs (ils commencent par `./`) soit absolus (ils commencent par `/`, ce qui est résolu comme étant relatif à la racine projet).
-- La correspondance glob est faite à l’aide de `fast-glob` — vous pouvez retrouver sa documentation des [patterns glob supportés](https://github.com/mrmlnc/fast-glob#pattern-syntax).
-- Vous devez être conscient(e) que les imports glob n’acceptent pas de variables ; vous devrez passer directement le pattern en chaîne de caractères.
-- Les patterns glob ne peuvent pas contenir les mêmes quotes (donc `'`, `"`, ou `` ` ``) que les quotes qui le délimitent, par exemple pour `'/Tom\'s files/**'` utilisez plutôt `"/Tom's files/**"`.
+- Les patterns glob sont traités comme des spécifications d’imports : ils doivent être relatifs (ils commencent par `./`), absolus (ils commencent par `/`, ce qui est résolu comme étant relatif à la racine projet), ou un chemin d’alias (voir [l’option `resolve.alias`](/config/#resolve-alias)).
+- La correspondance glob est faite à l’aide de [`fast-glob`](https://github.com/mrmlnc/fast-glob) — vous pouvez retrouver sa documentation des [patterns glob supportés](https://github.com/mrmlnc/fast-glob#pattern-syntax).
+- Vous devez être conscient·e du fait que tous les arguments de `import.meta.glob` doivent être **passés en tant que littéraux**. Vous ne pouvez PAS utiliser de variables ou d’expressions.
+
+## Import dynamique
+
+Un peu comme les [imports glob](#imports-glob), Vite supporte l’import dynamique avec des variables.
+
+```ts
+const module = await import(`./dir/${file}.js`)
+```
+
+Notez qu’une variable ne peut représenter qu’un seul niveau de dossier. Par exemple, si vous assignez `foo/bar` à `file`, l’import ne fonctionnera pas. Si vous avez besoin de quelque chose de plus complet, penchez-vous sur la fonctionnalité d’[import glob](#imports-glob).
 
 ## WebAssembly
 
-Les fichiers `.wasm` pré-compilés peuvent être importés directement — l’export par défaut sera une fonction d’initialisation qui retourne une promesse (_Promise_) de l’objet d’exports de l’instance wasm :
+Les fichiers `.wasm` pré-compilés peuvent être importés avec le paramètre de requête `?init` — l’export par défaut sera une fonction d’initialisation qui retourne une promesse (_Promise_) de l’instance wasm :
 
 ```js
-import init from './example.wasm'
+import init from './example.wasm?init'
 
-init().then((exports) => {
-  exports.test()
+init().then((instance) => {
+  instance.exports.test()
 })
 ```
 
@@ -352,9 +472,32 @@ init({
 
 Dans la compilation de production, les fichiers `.wasm` qui sont plus petits que `assetInlineLimit` seront mis inline en tant que chaînes de caractères base64. Sinon, ils seront copiés dans le dossier dist comme des ressources et seront récupérés à la demande.
 
+::: warning
+[La proposition d’intégration des modules ES dans WebAssembly](https://github.com/WebAssembly/esm-integration) n’est pas encore supportée.
+Utilisez [`vite-plugin-wasm`](https://github.com/Menci/vite-plugin-wasm) ou un autre plugin de la communauté si vous en avez besoin.
+:::
+
 ## Web workers
 
-Un script web worker peut être importé directement en suffixant `?worker` ou `?sharedworker` à la requête d’import. Par défaut, l’export sera un constructeur de worker :
+### Import avec constructeur
+
+Un script de web worker peut être importé à l’aide de [`new Worker()`](https://developer.mozilla.org/fr/docs/Web/API/Worker/Worker) et [`new SharedWorker()`](https://developer.mozilla.org/fr/docs/Web/API/SharedWorker/SharedWorker). Comparée aux suffixes spécifiques pour les workers, cette syntaxe est plus proche des standards et est la façon **recommandée** de créer des workers.
+
+```ts
+const worker = new Worker(new URL('./worker.js', import.meta.url))
+```
+
+Le constructeur du worker peut aussi prendre des options qui peuvent être utilisées pour créer des workers « modules » :
+
+```ts
+const worker = new Worker(new URL('./worker.js', import.meta.url), {
+  type: 'module'
+})
+```
+
+### Import avec un suffixe de requête
+
+Un script web worker peut être importé directement en suffixant `?worker` ou `?sharedworker` à la requête d’import. L’export par défaut sera un constructeur de worker :
 
 ```js
 import MyWorker from './worker?worker'
@@ -362,13 +505,21 @@ import MyWorker from './worker?worker'
 const worker = new MyWorker()
 ```
 
-Le script de worker peut aussi être une déclaration `import` plutôt qu’`importScripts()` — notez que durant le développement cela repose sur le support natif et ne fonctionne actuellement qu’avec Chrome, mais pour la compilation de production il sera compilé.
+Le script de worker peut aussi utiliser `import` plutôt qu’`importScripts()` — notez que durant le développement cela repose sur le support natif et ne fonctionne actuellement qu’avec Chrome, mais en production ce comportement est compilé.
 
 Par défaut, le script du worker sera émis dans un morceau (_chunk_) différent dans la compilation de production. Si vous souhaitez mettre le worker inline dans des chaînes de caractères base64, ajoutez l’instruction `inline` :
 
 ```js
 import MyWorker from './worker?worker&inline'
 ```
+
+Si vous voulez récupérer le worker en tant qu’URL, ajoutez la requête `url` :
+
+```js
+import MyWorker from './worker?worker&url'
+```
+
+Vous pouvez aller voir les [Options des workers](/config/#options-du-worker) pour plus de détails sur la configuration du bundling des workers.
 
 ## Optimisations de la compilation
 
@@ -384,9 +535,9 @@ Si vous préférez que tout le CSS soit extrait dans un même fichier, vous pouv
 
 Vite génère automatiquement des directives `<link rel="modulepreload">` pour les morceaux d’entrée et leurs imports directs dans le HTML.
 
-### Optimisation du chargement des morceaux asynchrones
+### Optimisation du chargement des morceaux (_chunks_) asynchrones
 
-Dans les applications réelles, Rollup génère souvent des morceaux « communs » —  du code qui est partagé par deux morceaux ou plus. Si l’on combine ça avec des imports dynamiques, il est courant d’avoir le scénario suivant :
+Dans les applications réelles, Rollup génère souvent des morceaux « communs » — pour le code qui est partagé par deux morceaux ou plus. Si l’on combine ça avec des imports dynamiques, il est courant d’avoir le scénario suivant :
 
 ![graph](/images/graph.png)
 

@@ -12,11 +12,13 @@ Vite expose des variables d’environnement via l’objet spécial **`import.met
 
 - **`import.meta.env.DEV`**: {boolean} si l’application est exécutée en développement (c’est toujours le contraire d’`import.meta.env.PROD`).
 
+- **`import.meta.env.SSR`**: {boolean} si l’application est exécutée [côté serveur](./ssr.md#logique-conditionnelle).
+
 ### Remplacement en production
 
 En production, ces variables d’environnement sont **remplacées statiquement**. Il est donc nécessaire de toujours les référencer en utilisant la chaîne de caractères statique entière. Par exemple, les accès dynamiques à l’aide de la clé comme `import.meta.env[clé]` ne fonctionneront pas.
 
-Ces chaînes seront aussi remplacées lorsqu’elles apparaîssent dans des chaînes JavaScript ou des templates Vue. C’est rare, mais il se peut que ce ne soit pas voulu. Vous aurez alors des erreurs comme `Missing Semicolon` ou `Unexpected token`, par exemple quand `"process.env.NODE_ENV: "` est transformé en `""development": "`. Il y a des moyens de contourner ce comportement :
+Ces chaînes seront aussi remplacées lorsqu’elles apparaîssent dans des chaînes JavaScript ou des templates Vue. C’est rare, mais il se peut que ce ne soit pas voulu. Vous aurez alors des erreurs comme `Missing Semicolon` ou `Unexpected token`, par exemple quand `{{ '"process.env.' + 'NODE_ENV"' }}` est transformé en `""development": "`. Il y a des moyens de contourner ce comportement :
 
 - Pour les chaînes de caractères JavaScript, vous pouvez mettre un caractère unicode espace insécable sans largeur au milieu, par exemple avec `'import.meta\u200b.env.MODE'`.
 
@@ -27,17 +29,17 @@ Ces chaînes seront aussi remplacées lorsqu’elles apparaîssent dans des cha�
 Vite utilise [dotenv](https://github.com/motdotla/dotenv) pour charger des variables d’environnement depuis les fichiers suivants de votre [répertoire d’environnement](/config/#envdir) :
 
 ```
-.env                # chargé dans tous les cas
-.env.local          # chargé dans tous les cas, ignoré par git
-.env.[mode]         # chargé seulement dans le mode spécifié
-.env.[mode].local   # chargé seulement dans le mode spécifié, ignoré par git
+.env              # chargé dans tous les cas
+.env.local        # chargé dans tous les cas, ignoré par git
+.env.[mode]       # chargé seulement dans le mode spécifié
+.env.[mode].local # chargé seulement dans le mode spécifié, ignoré par git
 ```
 
 :::tip Priorité de chargement de l’environnement
 
 Un fichier d’environnement pour un mode spécifique (par exemple `.env.production`) aura la priorité par rapport à fichier générique (comme `.env`).
 
-En plus de ça, les variables d’environnement qui existent déjà au moment où Vite est exécuté ont une encore plus grande priorité et ne seront pas remplacées par les fichiers `.env`.
+En plus de ça, les variables d’environnement qui existent déjà au moment où Vite est exécuté ont une encore plus grande priorité et ne seront pas remplacées par les fichiers `.env`. Si vous exécutez `VITE_SOME_KEY=123 vite build` par exemple.
 
 Les fichiers `.env` sont chargés au démarrage de Vite. Redémarrez le serveur après avoir fait des modifications.
 :::
@@ -47,11 +49,16 @@ Les variables d’environnement chargées sont aussi exposées au code source cl
 Pour éviter que des variables d’environnement ne fuitent accidentellement dans le client, seules les variables ayant le préfixe `VITE_` sont exposées à votre code traité par Vite. Par exemple, dans le fichier suivant :
 
 ```
-DB_PASSWORD=foobar
 VITE_SOME_KEY=123
+DB_PASSWORD=foobar
 ```
 
 seule `VITE_SOME_KEY` sera exposée à votre code source client (en tant que `import.meta.env.VITE_SOME_KEY`), `DB_PASSWORD` ne le sera pas.
+
+```js
+console.log(import.meta.env.VITE_SOME_KEY) // 123
+console.log(import.meta.env.DB_PASSWORD) // undefined
+```
 
 Si vous voulez customiser le préfixe des variables d’environnement, utilisez l’option [envPrefix](/config/index#envprefix).
 
@@ -78,6 +85,14 @@ interface ImportMetaEnv {
 
 interface ImportMeta {
   readonly env: ImportMetaEnv
+}
+```
+
+Si votre code repose sur des types d’environnements navigateurs tels que [DOM](https://github.com/microsoft/TypeScript/blob/main/lib/lib.dom.d.ts) ou [WebWorker](https://github.com/microsoft/TypeScript/blob/main/lib/lib.webworker.d.ts), vous pouvez modifier le champ [lib](https://www.typescriptlang.org/tsconfig#lib) de `tsconfig.json`.
+
+```json
+{
+  "lib": ["WebWorker"]
 }
 ```
 
