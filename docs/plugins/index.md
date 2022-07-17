@@ -4,6 +4,8 @@
 Vite tente de supporter les patterns de développement web les plus courants sans qu’il n’y ait besoin de plugins. Avant de partir à la recherche d’un plugin Vite ou Rollup qui soit compatible, faites un tour sur le [guide des fonctionnalités](../guide/features.md). Souvent, les cas où un plugin serait nécessaire pour un projet Rollup sont déjà couverts par Vite.
 :::
 
+Allez voir la page [Utiliser des plugins](../guide/using-plugins.md) pour savoir comment utiliser des plugins.
+
 ## Plugins officiels
 
 ### [@vitejs/plugin-vue](https://github.com/vitejs/vite/tree/main/packages/plugin-vue)
@@ -16,7 +18,7 @@ Vite tente de supporter les patterns de développement web les plus courants san
 
 ### [@vitejs/plugin-react](https://github.com/vitejs/vite/tree/main/packages/plugin-react)
 
-- Permet le support de React.
+- Permet le support tout-en-un de React.
 
 ### [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy)
 
