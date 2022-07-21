@@ -388,7 +388,10 @@ Vite génère automatiquement des directives `<link rel="modulepreload">` pour l
 
 Dans les applications réelles, Rollup génère souvent des morceaux « communs » —  du code qui est partagé par deux morceaux ou plus. Si l’on combine ça avec des imports dynamiques, il est courant d’avoir le scénario suivant :
 
-![graph](/images/graph.png)
+<script setup>
+import graphSvg from '../images/graph.svg?raw'
+</script>
+<svg-image :svg="graphSvg" />
 
 Dans un scénario non-optimisé, quand le morceau asynchrone `A` est importé, le navigateur devra faire la requête pour `A` et le lire avant de pouvoir comprendre qu’il a aussi besoin du morceau commun `C`. Cela résulte en un aller-retour supplémentaire sur le réseau :
 
