@@ -100,6 +100,20 @@ Cela permettra de fournir les types suivants :
 - Les [variables d’environnement](./env-and-mode#variables-d%E2%80%99environnement) injectées par Vite dans `import.meta.env`
 - L’[API de rafraîchissement des modules](./api-hmr) dans `import.meta.hot`
 
+::: tip
+To override the default typing, declare it before the triple-slash reference. For example, to make the default import of `*.svg` a React component:
+
+```ts
+declare module '*.svg' {
+  const content: React.FC<React.SVGProps<SVGElement>>
+  export default content
+}
+
+/// <reference types="vite/client" />
+```
+
+:::
+
 ## Vue
 
 Vite fournit un support de première classe pour Vue :
